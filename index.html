@@ -1883,6 +1883,190 @@ window.axeCookV6Debug = window.axeCookV11Debug;
 })();
 </script>
 
+
+
+<style id="axeCookV32RecipePanelRedesign">
+/* v32: 제작 레시피 / 가공 레시피 영역 재설계
+   - 좌우는 1:1 파티션 유지
+   - 좌측 카드가 반쪽으로 쪼개지던 문제 해결
+   - 가공 영역도 제작 레시피와 같은 톤 사용
+   - 가공 필요 총량/회차 문구는 숨기고 가공 공식만 표시 */
+.recipe-work-panel.has-process-v31 .recipe-combo-v30,
+.recipe-work-panel.has-process-v32 .recipe-combo-v30{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  gap:14px!important;
+  align-items:start!important;
+}
+.recipe-work-panel.has-process-v31 .compact-recipe-list,
+.recipe-work-panel.has-process-v32 .compact-recipe-list{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:8px!important;
+  width:100%!important;
+  min-width:0!important;
+  align-self:start!important;
+}
+.recipe-work-panel.has-process-v31 .recipe-side-process-v30,
+.recipe-work-panel.has-process-v32 .recipe-side-process-v30{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  align-self:start!important;
+}
+.recipe-work-panel.has-process-v31 .recipe-work-card,
+.recipe-work-panel.has-process-v32 .recipe-work-card,
+.recipe-work-panel.has-process-v31 .process-recipe-card-v31,
+.recipe-work-panel.has-process-v32 .process-recipe-card-v31{
+  width:100%!important;
+  max-width:none!important;
+  min-height:96px!important;
+  height:auto!important;
+  margin:0!important;
+  padding:12px 13px!important;
+  border-radius:13px!important;
+  background:rgba(255,255,255,.026)!important;
+  border:1px solid rgba(255,255,255,.075)!important;
+  box-shadow:none!important;
+}
+.recipe-work-panel.has-process-v31 .recipe-v13-card,
+.recipe-work-panel.has-process-v32 .recipe-v13-card{
+  width:100%!important;
+  max-width:none!important;
+}
+.recipe-work-panel.has-process-v31 .recipe-v13-mats,
+.recipe-work-panel.has-process-v32 .recipe-v13-mats{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:6px!important;
+  align-items:center!important;
+}
+.process-side-card-v30{
+  border:0!important;
+  background:transparent!important;
+  padding:0!important;
+  box-shadow:none!important;
+}
+.process-side-title-v30{
+  display:flex!important;
+  justify-content:space-between!important;
+  align-items:center!important;
+  gap:10px!important;
+  height:24px!important;
+  margin:0 0 8px!important;
+  color:#f4f6fa!important;
+  font-size:14.5px!important;
+  font-weight:1000!important;
+}
+.process-side-title-v30 span::before{content:'';}
+.process-side-title-v30 small{
+  color:#aeb7c7!important;
+  font-size:11.5px!important;
+  font-weight:950!important;
+}
+.process-side-list-v30{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:8px!important;
+}
+.process-recipe-head-v31{
+  display:flex!important;
+  align-items:center!important;
+  gap:5px!important;
+  min-width:0!important;
+  margin-bottom:8px!important;
+  white-space:nowrap!important;
+}
+.process-recipe-name-v31,
+.recipe-v13-name{
+  min-width:0!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+.process-recipe-time-v31,
+.recipe-v13-time{
+  height:23px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  border-radius:999px!important;
+  padding:0 8px!important;
+  font-size:12.3px!important;
+}
+.process-recipe-mats-v31{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:6px!important;
+  align-items:center!important;
+  font-size:13px!important;
+  line-height:1.35!important;
+}
+.process-recipe-mat-v31{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:3px!important;
+  color:#dfe5ef!important;
+  background:rgba(255,255,255,.035)!important;
+  border:1px solid rgba(255,255,255,.065)!important;
+  border-radius:7px!important;
+  padding:3px 6px!important;
+  font-weight:850!important;
+  white-space:nowrap!important;
+}
+.process-recipe-mat-v31 b{
+  color:#e9edf5!important;
+  background:rgba(255,255,255,.075)!important;
+  border-radius:6px!important;
+  min-width:18px!important;
+  height:18px!important;
+  display:inline-grid!important;
+  place-items:center!important;
+  font-size:12px!important;
+}
+.process-recipe-dot-v31{display:none!important;}
+.process-recipe-batch-v31{display:none!important;}
+.recipe-work-panel.has-process-v31 .panel-title small,
+.recipe-work-panel.has-process-v32 .panel-title small{color:#9ca6b6!important;}
+@media(max-width:760px){
+  .recipe-work-panel.has-process-v31 .recipe-combo-v30,
+  .recipe-work-panel.has-process-v32 .recipe-combo-v30{grid-template-columns:1fr!important;}
+}
+</style>
+
+<script id="axeCookV32RecipePanelRedesignScript">
+(function(){
+  const oldRenderResultsOnly = renderResultsOnly;
+  renderResultsOnly = function(){
+    const result = oldRenderResultsOnly.apply(this, arguments);
+    try{
+      const r = calc();
+      const panel = document.querySelector('.recipe-work-panel');
+      if(panel){
+        panel.classList.toggle('has-process-v32', r.proc.length>0);
+        panel.classList.toggle('no-process-v32', !r.proc.length);
+        panel.classList.toggle('has-process-v31', r.proc.length>0);
+        panel.classList.toggle('no-process-v31', !r.proc.length);
+      }
+    }catch(e){ console.warn('[AXE COOK v32] recipe panel class sync failed', e); }
+    return result;
+  };
+  const oldDebug = window.axeCookV31Debug || window.axeCookV26Debug;
+  window.axeCookV32Debug = function(){
+    let r=null; try{r=calc();}catch(e){}
+    return {
+      version:'v32',
+      focus:'recipe-process-balanced-partition-redesign',
+      recipeList:'one-column-in-left-partition',
+      processRecipe:'same-tone-recipe-card-no-total-count-text',
+      layout:'1:1 partition, align start, no card stretching',
+      dataSource:AXE_COOK_DATA_SOURCE,
+      currentProcessCount:r ? r.proc.length : null,
+      counts: DB ? {foods:(DB.foods||[]).length, materials:(DB.materials||[]).length, recipes:(DB.recipes||[]).length, processes:(DB.processes||[]).length} : null,
+      previousDebug: oldDebug ? oldDebug() : null
+    };
+  };
+})();
+</script>
+
 <div id="confirmResetOverlay" class="confirm-reset-overlay-v30" aria-hidden="true">
   <div class="confirm-reset-box-v30" role="dialog" aria-modal="true" aria-labelledby="confirmResetTitle">
     <div id="confirmResetTitle" class="confirm-reset-title-v30">작업공간을 초기화 하겠습니까?</div>
