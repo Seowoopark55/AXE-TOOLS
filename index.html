@@ -2070,7 +2070,7 @@ window.axeCookV6Debug = window.axeCookV11Debug;
 
 
 <style id="axeCookV33RecipeHeaderAlign">
-/* v33: 제작/가공 레시피 헤더 라인 통일 + 불필요 문구 제거 */
+/* v34: 제작/가공 레시피 헤더 라인 통일 + 불필요 문구 제거 */
 .recipe-work-panel > .panel-title{
   display:block!important;
   margin-bottom:10px!important;
@@ -2193,6 +2193,190 @@ window.axeCookV6Debug = window.axeCookV11Debug;
   window.axeCookV33Debug=function(){
     let r=null; try{r=calc();}catch(e){}
     return {version:'v33',focus:'recipe-process-header-line-aligned',removed:['panel small copy','process count label','separate process title row'],layout:'two headers same top line, cards start same line',dataSource:AXE_COOK_DATA_SOURCE,currentProcessCount:r?r.proc.length:null,previousDebug:oldDebug?oldDebug():null};
+  };
+})();
+</script>
+
+
+<style id="axeCookV34RecipePurchaseBalance">
+/* v34: 제작/가공 레시피 라인 재정렬 + 구매 체크리스트 한 줄 금액 배치 */
+.recipe-work-panel.has-process-v33 .recipe-combo-v30,
+.recipe-work-panel.has-process-v34 .recipe-combo-v30{
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  gap:16px!important;
+  align-items:start!important;
+}
+.recipe-work-panel.has-process-v34 .compact-recipe-list,
+.recipe-work-panel.has-process-v34 .recipe-side-process-v30{
+  display:grid!important;
+  gap:9px!important;
+  align-content:start!important;
+}
+.recipe-work-panel.has-process-v34 .recipe-v13-card,
+.recipe-work-panel.has-process-v34 .process-recipe-card-v33{
+  width:100%!important;
+  box-sizing:border-box!important;
+  min-height:0!important;
+  padding:13px 14px!important;
+  border-radius:12px!important;
+  display:block!important;
+}
+.recipe-work-panel.has-process-v34 .recipe-v13-head{
+  min-height:24px!important;
+  display:flex!important;
+  align-items:center!important;
+  flex-wrap:wrap!important;
+  gap:5px!important;
+  margin-bottom:8px!important;
+}
+.recipe-work-panel.has-process-v34 .recipe-v13-mats{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:6px!important;
+  align-items:center!important;
+  min-height:28px!important;
+}
+.recipe-work-panel.has-process-v34 .process-side-card-v30{
+  background:transparent!important;
+  border:0!important;
+  padding:0!important;
+  box-shadow:none!important;
+}
+.recipe-work-panel.has-process-v34 .process-side-list-v30{
+  display:grid!important;
+  gap:9px!important;
+}
+.recipe-head-grid-v33{
+  gap:16px!important;
+}
+
+/* 구매 체크리스트: 묶음과 금액을 한 줄에 고정 */
+.purchase-panel .compact-checklist{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:8px!important;
+}
+.purchase-panel .check-row{
+  display:grid!important;
+  grid-template-columns:18px minmax(0,1fr) auto!important;
+  grid-template-areas:'box info right'!important;
+  gap:8px!important;
+  align-items:center!important;
+  min-height:64px!important;
+  padding:9px 10px!important;
+  border-radius:13px!important;
+}
+.purchase-panel .check-row input{
+  grid-area:box!important;
+  width:16px!important;
+  height:16px!important;
+  margin:0!important;
+}
+.purchase-panel .check-row > div:nth-of-type(1){
+  grid-area:info!important;
+  min-width:0!important;
+}
+.purchase-panel .check-name{
+  font-size:14.4px!important;
+  line-height:1.12!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+.purchase-panel .check-sub{
+  font-size:10.6px!important;
+  line-height:1.25!important;
+  margin-top:4px!important;
+  white-space:normal!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  word-break:keep-all!important;
+}
+.purchase-panel .check-right{
+  grid-area:right!important;
+  display:flex!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:6px!important;
+  min-width:94px!important;
+  max-width:none!important;
+}
+.purchase-panel .check-bundle{
+  height:22px!important;
+  min-width:43px!important;
+  padding:0 7px!important;
+  font-size:12px!important;
+  line-height:1!important;
+  flex:0 0 auto!important;
+}
+.purchase-panel .check-cost{
+  display:inline-block!important;
+  font-size:11.4px!important;
+  line-height:1!important;
+  flex:0 0 auto!important;
+  color:#63e6a3!important;
+}
+@media(max-width:860px){
+  .purchase-panel .compact-checklist{grid-template-columns:1fr!important;}
+  .recipe-work-panel.has-process-v34 .recipe-combo-v30,
+  .recipe-head-grid-v33{grid-template-columns:1fr!important;}
+}
+</style>
+
+<script id="axeCookV34RecipePurchaseBalanceScript">
+(function(){
+  function normalizeSourceV34(v){
+    const s=text(v==null?'':v).trim();
+    if(!s) return '구매';
+    if(s==='고정단가') return '기타';
+    return s;
+  }
+  function renderPurchaseListV34(){
+    const purchase=document.getElementById('purchaseList');
+    if(!purchase) return;
+    const r=calc();
+    const rows=[...r.purchases.map(p=>({...p,type:'buy'})),...r.farmRows.map(x=>({name:x.name,qty:x.qty,bundleQty:0,bundlePrice:0,bundles:'채집',cost:0,where:'농장',type:'farm'}))];
+    if(!rows.length){
+      purchase.innerHTML='<div class="empty">필요한 구매 재료가 없습니다.</div>';
+      return;
+    }
+    purchase.innerHTML=rows.map(p=>{
+      const key=checkKey(p.type+'_'+p.name);
+      const done=checks[key];
+      const isFarm=p.type==='farm';
+      const need=Math.ceil(num(p.qty,0));
+      const buyQty=(!isFarm)?Math.ceil(num(p.bundles,0)*num(p.bundleQty,0)):0;
+      const remain=(!isFarm)?Math.max(0,buyQty-need):0;
+      const src=normalizeSourceV34(p.where);
+      const sub=isFarm?`농장 · 필요 ${need}개 · 채집`:`${h(src)} · 필요 ${need}개 · 구매 ${buyQty}개 · ${remain}개 남음`;
+      return `<label class="check-row ${done?'done':''} ${isFarm?'farm-row':''}"><input type="checkbox" ${done?'checked':''} data-check="${h(key)}"><div><div class="check-name">${h(p.name)}${isFarm?'<span class="mini-badge farm-badge">농장</span>':''}</div><div class="check-sub">${sub}</div></div><div class="check-right"><span class="check-bundle ${isFarm?'farm-pack':''}">${isFarm?'채집':p.bundles+'묶음'}</span>${isFarm?'':`<span class="check-cost">${num(p.cost,0).toLocaleString()}원</span>`}</div></label>`;
+    }).join('');
+    purchase.querySelectorAll('[data-check]').forEach(i=>i.addEventListener('change',()=>{checks[i.dataset.check]=i.checked;saveState();i.closest('.check-row').classList.toggle('done',i.checked)}));
+  }
+  function markRecipePanelV34(){
+    const panel=document.querySelector('.recipe-work-panel');
+    if(!panel) return;
+    let r=null; try{r=calc();}catch(e){}
+    const has=!!(r&&r.proc&&r.proc.length);
+    panel.classList.toggle('has-process-v34',has);
+    panel.classList.toggle('no-process-v34',!has);
+  }
+  const prevRenderResultsOnly=renderResultsOnly;
+  renderResultsOnly=function(){
+    const out=prevRenderResultsOnly.apply(this,arguments);
+    try{renderPurchaseListV34();markRecipePanelV34();}catch(e){console.warn('[AXE COOK v34] balance failed',e);}
+    return out;
+  };
+  const prevRenderWorkRecipes=renderWorkRecipes;
+  renderWorkRecipes=function(){
+    const out=prevRenderWorkRecipes.apply(this,arguments);
+    try{markRecipePanelV34();}catch(e){}
+    return out;
+  };
+  const oldDebug=window.axeCookV33Debug||window.axeCookV32Debug;
+  window.axeCookV34Debug=function(){
+    let r=null;try{r=calc();}catch(e){}
+    return {version:'v34',focus:'recipe-process-card-line-balance-and-purchase-one-line-price',purchase:'bundle-and-cost-one-line, source-needed-buy-remain text',recipe:'matched card line and compact process cards',dataSource:AXE_COOK_DATA_SOURCE,processCount:r&&r.proc?r.proc.length:null,previousDebug:oldDebug?oldDebug():null};
   };
 })();
 </script>
