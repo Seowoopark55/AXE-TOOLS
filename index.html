@@ -2376,7 +2376,7 @@ window.axeCookV6Debug = window.axeCookV11Debug;
   const oldDebug=window.axeCookV33Debug||window.axeCookV32Debug;
   window.axeCookV34Debug=function(){
     let r=null;try{r=calc();}catch(e){}
-    return {version:'v34',focus:'recipe-process-card-line-balance-and-purchase-one-line-price',purchase:'bundle-and-cost-one-line, source-needed-buy-remain text',recipe:'matched card line and compact process cards',dataSource:AXE_COOK_DATA_SOURCE,processCount:r&&r.proc?r.proc.length:null,previousDebug:oldDebug?oldDebug():null};
+    return {version:'v35',focus:'recipe-process-card-line-balance-and-purchase-one-line-price',purchase:'bundle-and-cost-one-line, source-needed-buy-remain text',recipe:'matched card line and compact process cards',dataSource:AXE_COOK_DATA_SOURCE,processCount:r&&r.proc?r.proc.length:null,previousDebug:oldDebug?oldDebug():null};
   };
 })();
 </script>
@@ -2385,10 +2385,123 @@ window.axeCookV6Debug = window.axeCookV11Debug;
   <div class="confirm-reset-box-v30" role="dialog" aria-modal="true" aria-labelledby="confirmResetTitle">
     <div id="confirmResetTitle" class="confirm-reset-title-v30">작업공간을 초기화 하겠습니까?</div>
     <div class="confirm-reset-actions-v30">
-      <button type="button" class="btn ghost" id="resetNoBtn">아니오</button>
       <button type="button" class="btn bad" id="resetYesBtn">예</button>
+      <button type="button" class="btn ghost" id="resetNoBtn">아니오</button>
     </div>
   </div>
 </div>
+
+
+<style id="axeCookV35RecipeLineModalOrder">
+/* v35: 확인 팝업 예/아니오 순서 변경 + 제작/가공 레시피 라인 강제 통일 */
+.confirm-reset-actions-v30{
+  justify-content:flex-end!important;
+  flex-direction:row!important;
+}
+#resetYesBtn{order:1!important;}
+#resetNoBtn{order:2!important;}
+.recipe-work-panel.has-process-v33 > .panel-title,
+.recipe-work-panel.has-process-v34 > .panel-title,
+.recipe-work-panel.has-process-v35 > .panel-title{
+  margin-bottom:12px!important;
+}
+.recipe-work-panel.has-process-v35 .recipe-head-grid-v33{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  gap:16px!important;
+  align-items:end!important;
+}
+.recipe-work-panel.has-process-v35 .recipe-combo-v30{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  gap:16px!important;
+  align-items:start!important;
+}
+.recipe-work-panel.has-process-v35 .compact-recipe-list,
+.recipe-work-panel.has-process-v35 .recipe-side-process-v30,
+.recipe-work-panel.has-process-v35 .process-side-card-v30,
+.recipe-work-panel.has-process-v35 .process-side-list-v30{
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+.recipe-work-panel.has-process-v35 .compact-recipe-list,
+.recipe-work-panel.has-process-v35 .process-side-list-v30{
+  display:flex!important;
+  flex-direction:column!important;
+  gap:10px!important;
+}
+.recipe-work-panel.has-process-v35 .recipe-work-card,
+.recipe-work-panel.has-process-v35 .process-recipe-card-v33{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-height:94px!important;
+  height:auto!important;
+  margin:0!important;
+  padding:12px 13px!important;
+  border-radius:13px!important;
+  background:rgba(255,255,255,.026)!important;
+  border:1px solid rgba(255,255,255,.075)!important;
+  box-shadow:none!important;
+}
+.recipe-work-panel.has-process-v35 .recipe-v13-head{
+  display:flex!important;
+  align-items:center!important;
+  flex-wrap:wrap!important;
+  gap:4px!important;
+  min-height:22px!important;
+  margin:0 0 8px 0!important;
+  line-height:1.2!important;
+}
+.recipe-work-panel.has-process-v35 .recipe-v13-mats{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  align-items:center!important;
+  gap:6px!important;
+  margin:0!important;
+}
+.recipe-work-panel.has-process-v35 .recipe-v13-dot{display:none!important;}
+.recipe-work-panel.has-process-v35 .recipe-v13-mat{
+  margin:0!important;
+}
+@media(max-width:760px){
+  .recipe-work-panel.has-process-v35 .recipe-head-grid-v33,
+  .recipe-work-panel.has-process-v35 .recipe-combo-v30{grid-template-columns:1fr!important;}
+}
+</style>
+<script id="axeCookV35RecipeLineModalOrderScript">
+(function(){
+  function applyV35RecipeClass(){
+    const panel=document.querySelector('.recipe-work-panel');
+    if(!panel) return;
+    const hasProc=!!document.querySelector('#processInline .process-recipe-card-v33, #processInline .process-recipe-card-v34');
+    panel.classList.toggle('has-process-v35', hasProc);
+  }
+  const prevRenderResultsOnly=renderResultsOnly;
+  renderResultsOnly=function(){
+    const result=prevRenderResultsOnly.apply(this, arguments);
+    try{applyV35RecipeClass();}catch(e){}
+    return result;
+  };
+  const prevRender=render;
+  render=function(){
+    const result=prevRender.apply(this, arguments);
+    try{applyV35RecipeClass();}catch(e){}
+    return result;
+  };
+  const oldDebug=window.axeCookV34Debug||window.axeCookV33Debug||window.axeCookV32Debug;
+  window.axeCookV35Debug=function(){
+    const yes=document.getElementById('resetYesBtn');
+    const no=document.getElementById('resetNoBtn');
+    const panel=document.querySelector('.recipe-work-panel');
+    return {version:'v35',focus:'recipe-card-line-alignment-and-modal-order',resetOrder:'yes-left-no-right',panelClass:panel?panel.className:null,yesBeforeNo:!!(yes&&no&&yes.compareDocumentPosition(no)&Node.DOCUMENT_POSITION_FOLLOWING),previousDebug:oldDebug?oldDebug():null};
+  };
+})();
+</script>
+
 </body>
 </html>
