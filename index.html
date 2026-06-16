@@ -656,6 +656,29 @@ body{font-size:15.8px!important;}
 @media(max-width:980px){.top-inner{grid-template-columns:1fr!important}.top-nav-v23{justify-self:stretch;order:3}.top-actions{justify-self:start}.settings-grid-v23{grid-template-columns:1fr 1fr}}
 @media(max-width:640px){.settings-grid-v23{grid-template-columns:1fr}.top-tab-v23{min-width:0;flex:1}}
 .reset-visible-v29{height:28px!important;padding:0 9px!important;font-size:10.5px!important;border-radius:9px!important}
+
+/* v30: 단일 요리 작업 흐름 + 레시피 우측 가공 준비 */
+.recipe-combo-v30{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;align-items:stretch;}
+.recipe-work-panel.has-process-v30 .recipe-combo-v30{grid-template-columns:minmax(0,1fr) 265px;}
+.recipe-work-panel.has-process-v30 .recipe-work-card{max-width:none!important;margin-left:0!important;margin-right:0!important;height:100%;}
+.recipe-side-process-v30{display:none;}
+.recipe-work-panel.has-process-v30 .recipe-side-process-v30{display:block;}
+.process-side-card-v30{height:100%;min-height:92px;border:1px solid rgba(255,181,46,.18);border-radius:12px;background:linear-gradient(180deg,rgba(255,181,46,.075),rgba(255,255,255,.025));padding:9px 10px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.14);}
+.process-side-title-v30{display:flex;justify-content:space-between;align-items:center;gap:8px;color:var(--gold2);font-size:13px;font-weight:1000;margin-bottom:7px;}
+.process-side-title-v30 small{color:var(--sub);font-size:10.5px;font-weight:900;}
+.process-side-list-v30{display:grid;gap:6px;}
+.process-side-row-v30{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:6px 7px;border:1px solid rgba(255,255,255,.07);border-radius:9px;background:rgba(0,0,0,.18);}
+.process-side-row-v30 b{color:#eef3ff;font-size:12.8px;}
+.process-side-row-v30 small{display:block;margin-top:2px;color:var(--muted);font-size:10.5px;font-weight:850;line-height:1.25;}
+.process-side-batch-v30{height:22px;min-width:44px;display:inline-grid;place-items:center;border-radius:999px;border:1px solid rgba(255,181,46,.3);background:rgba(255,181,46,.11);color:var(--gold2);font-size:12px;font-weight:1000;}
+.process-assist-v30{display:none!important;}
+.confirm-reset-overlay-v30{position:fixed;inset:0;display:none;place-items:center;background:rgba(0,0,0,.52);z-index:9999;backdrop-filter:blur(4px);}
+.confirm-reset-overlay-v30.show{display:grid;}
+.confirm-reset-box-v30{width:min(360px,calc(100vw - 36px));border:1px solid rgba(255,181,46,.22);border-radius:18px;background:#111318;box-shadow:0 22px 70px rgba(0,0,0,.45);padding:18px;}
+.confirm-reset-title-v30{font-size:16px;font-weight:1000;color:#f2f5fb;letter-spacing:-.2px;margin-bottom:16px;}
+.confirm-reset-actions-v30{display:flex;justify-content:flex-end;gap:8px;}
+@media(max-width:760px){.recipe-work-panel.has-process-v30 .recipe-combo-v30{grid-template-columns:1fr}.recipe-side-process-v30{display:block!important}}
+
 </style>
 </head>
 <body>
@@ -712,15 +735,17 @@ body{font-size:15.8px!important;}
         <div id="orderList" class="order-list compact-order-list"></div>
       </div>
 
-      <div class="panel tool-panel recipe-work-panel">
-        <div class="panel-title">제작 레시피 <small>구매 후 바로 확인</small></div>
-        <div id="recipeWorkList" class="recipe-work-list compact-recipe-list"></div>
+      <div class="panel tool-panel recipe-work-panel no-process-v30">
+        <div class="panel-title">제작 레시피 <small>가공 준비 함께 확인</small></div>
+        <div class="recipe-combo-v30">
+          <div id="recipeWorkList" class="recipe-work-list compact-recipe-list"></div>
+          <div id="processInline" class="process-inline recipe-side-process-v30"></div>
+        </div>
       </div>
 
       <div class="panel tool-panel purchase-panel">
         <div class="panel-title">구매 체크리스트 <small>묶음 단위</small></div>
         <div id="purchaseList" class="checklist compact-checklist"></div>
-        <div id="processInline" class="process-inline"></div>
       </div>
 
       <section class="assist-strip near-assist">
@@ -728,7 +753,7 @@ body{font-size:15.8px!important;}
           <summary><span>농장</span><b id="farmCount">0</b></summary>
           <div id="farmList" class="mini-list micro-list"></div>
         </details>
-        <details class="micro-block assist-chip">
+        <details class="micro-block assist-chip process-assist-v30">
           <summary><span>가공</span><b id="processCount">0</b></summary>
           <div id="processList" class="mini-list micro-list"></div>
         </details>
@@ -1362,10 +1387,27 @@ function processRows(name){const n=stdName(name);return DB.processes.filter(p=>t
 function addQty(map,name,qty){if(!name||!qty)return;const n=stdName(name);map.set(n,(map.get(n)||0)+qty);}
 function loadState(){try{orders=JSON.parse(localStorage.getItem(STORE_ORDERS)||'[]');}catch(e){orders=[]}try{favorites=JSON.parse(localStorage.getItem(STORE_FAVS)||'[]');}catch(e){favorites=[]}try{checks=JSON.parse(localStorage.getItem(STORE_CHECKS)||'{}');}catch(e){checks={}}}
 function saveState(){localStorage.setItem(STORE_ORDERS,JSON.stringify(orders));localStorage.setItem(STORE_FAVS,JSON.stringify(favorites));localStorage.setItem(STORE_CHECKS,JSON.stringify(checks));}
-function addOrder(name,sets=1){const food=getFood(name);if(!food)return toast('요리를 찾을 수 없습니다.');sets=Math.max(1,Math.floor(num(sets,1)));localStorage.removeItem(STORE_EMPTY);const old=orders.find(o=>o.name===name);if(old)old.sets+=sets;else orders.push({name,sets});saveState();render();toast(`${name} ${sets}세트 추가`);}
+function addOrder(name,sets=1){const food=getFood(name);if(!food)return toast('요리를 찾을 수 없습니다.');sets=Math.max(1,Math.floor(num(sets,1)));localStorage.removeItem(STORE_EMPTY);const old=orders.find(o=>o.name===name);if(old){old.sets+=sets;}else{orders=[{name,sets}];checks={};localStorage.setItem(STORE_CHECKS,JSON.stringify({}));}saveState();render();toast(`${name} ${sets}세트 작업 시작`);}
 function removeOrder(name){orders=orders.filter(o=>o.name!==name);saveState();render();}
-function resetWorkspace(){
-  const ok=confirm('작업공간을 초기화할까요?\n작업 목록과 구매 체크 상태가 모두 비워집니다.\n즐겨찾기와 시트 데이터는 유지됩니다.');
+function askResetConfirm(){
+  return new Promise(resolve=>{
+    const overlay=document.getElementById('confirmResetOverlay');
+    const yes=document.getElementById('resetYesBtn');
+    const no=document.getElementById('resetNoBtn');
+    if(!overlay||!yes||!no){resolve(confirm('작업공간을 초기화 하겠습니까?'));return;}
+    const close=(v)=>{overlay.classList.remove('show');overlay.setAttribute('aria-hidden','true');yes.onclick=null;no.onclick=null;overlay.onclick=null;document.removeEventListener('keydown',onKey);resolve(v);};
+    const onKey=(e)=>{if(e.key==='Escape')close(false);};
+    yes.onclick=()=>close(true);
+    no.onclick=()=>close(false);
+    overlay.onclick=(e)=>{if(e.target===overlay)close(false);};
+    document.addEventListener('keydown',onKey);
+    overlay.classList.add('show');
+    overlay.setAttribute('aria-hidden','false');
+    no.focus();
+  });
+}
+async function resetWorkspace(){
+  const ok=await askResetConfirm();
   if(!ok)return;
   orders=[];
   checks={};
@@ -1395,8 +1437,10 @@ const rows=[...r.purchases.map(p=>({...p,type:'buy'})),...r.farmRows.map(x=>({na
 if(!rows.length)purchase.innerHTML='<div class="empty">구매·채집할 재료가 없습니다.</div>';
 else purchase.innerHTML=rows.map(p=>{const key=checkKey(p.type+'_'+p.name);const done=checks[key];const isFarm=p.type==='farm';const remain=(!isFarm)?Math.max(0,(p.bundles*p.bundleQty)-p.qty):0;const sub=isFarm?`채집 · 필요 ${p.qty}개`:`${h(p.where)} · 필요 ${p.qty}개 · 구매 ${p.bundles*p.bundleQty}개 · ${remain}개 남음`;return `<label class="check-row ${done?'done':''} ${isFarm?'farm-row':''}"><input type="checkbox" ${done?'checked':''} data-check="${h(key)}"><div><div class="check-name">${h(p.name)}${isFarm?'<span class="mini-badge farm-badge">농장</span>':''}</div><div class="check-sub">${sub}</div></div><div class="check-right"><span class="check-bundle ${isFarm?'farm-pack':''}">${isFarm?'채집':p.bundles+'묶음'}</span>${isFarm?'':`<span class="check-cost">${p.cost.toLocaleString()}원</span>`}</div></label>`;}).join('');
 purchase.querySelectorAll('[data-check]').forEach(i=>i.addEventListener('change',()=>{checks[i.dataset.check]=i.checked;saveState();i.closest('.check-row').classList.toggle('done',i.checked)}));
+const recipePanel=document.querySelector('.recipe-work-panel');
+if(recipePanel){recipePanel.classList.toggle('has-process-v30',r.proc.length>0);recipePanel.classList.toggle('no-process-v30',!r.proc.length);}
 const procInline=document.getElementById('processInline');
-if(procInline){procInline.innerHTML=r.proc.length?`<details class="process-compact"><summary><span>가공 준비</span><b>${r.proc.length}</b></summary><div class="process-pill-list">${r.proc.map(p=>`<span class="process-pill">${h(p.name)} <b>${p.batch}회</b><small>필요 ${p.need} · ${p.output}개/회</small></span>`).join('')}</div></details>`:'';}
+if(procInline){procInline.innerHTML=r.proc.length?`<div class="process-side-card-v30"><div class="process-side-title-v30"><span>가공 준비</span><small>${r.proc.length}개</small></div><div class="process-side-list-v30">${r.proc.map(p=>`<div class="process-side-row-v30"><div><b>${h(p.name)}</b><small>필요 ${p.need}개 · 결과 ${p.output}개/회</small></div><span class="process-side-batch-v30">${p.batch}회</span></div>`).join('')}</div></div>`:'';}
 document.getElementById('farmCount')&&(document.getElementById('farmCount').textContent=r.farmRows.length);
 document.getElementById('processCount')&&(document.getElementById('processCount').textContent=r.proc.length);
 document.getElementById('fishCount')&&(document.getElementById('fishCount').textContent=r.fishNeed.length);
@@ -1410,7 +1454,7 @@ function recipeRowsByFood(name){return DB.recipes.filter(r=>text(r['요리명'])
 function renderRecipeCard(name){const card=document.getElementById('recipeCard');if(!card)return;const f=getFood(name);const rows=recipeRowsByFood(name);if(!f){card.innerHTML='<div class="empty">요리를 선택하세요.</div>';return;}card.innerHTML=`<div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start"><div><div style="font-size:18px;font-weight:1000;color:var(--gold2)">${h(name)}</div><div class="chip-row"><span class="chip">${h(text(f['등급'])||'등급 미확인')}</span><span class="chip">1세트 ${getSetQty(f)}개</span><span class="chip">판매가 ${getSale(f).toLocaleString()}원</span></div></div><button class="btn primary" data-recipe-add="${h(name)}">추가</button></div><div style="margin-top:12px" class="mini-list">${rows.length?rows.map(r=>`<div class="mini-row"><span>${h(r['재료명'])}</span><strong>${h(r['필요수량'])}</strong></div>`).join(''):'<div class="empty">등록된 레시피가 없습니다.</div>'}</div><div style="margin-top:10px;color:var(--muted);font-size:12px;font-weight:850;line-height:1.5">효과: ${h(text(f['효과'])||'미확인')} · 지속시간: ${h(text(f['지속시간'])||'미확인')}</div>`;card.querySelector('[data-recipe-add]')?.addEventListener('click',e=>addOrder(e.currentTarget.dataset.recipeAdd,document.getElementById('setCount').value));}
 function renderDataView(){const box=document.getElementById('dataView');if(!box)return;let rows=[];if(activeTab==='foods'){rows=DB.foods.slice(0,100);box.innerHTML=`<table><thead><tr><th>요리명</th><th>등급</th><th>1세트</th><th>판매가</th><th>효과</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${h(r['요리명'])}</td><td>${h(r['등급'])}</td><td>${getSetQty(r)}</td><td>${getSale(r).toLocaleString()}</td><td>${h(r['효과'])}</td></tr>`).join('')}</tbody></table>`;}else if(activeTab==='materials'){rows=DB.materials;box.innerHTML=`<table><thead><tr><th>재료</th><th>구매처</th><th>묶음</th><th>가격</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${h(r['재료명'])}</td><td>${h(r['구매처'])}</td><td>${h(r['묶음수량'])}</td><td>${h(r['묶음가격'])}</td></tr>`).join('')}</tbody></table>`;}else if(activeTab==='processes'){rows=DB.processes;box.innerHTML=`<table><thead><tr><th>가공재료</th><th>하위재료</th><th>필요</th><th>결과</th><th>시간</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${h(r['가공재료명'])}</td><td>${h(r['하위재료명'])}</td><td>${h(r['필요수량'])}</td><td>${h(r['결과수량']||'')}</td><td>${h(r['가공시간'])}</td></tr>`).join('')}</tbody></table>`;}else{const foodNames=[...new Set(DB.recipes.map(r=>text(r['요리명'])).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ko'));const first=foodNames[0]||'';box.innerHTML=`<div class="recipe-browser"><div class="recipe-list">${foodNames.map((n,i)=>`<button class="recipe-pick ${i===0?'active':''}" data-recipe-food="${h(n)}">${h(n)}</button>`).join('')}</div><div id="recipeCard" class="recipe-card"></div></div>`;box.querySelectorAll('[data-recipe-food]').forEach(b=>b.addEventListener('click',()=>{box.querySelectorAll('.recipe-pick').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderRecipeCard(b.dataset.recipeFood);}));renderRecipeCard(first);}}
 function render(){renderSearch();renderFavorites();renderOrders();renderResultsOnly();renderDataView();}
-async function boot(){await loadSheetRawBeforeBoot();initDB();loadState();document.getElementById('foodSearch').addEventListener('input',renderSearch);document.getElementById('clearBtn')?.addEventListener('click',resetWorkspace);document.getElementById('clearBtnVisible')?.addEventListener('click',resetWorkspace);document.getElementById('calcBtn')?.addEventListener('click',()=>{renderResultsOnly();toast('계산 갱신 완료');});document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');activeTab=b.dataset.tab;renderDataView();}));if(!orders.length && localStorage.getItem(STORE_EMPTY)!=='true'){['라면','프라이드치킨'].forEach(n=>{if(getFood(n))orders.push({name:n,sets:1});});saveState();}render();AXE_COOK_BOOT_READY=true;window.axeCookV5Debug=()=>({version:VERSION, foods:DB.foods.length, recipes:DB.recipes.length, materials:DB.materials.length, orders:orders.length, mode:AXE_COOK_DATA_SOURCE, sheetMeta:AXE_COOK_SHEET_META, workspaceEmpty:localStorage.getItem(STORE_EMPTY)==='true', focus:'sheet-ready-top-search-horizontal-tool-layout' }); window.axeCookV4Debug=window.axeCookV5Debug; window.axeCookV29Debug=window.axeCookV5Debug; window.axeCookV28Debug=window.axeCookV5Debug; window.axeCookV27Debug=window.axeCookV5Debug;}
+async function boot(){await loadSheetRawBeforeBoot();initDB();loadState();document.getElementById('foodSearch').addEventListener('input',renderSearch);document.getElementById('clearBtn')?.addEventListener('click',resetWorkspace);document.getElementById('clearBtnVisible')?.addEventListener('click',resetWorkspace);document.getElementById('calcBtn')?.addEventListener('click',()=>{renderResultsOnly();toast('계산 갱신 완료');});document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');activeTab=b.dataset.tab;renderDataView();}));if(!orders.length && localStorage.getItem(STORE_EMPTY)!=='true'){localStorage.setItem(STORE_EMPTY,'true');}render();AXE_COOK_BOOT_READY=true;window.axeCookV5Debug=()=>({version:VERSION, foods:DB.foods.length, recipes:DB.recipes.length, materials:DB.materials.length, orders:orders.length, mode:AXE_COOK_DATA_SOURCE, sheetMeta:AXE_COOK_SHEET_META, workspaceEmpty:localStorage.getItem(STORE_EMPTY)==='true', focus:'single-recipe-workflow-process-beside-recipe-reset-modal' }); window.axeCookV4Debug=window.axeCookV5Debug; window.axeCookV30Debug=window.axeCookV5Debug; window.axeCookV29Debug=window.axeCookV5Debug; window.axeCookV28Debug=window.axeCookV5Debug; window.axeCookV27Debug=window.axeCookV5Debug;}
 document.addEventListener('DOMContentLoaded',boot);
 
 window.axeCookV11Debug = function(){
@@ -1598,6 +1642,29 @@ window.axeCookV6Debug = window.axeCookV11Debug;
   .order-row{grid-template-columns:minmax(0,1fr)!important;}
   .order-row-controls-v21{justify-content:flex-start!important;min-width:0!important;}
 }
+
+/* v30: 단일 요리 작업 흐름 + 레시피 우측 가공 준비 */
+.recipe-combo-v30{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;align-items:stretch;}
+.recipe-work-panel.has-process-v30 .recipe-combo-v30{grid-template-columns:minmax(0,1fr) 265px;}
+.recipe-work-panel.has-process-v30 .recipe-work-card{max-width:none!important;margin-left:0!important;margin-right:0!important;height:100%;}
+.recipe-side-process-v30{display:none;}
+.recipe-work-panel.has-process-v30 .recipe-side-process-v30{display:block;}
+.process-side-card-v30{height:100%;min-height:92px;border:1px solid rgba(255,181,46,.18);border-radius:12px;background:linear-gradient(180deg,rgba(255,181,46,.075),rgba(255,255,255,.025));padding:9px 10px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.14);}
+.process-side-title-v30{display:flex;justify-content:space-between;align-items:center;gap:8px;color:var(--gold2);font-size:13px;font-weight:1000;margin-bottom:7px;}
+.process-side-title-v30 small{color:var(--sub);font-size:10.5px;font-weight:900;}
+.process-side-list-v30{display:grid;gap:6px;}
+.process-side-row-v30{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:6px 7px;border:1px solid rgba(255,255,255,.07);border-radius:9px;background:rgba(0,0,0,.18);}
+.process-side-row-v30 b{color:#eef3ff;font-size:12.8px;}
+.process-side-row-v30 small{display:block;margin-top:2px;color:var(--muted);font-size:10.5px;font-weight:850;line-height:1.25;}
+.process-side-batch-v30{height:22px;min-width:44px;display:inline-grid;place-items:center;border-radius:999px;border:1px solid rgba(255,181,46,.3);background:rgba(255,181,46,.11);color:var(--gold2);font-size:12px;font-weight:1000;}
+.process-assist-v30{display:none!important;}
+.confirm-reset-overlay-v30{position:fixed;inset:0;display:none;place-items:center;background:rgba(0,0,0,.52);z-index:9999;backdrop-filter:blur(4px);}
+.confirm-reset-overlay-v30.show{display:grid;}
+.confirm-reset-box-v30{width:min(360px,calc(100vw - 36px));border:1px solid rgba(255,181,46,.22);border-radius:18px;background:#111318;box-shadow:0 22px 70px rgba(0,0,0,.45);padding:18px;}
+.confirm-reset-title-v30{font-size:16px;font-weight:1000;color:#f2f5fb;letter-spacing:-.2px;margin-bottom:16px;}
+.confirm-reset-actions-v30{display:flex;justify-content:flex-end;gap:8px;}
+@media(max-width:760px){.recipe-work-panel.has-process-v30 .recipe-combo-v30{grid-template-columns:1fr}.recipe-side-process-v30{display:block!important}}
+
 </style>
 <script id="axeCookV22SearchLineFixScript">
 (function(){
@@ -1700,5 +1767,15 @@ window.axeCookV6Debug = window.axeCookV11Debug;
 })();
 </script>
 
+
+<div id="confirmResetOverlay" class="confirm-reset-overlay-v30" aria-hidden="true">
+  <div class="confirm-reset-box-v30" role="dialog" aria-modal="true" aria-labelledby="confirmResetTitle">
+    <div id="confirmResetTitle" class="confirm-reset-title-v30">작업공간을 초기화 하겠습니까?</div>
+    <div class="confirm-reset-actions-v30">
+      <button type="button" class="btn ghost" id="resetNoBtn">아니오</button>
+      <button type="button" class="btn bad" id="resetYesBtn">예</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
