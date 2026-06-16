@@ -2067,6 +2067,136 @@ window.axeCookV6Debug = window.axeCookV11Debug;
 })();
 </script>
 
+
+
+<style id="axeCookV33RecipeHeaderAlign">
+/* v33: 제작/가공 레시피 헤더 라인 통일 + 불필요 문구 제거 */
+.recipe-work-panel > .panel-title{
+  display:block!important;
+  margin-bottom:10px!important;
+}
+.recipe-head-grid-v33{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  gap:14px!important;
+  align-items:center!important;
+  width:100%!important;
+}
+.recipe-head-grid-v33 span{
+  color:#f4f7ff!important;
+  font-size:14.5px!important;
+  font-weight:1000!important;
+  line-height:1.2!important;
+}
+.recipe-work-panel.no-process-v33 > .panel-title,
+.recipe-work-panel.no-process-v32 > .panel-title{
+  color:#f4f7ff!important;
+  font-size:14.5px!important;
+  font-weight:1000!important;
+}
+.recipe-work-panel > .panel-title small,
+.process-side-title-v30{
+  display:none!important;
+}
+.recipe-work-panel.has-process-v33 .recipe-combo-v30{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  gap:14px!important;
+  align-items:start!important;
+}
+.recipe-work-panel.has-process-v33 .compact-recipe-list,
+.recipe-work-panel.has-process-v33 .recipe-side-process-v30{
+  width:100%!important;
+  min-width:0!important;
+  align-self:start!important;
+}
+.recipe-work-panel.has-process-v33 .recipe-work-card,
+.recipe-work-panel.has-process-v33 .process-recipe-card-v33{
+  width:100%!important;
+  max-width:none!important;
+  min-height:96px!important;
+  height:auto!important;
+  margin:0!important;
+  padding:12px 13px!important;
+  border-radius:13px!important;
+  background:rgba(255,255,255,.026)!important;
+  border:1px solid rgba(255,255,255,.075)!important;
+  box-shadow:none!important;
+}
+.process-recipe-card-v33 .recipe-v13-head{
+  margin-bottom:8px!important;
+}
+.process-recipe-card-v33 .recipe-v13-mats{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:6px!important;
+  align-items:center!important;
+}
+@media(max-width:760px){
+  .recipe-head-grid-v33,
+  .recipe-work-panel.has-process-v33 .recipe-combo-v30{grid-template-columns:1fr!important;}
+}
+</style>
+
+<script id="axeCookV33RecipeHeaderAlignScript">
+(function(){
+  function safeText(v){ return text(v==null?'':v); }
+  function safeHtml(v){ return h(v==null?'':v); }
+  function getProcessTime(rows){
+    const r=(rows||[]).find(x=>safeText(x['가공시간']) || safeText(x['process_time']));
+    return r ? (safeText(r['가공시간']) || safeText(r['process_time'])) : '가공';
+  }
+  function renderProcessCardV33(p){
+    const rows=Array.isArray(p && p.rows) ? p.rows : [];
+    const mats=rows.length ? rows.map(r=>{
+      const child=safeText(r['하위재료명']) || safeText(r['input_material_name']);
+      const qty=num(r['필요수량'],0) || num(r['required_qty'],0);
+      return `<span class="recipe-v13-mat"><span>${safeHtml(child)}</span> <b>${qty}</b></span>`;
+    }).join('<span class="recipe-v13-dot">·</span>') : '<span class="recipe-v13-empty">가공 레시피 미등록</span>';
+    return `<div class="process-recipe-card-v33 recipe-v13-card"><div class="recipe-v13-head"><span class="recipe-v13-bracket">[</span><span class="recipe-v13-name">${safeHtml(p.name)}</span><span class="recipe-v13-sep">/</span><span class="recipe-v13-time">${safeHtml(getProcessTime(rows))}</span><span class="recipe-v13-bracket">]</span></div><div class="recipe-v13-mats">${mats}</div></div>`;
+  }
+  function syncRecipeHeaderV33(procCount){
+    const panel=document.querySelector('.recipe-work-panel');
+    if(!panel) return;
+    panel.classList.toggle('has-process-v33', procCount>0);
+    panel.classList.toggle('no-process-v33', procCount<=0);
+    const title=panel.querySelector(':scope > .panel-title');
+    if(!title) return;
+    title.innerHTML = procCount>0
+      ? '<div class="recipe-head-grid-v33"><span>제작 레시피</span><span>가공 레시피</span></div>'
+      : '제작 레시피';
+  }
+  function renderProcessSideV33(proc){
+    const box=document.getElementById('processInline');
+    if(!box) return;
+    box.innerHTML = proc && proc.length
+      ? `<div class="process-side-card-v30"><div class="process-side-list-v30">${proc.map(renderProcessCardV33).join('')}</div></div>`
+      : '';
+  }
+  const prevRenderResultsOnly=renderResultsOnly;
+  renderResultsOnly=function(){
+    const result=prevRenderResultsOnly.apply(this, arguments);
+    try{
+      const r=calc();
+      syncRecipeHeaderV33(r.proc.length);
+      renderProcessSideV33(r.proc);
+    }catch(e){console.warn('[AXE COOK v33] recipe header align failed', e);}
+    return result;
+  };
+  const prevRenderWorkRecipes=renderWorkRecipes;
+  renderWorkRecipes=function(){
+    const result=prevRenderWorkRecipes.apply(this, arguments);
+    try{ const r=calc(); syncRecipeHeaderV33(r.proc.length); renderProcessSideV33(r.proc); }catch(e){}
+    return result;
+  };
+  const oldDebug=window.axeCookV32Debug || window.axeCookV31Debug;
+  window.axeCookV33Debug=function(){
+    let r=null; try{r=calc();}catch(e){}
+    return {version:'v33',focus:'recipe-process-header-line-aligned',removed:['panel small copy','process count label','separate process title row'],layout:'two headers same top line, cards start same line',dataSource:AXE_COOK_DATA_SOURCE,currentProcessCount:r?r.proc.length:null,previousDebug:oldDebug?oldDebug():null};
+  };
+})();
+</script>
+
 <div id="confirmResetOverlay" class="confirm-reset-overlay-v30" aria-hidden="true">
   <div class="confirm-reset-box-v30" role="dialog" aria-modal="true" aria-labelledby="confirmResetTitle">
     <div id="confirmResetTitle" class="confirm-reset-title-v30">작업공간을 초기화 하겠습니까?</div>
