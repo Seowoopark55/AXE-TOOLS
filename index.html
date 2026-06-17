@@ -763,6 +763,46 @@ body{font-size:15.8px!important;}
 #settingsRootV44 .group-chip-v44 small{grid-column:1/-1!important;color:#9aa4b5!important;font-size:10.8px!important;font-weight:850!important;line-height:1.25!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
 @media(max-width:640px){#settingsRootV44 .detail-line-v44{grid-template-columns:68px minmax(0,1fr)!important;}#settingsRootV44 .group-lines-v44{grid-template-columns:1fr!important;}}
 
+
+/* AXE COOK v48: AXE logo watermark background */
+html,body{
+  min-height:100%;
+}
+body{
+  position:relative;
+  overflow-x:hidden;
+}
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background-image:url('./axe.png?v=48');
+  background-repeat:no-repeat;
+  background-position:center 58%;
+  background-size:clamp(520px,62vw,980px) auto;
+  opacity:.052;
+  filter:grayscale(.12) saturate(.82) brightness(.72);
+}
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 18% 28%,rgba(255,181,46,.035),transparent 28%),
+    radial-gradient(circle at 82% 70%,rgba(255,181,46,.028),transparent 30%);
+}
+.app{
+  position:relative;
+  z-index:1;
+}
+.top{
+  z-index:50;
+}
+
 </style>
 
 <link rel="manifest" href="./manifest.json">
@@ -770,7 +810,7 @@ body{font-size:15.8px!important;}
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="AXE COOK">
-<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" href="./icon-192.png">
 </head>
 <body>
 <div class="app">
@@ -1390,7 +1430,7 @@ fish_022	보카시오 록피시	1	분홍살생선	5	10초	TRUE	22
 fish_023	코르비나	1	흰살생선	6	10초	TRUE	23	
 fish_024	태평양 바라쿠다	1	분홍살생선	6	10초	TRUE	24	
 `};
-const VERSION='AXE_TOOLS_COOK_BETA_V47_PWA';
+const VERSION='AXE_TOOLS_COOK_BETA_V48_AXE_BG';
 const STORE_ORDERS='axe_cook_v1_orders', STORE_FAVS='axe_cook_v1_favs', STORE_CHECKS='axe_cook_v1_checks', STORE_EMPTY='axe_cook_v1_workspace_empty';
 const PROCESS_OUTPUT={'빵반죽':8,'식빵':8,'구운빵':8};
 let DB={foods:[],recipes:[],materials:[],processes:[],farm:[],aliases:[],fish:[],aliasMap:new Map()}, orders=[], favorites=[], checks={}, activeTab='foods';
