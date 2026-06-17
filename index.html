@@ -1526,15 +1526,67 @@ body{
 }
 </style>
 
-<style id="v119-brand-splash">
-#axeBrandSplash{position:fixed;inset:0;z-index:999999;background:#0b0d10;display:flex;align-items:center;justify-content:center;transition:opacity .25s ease}
-#axeBrandSplash.hide{opacity:0;pointer-events:none}
-#axeBrandSplash img{width:min(320px,60vw);opacity:0;animation:axeFade .35s ease forwards, axeScale 1.2s ease forwards}
-@keyframes axeFade{to{opacity:1}}
-@keyframes axeScale{from{transform:scale(.97)}to{transform:scale(1.03)}}
+<style id="v120-cinematic-brand-splash">
+/* AXE COOK v120: cinematic logo splash - blended scene, no hard square image */
+#bootLoaderV69{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;}
+#axeBrandSplash{
+  position:fixed;
+  inset:0;
+  z-index:999999;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 52%, rgba(255,181,46,.16), transparent 25%),
+    radial-gradient(circle at 50% 82%, rgba(255,181,46,.08), transparent 28%),
+    linear-gradient(180deg,#050608 0%,#0a0b0e 48%,#050608 100%);
+  opacity:1;
+  transition:opacity .42s ease, visibility .42s ease;
+}
+#axeBrandSplash::before{
+  content:"";
+  position:absolute;
+  inset:-18%;
+  background:
+    radial-gradient(ellipse at center, transparent 0 40%, rgba(0,0,0,.44) 72%, rgba(0,0,0,.86) 100%),
+    radial-gradient(circle at 50% 55%, rgba(255,173,35,.09), transparent 34%);
+  pointer-events:none;
+}
+#axeBrandSplash::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(115deg, transparent 0%, rgba(255,190,67,.055) 46%, transparent 58%);
+  opacity:0;
+  transform:translateX(-18%);
+  animation:axeSplashSweep 1.8s ease .22s forwards;
+  pointer-events:none;
+}
+#axeBrandSplash.hide{opacity:0;visibility:hidden;pointer-events:none;}
+#axeBrandSplash img{display:none!important;}
+.axeSplashSceneV120{
+  position:relative;
+  z-index:1;
+  width:min(980px,92vw);
+  aspect-ratio:3/2;
+  background:url('./axe_splash.png') center center / contain no-repeat;
+  filter:drop-shadow(0 0 22px rgba(255,178,40,.20)) drop-shadow(0 16px 54px rgba(0,0,0,.65));
+  opacity:0;
+  transform:scale(.982) translateY(8px);
+  animation:axeSplashSceneIn 1.45s cubic-bezier(.2,.8,.2,1) forwards;
+  -webkit-mask-image:radial-gradient(ellipse at center, #000 0 46%, rgba(0,0,0,.92) 58%, rgba(0,0,0,.42) 74%, transparent 88%);
+  mask-image:radial-gradient(ellipse at center, #000 0 46%, rgba(0,0,0,.92) 58%, rgba(0,0,0,.42) 74%, transparent 88%);
+}
+@keyframes axeSplashSceneIn{
+  0%{opacity:0;transform:scale(.965) translateY(12px);filter:blur(2px) drop-shadow(0 0 0 rgba(255,178,40,0));}
+  45%{opacity:1;filter:blur(0) drop-shadow(0 0 20px rgba(255,178,40,.18));}
+  100%{opacity:1;transform:scale(1.01) translateY(0);filter:blur(0) drop-shadow(0 0 26px rgba(255,178,40,.22)) drop-shadow(0 16px 54px rgba(0,0,0,.65));}
+}
+@keyframes axeSplashSweep{0%{opacity:0;transform:translateX(-18%)}38%{opacity:.55}100%{opacity:0;transform:translateX(18%)}}
+@media(max-width:720px){.axeSplashSceneV120{width:112vw;}}
 </style>
 </head>
-<body><div id="axeBrandSplash"><img src="axe.png" alt="AXE"></div>
+<body><div id="axeBrandSplash" aria-hidden="true"><div class="axeSplashSceneV120"></div></div>
 
 <div id="bootLoaderV69" class="boot-loader-v69" role="status" aria-label="AXE COOK 시작 화면">
   <div class="boot-card-v69">
@@ -9476,13 +9528,41 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
 </script>
 
 
-<script>
-window.addEventListener('load',function(){
- setTimeout(function(){
-  var s=document.getElementById('axeBrandSplash');
-  if(s){s.classList.add('hide');setTimeout(()=>s.remove(),300);}
- },800);
-});
+<script id="axeCookV120CinematicSplashScript">
+(function(){
+  var splash=document.getElementById('axeBrandSplash');
+  var started=Date.now();
+  var hidden=false;
+  var MIN_SHOW=1250;
+  var MAX_SHOW=5200;
+  function removeLegacyBoot(){
+    var boot=document.getElementById('bootLoaderV69');
+    if(boot&&boot.parentNode) boot.parentNode.removeChild(boot);
+  }
+  function isReady(){
+    try{return !!(window.AXE_COOK_BOOT_READY || (typeof AXE_COOK_BOOT_READY!=='undefined' && AXE_COOK_BOOT_READY));}
+    catch(e){return !!window.AXE_COOK_BOOT_READY;}
+  }
+  function hideSplash(){
+    if(hidden||!splash)return;
+    hidden=true;
+    var delay=Math.max(0,MIN_SHOW-(Date.now()-started));
+    setTimeout(function(){
+      splash.classList.add('hide');
+      setTimeout(function(){if(splash&&splash.parentNode)splash.parentNode.removeChild(splash);},460);
+    },delay);
+  }
+  removeLegacyBoot();
+  var timer=setInterval(function(){
+    removeLegacyBoot();
+    if(isReady()){clearInterval(timer);hideSplash();}
+  },90);
+  window.addEventListener('load',function(){
+    setTimeout(function(){if(isReady()){clearInterval(timer);hideSplash();}},120);
+  });
+  setTimeout(function(){clearInterval(timer);hideSplash();},MAX_SHOW);
+  window.axeCookV120SplashDebug=function(){return {version:'v120-cinematic-brand-splash',visible:!hidden,ready:isReady(),elapsed:Date.now()-started};};
+})();
 </script>
 </body>
 </html>
