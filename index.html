@@ -8697,6 +8697,163 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
 })();
 </script>
 
+
+<style id="axeCookV98PageModalStyle">
+/* AXE COOK v98: compact work page tabs + premium center modal */
+#viewHome .orders-panel .panel-title{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:10px!important;
+}
+#viewHome .orders-panel .panel-title>span{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:7px!important;
+  flex:0 0 auto!important;
+}
+#viewHome .orders-panel .panel-title>#clearBtnVisible{
+  margin-left:auto!important;
+  flex:0 0 auto!important;
+}
+#viewHome .orders-pages-v97{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:5px!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  overflow:visible!important;
+  flex:0 0 auto!important;
+  scrollbar-width:none!important;
+}
+#viewHome .orders-pages-v97::-webkit-scrollbar{display:none!important;}
+#viewHome .orders-page-tab-v97{
+  width:27px!important;
+  min-width:27px!important;
+  height:27px!important;
+  padding:0!important;
+  border-radius:9px!important;
+  border:1px solid rgba(255,255,255,.095)!important;
+  background:rgba(255,255,255,.035)!important;
+  color:#aeb8c7!important;
+  font-size:12px!important;
+  font-weight:1000!important;
+  display:inline-grid!important;
+  place-items:center!important;
+  box-shadow:none!important;
+}
+#viewHome .orders-page-tab-v97.active{
+  border-color:rgba(255,181,46,.52)!important;
+  background:linear-gradient(135deg,rgba(255,181,46,.22),rgba(255,181,46,.08))!important;
+  color:#ffcf61!important;
+  box-shadow:0 8px 18px rgba(255,181,46,.08)!important;
+}
+#viewHome .orders-page-add-v97,
+#viewHome .orders-page-del-v97{
+  width:27px!important;
+  min-width:27px!important;
+  height:27px!important;
+  border-radius:9px!important;
+  display:inline-grid!important;
+  place-items:center!important;
+  font-size:15px!important;
+  font-weight:1000!important;
+  line-height:1!important;
+  flex:0 0 auto!important;
+}
+#viewHome .orders-page-add-v97{
+  border:1px solid rgba(255,181,46,.26)!important;
+  background:rgba(255,181,46,.075)!important;
+  color:#ffcf61!important;
+}
+#viewHome .orders-page-del-v97{
+  border:1px solid rgba(255,111,125,.2)!important;
+  background:rgba(255,111,125,.055)!important;
+  color:#ffb6be!important;
+}
+#viewHome .orders-page-hint-v97,.order-single-lock-v97{display:none!important;}
+.axe-modal-v98{
+  position:fixed!important;
+  inset:0!important;
+  z-index:100000!important;
+  display:none!important;
+  place-items:center!important;
+  padding:22px!important;
+  background:rgba(0,0,0,.58)!important;
+  backdrop-filter:blur(7px)!important;
+}
+.axe-modal-v98.show{display:grid!important;}
+.axe-modal-card-v98{
+  width:min(410px,calc(100vw - 38px))!important;
+  border:1px solid rgba(255,181,46,.22)!important;
+  border-radius:22px!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025)),#101217!important;
+  box-shadow:0 26px 90px rgba(0,0,0,.62), inset 0 0 0 1px rgba(255,255,255,.035)!important;
+  padding:20px!important;
+  transform:translateY(8px) scale(.985)!important;
+  opacity:0!important;
+  transition:opacity .18s ease, transform .18s ease!important;
+}
+.axe-modal-v98.show .axe-modal-card-v98{opacity:1!important;transform:translateY(0) scale(1)!important;}
+.axe-modal-icon-v98{
+  width:38px!important;height:38px!important;border-radius:14px!important;
+  display:grid!important;place-items:center!important;
+  border:1px solid rgba(255,181,46,.28)!important;
+  background:rgba(255,181,46,.09)!important;
+  color:#ffcf61!important;font-size:19px!important;font-weight:1000!important;
+  margin-bottom:13px!important;
+}
+.axe-modal-title-v98{font-size:18px!important;font-weight:1000!important;color:#f5f7fb!important;letter-spacing:-.2px!important;margin-bottom:8px!important;line-height:1.3!important;}
+.axe-modal-msg-v98{font-size:13px!important;font-weight:850!important;color:#aeb8c7!important;line-height:1.55!important;margin-bottom:18px!important;}
+.axe-modal-actions-v98{display:flex!important;justify-content:flex-end!important;gap:8px!important;}
+.axe-modal-btn-v98{height:36px!important;padding:0 14px!important;border-radius:12px!important;border:1px solid rgba(255,255,255,.1)!important;background:#171b22!important;color:#d8dee8!important;font-size:12px!important;font-weight:1000!important;}
+.axe-modal-btn-v98.primary{border-color:rgba(255,181,46,.58)!important;background:linear-gradient(135deg,#ffcf61,#ffb52e)!important;color:#17100a!important;}
+.axe-modal-btn-v98.danger{border-color:rgba(255,111,125,.38)!important;background:rgba(255,111,125,.10)!important;color:#ffc6cc!important;}
+@media(max-width:760px){#viewHome .orders-panel .panel-title{gap:7px!important;flex-wrap:wrap!important}#viewHome .orders-panel .panel-title>#clearBtnVisible{margin-left:0!important}.axe-modal-card-v98{padding:18px!important}}
+</style>
+<script id="axeCookV98PageModalScript">
+(function(){
+  'use strict';
+  function ensureModal(){
+    var m=document.getElementById('axeModalV98');
+    if(m)return m;
+    m=document.createElement('div');
+    m.id='axeModalV98';
+    m.className='axe-modal-v98';
+    m.innerHTML='<div class="axe-modal-card-v98" role="dialog" aria-modal="true"><div class="axe-modal-icon-v98" id="axeModalIconV98">!</div><div class="axe-modal-title-v98" id="axeModalTitleV98"></div><div class="axe-modal-msg-v98" id="axeModalMsgV98"></div><div class="axe-modal-actions-v98" id="axeModalActionsV98"></div></div>';
+    document.body.appendChild(m);
+    return m;
+  }
+  function closeModal(){var m=ensureModal();m.classList.remove('show');}
+  window.axeCookNoticeV98=function(title,message){
+    var m=ensureModal();
+    document.getElementById('axeModalIconV98').textContent='+';
+    document.getElementById('axeModalTitleV98').textContent=title||'알림';
+    document.getElementById('axeModalMsgV98').textContent=message||'';
+    document.getElementById('axeModalActionsV98').innerHTML='<button type="button" class="axe-modal-btn-v98 primary" data-v98-close>확인</button>';
+    m.classList.add('show');
+    m.querySelector('[data-v98-close]').onclick=closeModal;
+  };
+  window.axeCookConfirmV98=function(opt){
+    opt=opt||{};
+    return new Promise(function(resolve){
+      var m=ensureModal();
+      document.getElementById('axeModalIconV98').textContent=opt.danger?'⟳':'?';
+      document.getElementById('axeModalTitleV98').textContent=opt.title||'확인';
+      document.getElementById('axeModalMsgV98').textContent=opt.message||'';
+      document.getElementById('axeModalActionsV98').innerHTML='<button type="button" class="axe-modal-btn-v98" data-v98-cancel>'+(opt.cancelText||'취소')+'</button><button type="button" class="axe-modal-btn-v98 '+(opt.danger?'danger':'primary')+'" data-v98-ok>'+(opt.okText||'확인')+'</button>';
+      m.classList.add('show');
+      m.querySelector('[data-v98-cancel]').onclick=function(){closeModal();resolve(false);};
+      m.querySelector('[data-v98-ok]').onclick=function(){closeModal();resolve(true);};
+    });
+  };
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
+})();
+</script>
+
 </body>
 </html>
 
@@ -9314,21 +9471,21 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
   function renderPagesBar(){
     var panel=document.querySelector('#viewHome .orders-panel');
     var list=document.getElementById('orderList');
-    if(!panel||!list)return;
+    var title=panel?panel.querySelector('.panel-title'):null;
+    var titleText=title?title.querySelector('span'):null;
+    if(!panel||!list||!title||!titleText)return;
     var bar=document.getElementById('ordersPagesV97');
     if(!bar){
       bar=document.createElement('div');
       bar.id='ordersPagesV97';
       bar.className='orders-pages-v97';
-      list.parentNode.insertBefore(bar,list);
+      title.insertBefore(bar,titleText.nextSibling);
     }
     bar.innerHTML=pages.map(function(p,i){
-      var name=p.order&&p.order.name?'<span class="page-food-v97">'+escapeHtml(p.order.name)+'</span>':'';
-      return '<button type="button" class="orders-page-tab-v97 '+(p.id===activeId?'active':'')+'" data-page-v97="'+escapeHtml(p.id)+'"><span>'+(i+1)+'P</span>'+name+'</button>';
+      return '<button type="button" class="orders-page-tab-v97 '+(p.id===activeId?'active':'')+'" data-page-v97="'+escapeHtml(p.id)+'" title="작업 페이지 '+(i+1)+'"><span>'+(i+1)+'</span></button>';
     }).join('')+
     '<button type="button" class="orders-page-add-v97" id="ordersPageAddV97" title="작업 페이지 추가">+</button>'+
-    (pages.length>1?'<button type="button" class="orders-page-del-v97" id="ordersPageDelV97" title="현재 페이지 삭제">×</button>':'')+
-    '<span class="orders-page-hint-v97">페이지당 음식 1종류</span>';
+    (pages.length>1?'<button type="button" class="orders-page-del-v97" id="ordersPageDelV97" title="현재 페이지 삭제">×</button>':'');
     bar.querySelectorAll('[data-page-v97]').forEach(function(b){b.onclick=function(){switchPage(b.dataset.pageV97);};});
     var add=document.getElementById('ordersPageAddV97'); if(add)add.onclick=addPage;
     var del=document.getElementById('ordersPageDelV97'); if(del)del.onclick=deletePage;
@@ -9373,7 +9530,7 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
     loadIfNeeded();
     var p=page();
     if(p.order&&p.order.name&&p.order.name!==name){
-      if(typeof toast==='function')toast('한 페이지에는 음식 1종류만 등록할 수 있습니다. 새 페이지를 추가해 주세요.');
+      if(window.axeCookNoticeV98) window.axeCookNoticeV98('한 페이지에는 음식 1종류만 등록할 수 있습니다.','새 작업 페이지를 추가한 뒤 다른 음식을 등록해 주세요.'); else if(typeof toast==='function')toast('한 페이지에는 음식 1종류만 등록할 수 있습니다.');
       return;
     }
     if(typeof getFood==='function'&&!getFood(name)){ if(typeof toast==='function')toast('요리를 찾을 수 없습니다.'); return; }
@@ -9452,15 +9609,25 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
       var nm=t.dataset.add||t.dataset.food||t.dataset.name||t.dataset.actionName;
       if(nm&&currentHasDifferent(nm)){
         ev.preventDefault();ev.stopPropagation();ev.stopImmediatePropagation();
-        if(typeof toast==='function')toast('한 페이지에는 음식 1종류만 등록할 수 있습니다. +로 새 페이지를 추가해 주세요.');
+        if(window.axeCookNoticeV98) window.axeCookNoticeV98('현재 페이지에 이미 음식이 있습니다.','+ 버튼으로 새 작업 페이지를 만든 뒤 등록해 주세요.'); else if(typeof toast==='function')toast('한 페이지에는 음식 1종류만 등록할 수 있습니다.');
       }
     },true);
     document.addEventListener('click',function(ev){
       var reset=ev.target&&ev.target.closest?ev.target.closest('#clearBtnVisible,#clearBtn'):null;
       if(!reset)return;
       ev.preventDefault();ev.stopPropagation();ev.stopImmediatePropagation();
-      var ok=true;try{ok=confirm('현재 작업 페이지를 초기화 하겠습니까?');}catch(e){}
-      if(ok)resetCurrentPage();
+      if(window.axeCookConfirmV98){
+        window.axeCookConfirmV98({
+          title:'현재 작업 페이지를 초기화할까요?',
+          message:'등록된 음식, 체크 상태, 작업 메모가 이 페이지에서만 비워집니다.',
+          okText:'초기화',
+          cancelText:'취소',
+          danger:true
+        }).then(function(ok){ if(ok) resetCurrentPage(); });
+      }else{
+        var ok=true;try{ok=confirm('현재 작업 페이지를 초기화 하겠습니까?');}catch(e){}
+        if(ok)resetCurrentPage();
+      }
     },true);
     setTimeout(function(){applyToGlobals();wrapRenderOrders();installMemo();hardRender();},0);
     setTimeout(function(){applyToGlobals();wrapRenderOrders();installMemo();hardRender();},450);
