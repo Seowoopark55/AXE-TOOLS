@@ -6230,6 +6230,59 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
 .purchase-panel .panel-title small,.memo-panel-v53 .panel-title small{display:none!important;}
 @media(max-width:720px){.logo{width:40px!important;height:36px!important;font-size:11px!important}.brand-title{font-size:17px!important}}
 
+
+
+/* v66: 가공 레시피를 제작 레시피와 같은 크기/형식으로 통일, 회수 표시 제거 */
+#viewHome .axe-process-card-v64{
+  min-height:66px!important;
+  padding:9px 10px!important;
+  display:block!important;
+  grid-template-columns:none!important;
+  gap:0!important;
+  align-items:initial!important;
+}
+#viewHome .axe-process-card-v64 .axe-process-main-v64{
+  width:100%!important;
+  min-width:0!important;
+}
+#viewHome .axe-process-card-v64 .axe-recipe-card-head-v64{
+  display:flex!important;
+  align-items:center!important;
+  flex-wrap:wrap!important;
+  gap:4px!important;
+  margin:0 0 6px!important;
+  min-width:0!important;
+}
+#viewHome .axe-process-card-v64 .name-v64{
+  font-size:15px!important;
+  line-height:1.1!important;
+}
+#viewHome .axe-process-card-v64 .time-v64{
+  height:21px!important;
+  padding:0 7px!important;
+  font-size:12px!important;
+}
+#viewHome .axe-process-card-v64 .mats-v64{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:4px!important;
+  min-width:0!important;
+}
+#viewHome .axe-process-card-v64 .mat-v64{
+  height:22px!important;
+  padding:0 7px!important;
+  font-size:11.5px!important;
+}
+#viewHome .axe-process-card-v64 .mat-v64 b{
+  min-width:18px!important;
+  height:17px!important;
+  font-size:11px!important;
+}
+#viewHome .axe-process-batch-v64{display:none!important;}
+#viewHome .axe-recipe-body-v64{gap:7px!important;}
+/* 3개 가공 레시피까지는 한 화면에 들어오도록 패널 높이를 확보 */
+#viewHome .recipe-work-panel{min-height:250px!important;}
+
 </style>
 <script id="axeCookV64RecipePanelHardRebuildScript">
 (function(){
@@ -6256,7 +6309,12 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
   }
   function renderProcessCardV64(p){
     const rows=Array.isArray(p.rows)?p.rows:[];
-    return '<div class="axe-process-card-v64"><div class="axe-process-main-v64"><div class="axe-process-name-v64"><span>'+safe(p.name)+'</span><span class="time-v64">'+safe(processTimeV64(rows))+'</span></div><div class="axe-process-mats-v64">'+processMatsV64(rows)+'</div></div><span class="axe-process-batch-v64">'+safe(p.batch||0)+'회</span></div>';
+    const mats=rows.length?rows.map(function(x){
+      const n=text(x['하위재료명'])||text(x['input_material_name'])||'';
+      const q=num(x['필요수량'],0)||num(x['required_qty'],0)||'';
+      return n?'<span class="mat-v64"><span>'+safe(n)+'</span>'+(q?'<b>'+safe(q)+'</b>':'')+'</span>':'';
+    }).filter(Boolean).join(''):'<span class="mat-v64"><span>하위재료 미등록</span></span>';
+    return '<div class="axe-process-card-v64"><div class="axe-recipe-card-head-v64"><span class="br-v64">[</span><span class="name-v64">'+safe(p.name)+'</span><span class="time-v64">'+safe(processTimeV64(rows))+'</span><span class="br-v64">]</span></div><div class="mats-v64">'+mats+'</div></div>';
   }
   function renderRecipePanelV64(r){
     const panel=document.querySelector('#viewHome .recipe-work-panel');
