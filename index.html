@@ -11992,3 +11992,24 @@ window.addEventListener('load',function(){
   window.axeCookV123Debug=function(){return{version:VERSION,expanded:isExpanded(),favorites:getValidFavorites().length};};
 })();
 </script>
+
+<style id="axeCookV130gBannerBottomVisibleStyle">
+/* AXE COOK v130g: 배너 하단 캐릭터 영역 소폭 노출 */
+#viewHome.app-view.active[data-view-panel="home"]{
+  grid-template-rows:268px 136px 136px minmax(270px,auto)!important;
+}
+#viewHome .axe-hero-v50{
+  height:268px!important;
+  min-height:268px!important;
+  max-height:268px!important;
+}
+#viewHome .axe-hero-img-v55{
+  object-fit:cover!important;
+  object-position:center 58%!important;
+}
+@media(max-width:1280px){
+  #viewHome.app-view.active[data-view-panel="home"]{grid-template-rows:auto!important;}
+  #viewHome .axe-hero-v50{height:auto!important;min-height:0!important;max-height:none!important;}
+  #viewHome .axe-hero-img-v55{height:auto!important;object-fit:contain!important;object-position:center center!important;}
+}
+</style>
