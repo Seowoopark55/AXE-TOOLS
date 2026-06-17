@@ -2586,5 +2586,118 @@ window.axeCookV6Debug = window.axeCookV11Debug;
 })();
 </script>
 
+
+
+<style id="axeCookV38SettingsBalanceStyle">
+/* AXE COOK v38: 설정 관리 화면 균형 및 입력 흐름 정리 */
+.settings-work-v36{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  gap:14px!important;
+  align-items:start!important;
+}
+.setting-editor-v36,.setting-list-v36{
+  min-width:0!important;
+  width:100%!important;
+}
+.setting-list-v36{max-height:none!important;}
+.settings-list-body-v36{
+  max-height:620px!important;
+}
+.setting-editor-head-v36 b{
+  font-size:16px!important;
+  color:var(--gold2)!important;
+}
+#settingsModeBadge{display:none!important;}
+.setting-editor-v36.is-editing .setting-editor-head-v36 b::after{
+  content:' · 수정중';
+  display:inline-flex;
+  margin-left:7px;
+  height:24px;
+  align-items:center;
+  padding:0 9px;
+  border-radius:999px;
+  border:1px solid rgba(255,181,46,.28);
+  background:rgba(255,181,46,.09);
+  color:var(--gold2);
+  font-size:11px;
+  font-weight:1000;
+  vertical-align:middle;
+}
+.setting-editor-v36.is-dirty .setting-editor-head-v36 b::after{
+  content:' · 미저장';
+  border-color:rgba(255,111,125,.32);
+  background:rgba(255,111,125,.08);
+  color:#ffc3c8;
+}
+.settings-form-v36{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:9px 10px!important;
+}
+.settings-field-v36:has(textarea){grid-column:1/-1!important;}
+.settings-actions-v36{justify-content:flex-start!important;}
+.settings-note-v36{max-width:520px!important;}
+@media(max-width:900px){
+  .settings-work-v36{grid-template-columns:1fr!important;}
+  .settings-form-v36{grid-template-columns:1fr!important;}
+  .settings-list-body-v36{max-height:420px!important;}
+}
+</style>
+
+<script id="axeCookV38SettingsBalanceScript">
+(function(){
+  const VERSION_V38='AXE_COOK_v38_SETTINGS_BALANCE_AUTOSORT';
+  const titleMap={foods:'요리',materials:'재료',recipes:'레시피',processes:'가공',farm:'농장재료',aliases:'별칭',fish:'생선변환'};
+  const idMap={foods:'food_id',materials:'material_id',recipes:'recipe_id',processes:'process_id',farm:'farm_id',aliases:'alias_name',fish:'fish_id'};
+  const rowsMap={foods:()=>DB.foods,materials:()=>DB.materials,recipes:()=>DB.recipes,processes:()=>DB.processes,farm:()=>DB.farm,aliases:()=>DB.aliases,fish:()=>DB.fish};
+  function activeKind(){return document.querySelector('#settingsTabs .tab.active')?.dataset.manage||'foods';}
+  function activeTitle(){return titleMap[activeKind()]||'설정';}
+  function maxSort(kind){let max=0;(rowsMap[kind]?.()||[]).forEach(r=>{const n=Number(String(r['정렬']||'').replace(/,/g,'').trim());if(Number.isFinite(n))max=Math.max(max,n);});return max;}
+  function currentIdExists(kind){
+    const idField=idMap[kind];
+    const el=document.querySelector('#settingsForm [data-field="'+idField+'"]');
+    if(!el)return false;
+    const id=String(el.value||'').trim();
+    if(!id)return false;
+    return (rowsMap[kind]?.()||[]).some(r=>String(r['id']||r['입력명']||'').trim()===id);
+  }
+  function normalizeTitleAndButton(){
+    const kind=activeKind();
+    const title=document.getElementById('settingsEditorTitle');
+    const newBtn=document.getElementById('settingsNewBtn');
+    if(title)title.textContent=activeTitle();
+    if(newBtn)newBtn.textContent='추가';
+    const sort=document.querySelector('#settingsForm [data-field="sort_order"]');
+    if(sort && !String(sort.value||'').trim() && !currentIdExists(kind)){
+      sort.value=String(maxSort(kind)+1);
+    }
+  }
+  function beforeSaveAutosort(){
+    const kind=activeKind();
+    const sort=document.querySelector('#settingsForm [data-field="sort_order"]');
+    if(sort && !String(sort.value||'').trim()){
+      sort.value=String(maxSort(kind)+1);
+      sort.dispatchEvent(new Event('input',{bubbles:true}));
+    }
+  }
+  function schedule(){setTimeout(normalizeTitleAndButton,0);setTimeout(normalizeTitleAndButton,80);}
+  document.addEventListener('click',function(e){
+    if(e.target.closest('#settingsSaveBtn')) beforeSaveAutosort();
+    if(e.target.closest('#settingsTabs .tab,#settingsNewBtn,[data-edit-idx]')) schedule();
+  },true);
+  document.addEventListener('input',function(e){
+    if(e.target&&e.target.closest('#settingsSearch')) schedule();
+  },true);
+  const obs=new MutationObserver(schedule);
+  const boot=()=>{
+    const root=document.getElementById('viewSettings');
+    if(root)obs.observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
+    schedule();
+    window.axeCookV38Debug=()=>({version:VERSION_V38,kind:activeKind(),title:document.getElementById('settingsEditorTitle')?.textContent,autosortNext:maxSort(activeKind())+1});
+  };
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+})();
+</script>
+
 </body>
 </html>
