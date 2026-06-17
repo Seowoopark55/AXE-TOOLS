@@ -7447,266 +7447,6 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
   #viewHome .order-sub{flex-wrap:wrap!important;}
   #viewHome .order-total-text-v79{border-left:0!important;padding-left:0!important;}
 }
-
-/* AXE COOK v80: visual scale rebalance - recipe-panel level comfort */
-#viewHome .purchase-panel,
-#viewHome .orders-panel{
-  padding:14px 16px!important;
-}
-
-/* section titles: keep icon beside title, but reduce heavy dashboard scale */
-#viewHome .purchase-panel .panel-title,
-#viewHome .orders-panel .panel-title{
-  display:flex!important;
-  align-items:center!important;
-  justify-content:space-between!important;
-  gap:10px!important;
-  min-height:30px!important;
-  margin-bottom:12px!important;
-}
-#viewHome .section-title-v79,
-#viewHome .orders-title-v79{
-  display:inline-flex!important;
-  align-items:center!important;
-  justify-content:flex-start!important;
-  gap:8px!important;
-  font-size:18px!important;
-  line-height:1.1!important;
-  font-weight:1000!important;
-  color:#f3f6fb!important;
-  letter-spacing:-.2px!important;
-  text-shadow:none!important;
-}
-#viewHome .section-icon-v79,
-#viewHome .orders-icon-v79{
-  width:17px!important;
-  height:17px!important;
-  flex:0 0 17px!important;
-  border:2px solid #ffbd36!important;
-  border-radius:4px!important;
-  box-shadow:none!important;
-  transform:none!important;
-}
-#viewHome .section-icon-v79::after,
-#viewHome .orders-icon-v79::after{
-  display:none!important;
-  content:none!important;
-}
-#viewHome .orders-title-v79 small,
-#viewHome #orderCount{
-  height:22px!important;
-  min-width:31px!important;
-  padding:0 8px!important;
-  border-radius:999px!important;
-  font-size:12px!important;
-  line-height:22px!important;
-  background:rgba(255,255,255,.055)!important;
-  border:1px solid rgba(255,255,255,.09)!important;
-  color:#b9c2cf!important;
-}
-
-/* purchase checklist: reduce oversized badge/card, keep main info clear */
-#viewHome .compact-checklist{
-  display:grid!important;
-  grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:8px!important;
-}
-#viewHome .check-row{
-  display:grid!important;
-  grid-template-columns:20px minmax(0,1fr) 68px!important;
-  gap:10px!important;
-  align-items:center!important;
-  min-height:72px!important;
-  padding:11px 12px!important;
-  border-radius:14px!important;
-  background:linear-gradient(145deg,rgba(255,255,255,.042),rgba(255,255,255,.015)),rgba(5,7,10,.32)!important;
-  border:1px solid rgba(255,255,255,.085)!important;
-  box-shadow:inset 0 0 0 1px rgba(0,0,0,.16)!important;
-}
-#viewHome .check-row input{
-  width:17px!important;
-  height:17px!important;
-  margin:0!important;
-  accent-color:#ffb52e!important;
-  align-self:center!important;
-}
-#viewHome .check-info-v79,
-#viewHome .check-row>div:nth-of-type(1){
-  min-width:0!important;
-  align-self:center!important;
-}
-#viewHome .check-name{
-  font-size:16px!important;
-  line-height:1.16!important;
-  font-weight:1000!important;
-  color:#f4f6fa!important;
-  letter-spacing:-.2px!important;
-  margin:0!important;
-  white-space:nowrap!important;
-  overflow:hidden!important;
-  text-overflow:ellipsis!important;
-}
-#viewHome .check-sub{
-  margin-top:5px!important;
-  font-size:11.5px!important;
-  line-height:1.24!important;
-  font-weight:850!important;
-  color:#aeb8c8!important;
-  white-space:nowrap!important;
-  overflow:hidden!important;
-  text-overflow:ellipsis!important;
-}
-#viewHome .check-sub b{
-  color:#dfe6f2!important;
-  font-weight:1000!important;
-}
-#viewHome .check-right{
-  width:68px!important;
-  min-width:68px!important;
-  max-width:68px!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:flex-end!important;
-}
-#viewHome .check-bundle{
-  height:32px!important;
-  min-width:62px!important;
-  padding:0 11px!important;
-  border-radius:999px!important;
-  font-size:16px!important;
-  line-height:1!important;
-  font-weight:1000!important;
-  color:#15100a!important;
-  background:linear-gradient(135deg,#ffd46b,#ffb52e)!important;
-  border:1px solid rgba(255,181,46,.78)!important;
-  box-shadow:0 10px 22px rgba(255,181,46,.16)!important;
-}
-#viewHome .check-cost{display:none!important;}
-
-/* order list: downscale to match the recipe/process panels */
-#viewHome #clearBtnVisible{
-  height:32px!important;
-  border-radius:11px!important;
-  padding:0 11px!important;
-  font-size:11.5px!important;
-  box-shadow:none!important;
-}
-#viewHome #clearBtnVisible::before{
-  font-size:13px!important;
-  margin-right:6px!important;
-}
-#viewHome .compact-order-list{
-  gap:8px!important;
-}
-#viewHome .order-row{
-  display:grid!important;
-  grid-template-columns:minmax(0,1fr) auto!important;
-  gap:12px!important;
-  align-items:center!important;
-  min-height:68px!important;
-  padding:12px 14px!important;
-  border-radius:14px!important;
-  background:linear-gradient(145deg,rgba(255,255,255,.040),rgba(255,255,255,.014)),rgba(5,7,10,.32)!important;
-  border:1px solid rgba(255,255,255,.085)!important;
-  box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)!important;
-}
-#viewHome .order-main-v21{
-  display:flex!important;
-  align-items:center!important;
-  gap:13px!important;
-  min-width:0!important;
-  flex-wrap:nowrap!important;
-}
-#viewHome .order-name{
-  min-width:64px!important;
-  max-width:150px!important;
-  font-size:18px!important;
-  line-height:1.12!important;
-  font-weight:1000!important;
-  letter-spacing:-.25px!important;
-  color:#f5f7fb!important;
-}
-#viewHome .order-sub{
-  display:flex!important;
-  align-items:center!important;
-  gap:10px!important;
-  min-width:0!important;
-  margin:0!important;
-}
-#viewHome .order-set-pill-v79,
-#viewHome .order-total-text-v79{
-  height:27px!important;
-  display:inline-flex!important;
-  align-items:center!important;
-  gap:6px!important;
-  font-size:13.5px!important;
-  font-weight:900!important;
-  color:#cdd5e1!important;
-  white-space:nowrap!important;
-}
-#viewHome .order-set-pill-v79::before{
-  font-size:17px!important;
-  color:#ffbd36!important;
-  transform:skewX(-12deg)!important;
-}
-#viewHome .order-total-text-v79{
-  padding-left:11px!important;
-  border-left:1px solid rgba(255,255,255,.10)!important;
-}
-#viewHome .order-total-text-v79::before{
-  font-size:16px!important;
-  color:#ffbd36!important;
-}
-#viewHome .order-set-pill-v79 b,
-#viewHome .order-total-text-v79 b{
-  color:#ffcf61!important;
-  font-size:16px!important;
-  font-weight:1000!important;
-}
-#viewHome .order-row-controls-v21{
-  display:flex!important;
-  align-items:center!important;
-  gap:8px!important;
-}
-#viewHome .order-row .num{
-  width:60px!important;
-  height:36px!important;
-  border-radius:12px!important;
-  font-size:17px!important;
-  font-weight:1000!important;
-  text-align:center!important;
-}
-#viewHome .order-row .btn{
-  height:36px!important;
-  min-width:46px!important;
-  border-radius:12px!important;
-  font-size:12px!important;
-  font-weight:1000!important;
-}
-
-@media(max-width:1180px){
-  #viewHome .section-title-v79,
-  #viewHome .orders-title-v79{font-size:17px!important;}
-  #viewHome .check-row{min-height:68px!important;padding:10px 11px!important;}
-  #viewHome .check-name{font-size:15px!important;}
-  #viewHome .check-sub{font-size:11px!important;}
-  #viewHome .check-bundle{height:30px!important;min-width:58px!important;font-size:15px!important;}
-  #viewHome .order-row{min-height:64px!important;padding:11px 12px!important;}
-  #viewHome .order-name{font-size:17px!important;}
-  #viewHome .order-set-pill-v79,
-  #viewHome .order-total-text-v79{font-size:13px!important;}
-  #viewHome .order-set-pill-v79 b,
-  #viewHome .order-total-text-v79 b{font-size:15px!important;}
-}
-@media(max-width:760px){
-  #viewHome .compact-checklist{grid-template-columns:1fr!important;}
-  #viewHome .order-row{grid-template-columns:1fr!important;}
-  #viewHome .order-row-controls-v21{justify-content:flex-start!important;}
-  #viewHome .order-main-v21{flex-wrap:wrap!important;}
-  #viewHome .order-sub{flex-wrap:wrap!important;}
-  #viewHome .order-total-text-v79{border-left:0!important;padding-left:0!important;}
-}
-
 </style>
 <script id="axeCookV79BlockRedesignScript">
 (function(){
@@ -7783,6 +7523,136 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',installV79); else installV79();
   window.axeCookV79Debug=function(){return {version:'v79-block-redesign',reason:'purchase/order blocks rendered with final unified structure, old pseudo-icons neutralized'};};
+})();
+</script>
+
+
+
+<style id="axeCookV81IconSystemStyle">
+/* AXE COOK v81: SVG icon system + comfortable block balance */
+#viewHome .purchase-panel>.panel-title::before,
+#viewHome .purchase-panel .panel-title::before,
+#viewHome .orders-panel>.panel-title>span::before,
+#viewHome .orders-panel .panel-title>span::before,
+#viewHome .order-set-pill-v79::before,
+#viewHome .order-total-text-v79::before,
+#viewHome .section-icon-v79::before,
+#viewHome .orders-icon-v79::after{content:none!important;display:none!important;}
+#viewHome .axe-title-v81{display:inline-flex!important;align-items:center!important;gap:8px!important;color:#f5f7fb!important;font-size:17px!important;font-weight:1000!important;letter-spacing:-.2px!important;line-height:1!important;}
+#viewHome .axe-title-v81 small{font-size:12px!important;color:#8f98a6!important;font-weight:900!important;margin-left:2px!important;}
+#viewHome .axe-ico-v81{width:18px!important;height:18px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;color:#ffbf3f!important;flex:0 0 auto!important;filter:drop-shadow(0 0 10px rgba(255,181,46,.12));}
+#viewHome .axe-ico-v81 svg{width:100%!important;height:100%!important;display:block!important;stroke:currentColor!important;fill:none!important;stroke-width:2.15!important;stroke-linecap:round!important;stroke-linejoin:round!important;}
+#viewHome .orders-panel .panel-title,#viewHome .purchase-panel .panel-title,#viewHome .memo-panel-v53 .panel-title{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;margin:0 0 11px!important;padding:0!important;text-align:left!important;line-height:1!important;}
+#viewHome .memo-panel-v53 .panel-title span{display:inline-flex!important;align-items:center!important;gap:8px!important;}
+#viewHome .reset-visible-v29{display:inline-flex!important;align-items:center!important;gap:6px!important;height:30px!important;padding:0 10px!important;border-radius:10px!important;font-size:11.5px!important;color:#cfd6e2!important;background:rgba(255,255,255,.035)!important;border:1px solid rgba(255,255,255,.09)!important;}
+#viewHome .reset-visible-v29 .axe-ico-v81{width:14px!important;height:14px!important;color:#ff9ba5!important;filter:none!important;}
+#viewHome .compact-order-list{display:grid!important;gap:7px!important;}
+#viewHome .order-row{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;gap:10px!important;align-items:center!important;min-height:66px!important;padding:10px 12px!important;border-radius:14px!important;background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.014)),rgba(0,0,0,.24)!important;border:1px solid rgba(255,255,255,.085)!important;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)!important;}
+#viewHome .order-main-v21{display:grid!important;gap:5px!important;min-width:0!important;}
+#viewHome .order-name{font-size:15.5px!important;font-weight:1000!important;line-height:1.15!important;color:#f4f7fb!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;max-width:none!important;}
+#viewHome .order-sub{display:flex!important;align-items:center!important;gap:8px!important;flex-wrap:wrap!important;margin:0!important;color:#b9c2cf!important;font-size:12px!important;line-height:1.2!important;font-weight:900!important;}
+#viewHome .order-meta-v81{display:inline-flex!important;align-items:center!important;gap:5px!important;height:25px!important;padding:0 8px!important;border-radius:999px!important;background:rgba(255,255,255,.035)!important;border:1px solid rgba(255,255,255,.075)!important;color:#cdd4df!important;white-space:nowrap!important;}
+#viewHome .order-meta-v81 .axe-ico-v81{width:13px!important;height:13px!important;color:#ffbf3f!important;filter:none!important;}
+#viewHome .order-meta-v81 b{font-size:13px!important;color:#ffcf61!important;font-weight:1000!important;margin:0 1px!important;}
+#viewHome .order-total-v81{background:rgba(255,181,46,.06)!important;border-color:rgba(255,181,46,.14)!important;}
+#viewHome .order-row-controls-v21{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:7px!important;}
+#viewHome .order-row .num{width:58px!important;height:34px!important;border-radius:11px!important;text-align:center!important;font-size:15px!important;font-weight:1000!important;background:#10141b!important;border:1px solid rgba(255,255,255,.105)!important;color:#f7f9fc!important;}
+#viewHome .order-row .btn{height:34px!important;min-width:46px!important;border-radius:11px!important;font-size:11.5px!important;padding:0 9px!important;color:#d5dce7!important;background:rgba(255,255,255,.035)!important;border:1px solid rgba(255,255,255,.09)!important;}
+#viewHome .compact-checklist{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;width:100%!important;max-width:none!important;margin:0!important;padding:0!important;overflow:visible!important;align-items:stretch!important;}
+#viewHome .check-row{display:grid!important;grid-template-columns:20px minmax(0,1fr) auto!important;gap:9px!important;align-items:center!important;min-height:66px!important;padding:10px 11px!important;border-radius:14px!important;background:linear-gradient(145deg,rgba(255,255,255,.043),rgba(255,255,255,.014)),rgba(0,0,0,.23)!important;border:1px solid rgba(255,255,255,.085)!important;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)!important;}
+#viewHome .check-row input[type="checkbox"]{appearance:none!important;-webkit-appearance:none!important;width:18px!important;height:18px!important;margin:0!important;align-self:center!important;justify-self:center!important;border-radius:5px!important;border:2px solid rgba(255,191,63,.9)!important;background:rgba(255,181,46,.035)!important;box-shadow:0 0 0 1px rgba(0,0,0,.18)!important;position:relative!important;}
+#viewHome .check-row input[type="checkbox"]:checked{background:linear-gradient(135deg,#ffcf61,#ffb52e)!important;border-color:#ffcf61!important;}
+#viewHome .check-row input[type="checkbox"]:checked::after{content:'✓'!important;position:absolute!important;inset:-2px 0 0 0!important;display:grid!important;place-items:center!important;color:#111!important;font-size:14px!important;font-weight:1000!important;}
+#viewHome .check-info-v79,#viewHome .check-info-v81{min-width:0!important;display:grid!important;gap:4px!important;align-content:center!important;}
+#viewHome .check-name{font-size:15px!important;line-height:1.15!important;font-weight:1000!important;color:#f5f7fb!important;letter-spacing:-.15px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+#viewHome .check-sub{font-size:11.3px!important;line-height:1.22!important;font-weight:850!important;color:#aeb7c5!important;margin:0!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+#viewHome .check-sub b{color:#dfe5ef!important;font-weight:1000!important;}
+#viewHome .check-right{display:flex!important;align-items:center!important;justify-content:flex-end!important;min-width:62px!important;width:auto!important;max-width:none!important;}
+#viewHome .check-bundle{display:inline-flex!important;align-items:center!important;justify-content:center!important;min-width:58px!important;height:30px!important;padding:0 10px!important;border-radius:999px!important;background:linear-gradient(135deg,#ffcf61,#ffb52e)!important;border:1px solid rgba(255,207,97,.76)!important;color:#17100a!important;font-size:14px!important;font-weight:1000!important;letter-spacing:-.35px!important;box-shadow:0 8px 18px rgba(255,181,46,.10)!important;}
+#viewHome .check-bundle.farm-pack{background:rgba(99,230,163,.09)!important;border-color:rgba(99,230,163,.26)!important;color:#b9f7d5!important;box-shadow:none!important;}
+#viewHome .check-cost{display:none!important;}
+#viewHome .check-row.done{opacity:.56!important;}
+#viewHome .check-row.done .check-bundle{filter:saturate(.75)!important;}
+#viewHome .farm-badge{height:16px!important;padding:0 5px!important;border-radius:999px!important;font-size:9px!important;margin-left:5px!important;vertical-align:1px!important;}
+@media(max-width:1180px){#viewHome .compact-checklist{grid-template-columns:repeat(2,minmax(0,1fr))!important;}#viewHome .check-name{font-size:14.2px!important;}#viewHome .check-sub{font-size:10.8px!important;}#viewHome .check-bundle{height:28px!important;font-size:13px!important;min-width:54px!important;}#viewHome .order-name{font-size:14.5px!important;}#viewHome .order-meta-v81{font-size:11.5px!important;}}
+@media(max-width:760px){#viewHome .compact-checklist{grid-template-columns:1fr!important;}#viewHome .order-row{grid-template-columns:1fr!important;}#viewHome .order-row-controls-v21{justify-content:flex-start!important;}#viewHome .order-sub{gap:6px!important;}}
+</style>
+<script id="axeCookV81IconSystemScript">
+(function(){
+  function escV81(v){return h(v==null?'':v);}
+  function iconV81(name){
+    var paths={
+      list:'<path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3.5 6h.01"/><path d="M3.5 12h.01"/><path d="M3.5 18h.01"/>',
+      check:'<path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>',
+      memo:'<path d="M9 3h6l2 2h2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2l2-2z"/><path d="M8 11h8"/><path d="M8 15h6"/>',
+      package:'<path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/>',
+      layers:'<path d="M12 2l9 5-9 5-9-5 9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 17l9 5 9-5"/>',
+      refresh:'<path d="M21 12a9 9 0 0 1-15.4 6.4"/><path d="M3 12A9 9 0 0 1 18.4 5.6"/><path d="M18 2v4h4"/><path d="M6 22v-4H2"/>'
+    };
+    return '<span class="axe-ico-v81" aria-hidden="true"><svg viewBox="0 0 24 24">'+(paths[name]||paths.list)+'</svg></span>';
+  }
+  function decorateTitlesV81(){
+    var p=document.querySelector('#viewHome .purchase-panel .panel-title');
+    if(p){p.dataset.v81='1';p.innerHTML='<span class="axe-title-v81">'+iconV81('check')+'<span>구매 체크리스트</span></span>';}
+    var o=document.querySelector('#viewHome .orders-panel .panel-title');
+    if(o){
+      var n=(typeof orders!=='undefined'&&orders)?orders.length:0;
+      o.dataset.v81='1';
+      o.innerHTML='<span class="axe-title-v81">'+iconV81('list')+'<span>작업 목록</span><small id="orderCount">'+n+'개</small></span><button class="btn bad reset-visible-v29" id="clearBtnVisible" type="button">'+iconV81('refresh')+'<span>초기화</span></button>';
+      var reset=document.getElementById('clearBtnVisible');
+      if(reset && !reset.dataset.v81){reset.dataset.v81='1';reset.addEventListener('click',function(){if(typeof clearWorkspaceV30==='function') clearWorkspaceV30(); else if(typeof clearAll==='function') clearAll(); else {orders=[];checks={};saveState();if(typeof renderAll==='function')renderAll();}});}
+    }
+    var m=document.querySelector('#viewHome .memo-panel-v53 .panel-title');
+    if(m && !m.dataset.v81){m.dataset.v81='1';m.innerHTML='<span class="axe-title-v81">'+iconV81('memo')+'<span>작업 메모</span></span>';}
+  }
+  function orderMetaV81(o){
+    var f=getFood(o.name), setQty=getSetQty(f), total=num(o.sets,0)*setQty;
+    return '<span class="order-meta-v81">'+iconV81('package')+'<span>세트 구성 <b>'+escV81(setQty)+'</b>개</span></span><span class="order-meta-v81 order-total-v81">'+iconV81('layers')+'<span>총 <b>'+escV81(total)+'</b>개 제작</span></span>';
+  }
+  function renderOrdersV81(){
+    decorateTitlesV81();
+    var count=document.getElementById('orderCount'); if(count) count.textContent=orders.length+'개';
+    var box=document.getElementById('orderList'); if(!box) return;
+    if(!orders.length){box.innerHTML='<div class="empty">만들 음식을 추가하세요.</div>';return;}
+    box.innerHTML=orders.map(function(o){return '<div class="order-row"><div class="order-main-v21"><div class="order-name">'+escV81(o.name)+'</div><div class="order-sub">'+orderMetaV81(o)+'</div></div><div class="order-row-controls-v21"><input class="num" type="number" min="1" value="'+escV81(o.sets)+'" data-set="'+escV81(o.name)+'"><button class="btn bad" data-del="'+escV81(o.name)+'">삭제</button></div></div>';}).join('');
+    box.querySelectorAll('[data-set]').forEach(function(i){i.addEventListener('change',function(){updateSets(i.dataset.set,i.value);});});
+    box.querySelectorAll('[data-del]').forEach(function(b){b.addEventListener('click',function(){removeOrder(b.dataset.del);});});
+  }
+  function renderPurchaseRowsV81(r){
+    decorateTitlesV81();
+    var purchase=document.getElementById('purchaseList'); if(!purchase) return;
+    var rows=[].concat(r.purchases.map(function(p){return Object.assign({},p,{type:'buy'});}),r.farmRows.map(function(x){return {name:x.name,qty:x.qty,bundleQty:0,bundlePrice:0,bundles:'채집',cost:0,where:'농장',type:'farm'};}));
+    if(!rows.length){purchase.innerHTML='<div class="axe-empty-message-v61">필요한 구매 재료가 없습니다.</div>';return;}
+    purchase.innerHTML=rows.map(function(p){
+      var key=checkKey(p.type+'_'+p.name), done=checks[key], isFarm=p.type==='farm';
+      var buyQty=isFarm?0:(num(p.bundles,0)*num(p.bundleQty,0));
+      var remain=isFarm?0:Math.max(0,buyQty-num(p.qty,0));
+      var sub=isFarm?'채집 · 필요 <b>'+escV81(p.qty)+'</b>개':escV81(p.where)+' · 필요 <b>'+escV81(p.qty)+'</b>개 · 구매 <b>'+escV81(buyQty)+'</b>개 · <b>'+escV81(remain)+'</b>개 남음';
+      var bundle=isFarm?'채집':escV81(p.bundles)+'묶음';
+      return '<label class="check-row '+(done?'done':'')+' '+(isFarm?'farm-row':'')+'"><input type="checkbox" '+(done?'checked':'')+' data-check="'+escV81(key)+'"><div class="check-info-v81"><div class="check-name">'+escV81(p.name)+(isFarm?'<span class="mini-badge farm-badge">농장</span>':'')+'</div><div class="check-sub">'+sub+'</div></div><div class="check-right"><span class="check-bundle '+(isFarm?'farm-pack':'')+'">'+bundle+'</span></div></label>';
+    }).join('');
+    purchase.querySelectorAll('[data-check]').forEach(function(i){i.addEventListener('change',function(){checks[i.dataset.check]=i.checked;saveState();i.closest('.check-row').classList.toggle('done',i.checked);});});
+  }
+  function renderResultsOnlyV81(){
+    var r=calc();
+    var summary=document.getElementById('summaryGrid');
+    if(summary){summary.innerHTML='<div class="summary primary"><div class="summary-label">총 세트</div><div class="summary-value gold">'+r.totalSets+'</div></div><div class="summary"><div class="summary-label">인벤 예상</div><div class="summary-value">'+escV81(invText(r.totalSets))+'</div></div><div class="summary"><div class="summary-label">구매 원가</div><div class="summary-value ok">'+r.totalCost.toLocaleString()+'</div></div><div class="summary"><div class="summary-label">예상 수익</div><div class="summary-value '+(r.profit>=0?'gold':'bad')+'">'+r.profit.toLocaleString()+'</div></div>';}
+    var warning=document.getElementById('warningBox');
+    if(warning){warning.innerHTML=r.unknownRows.length?'<div class="warning">가격 또는 획득처가 없는 재료: '+r.unknownRows.map(function(x){return escV81(x.name)+' '+x.qty+'개';}).join(', ')+'</div>':'';}
+    try{if(typeof renderRecipePanelV64==='function')renderRecipePanelV64(r);else if(window.renderWorkRecipes)window.renderWorkRecipes();}catch(e){}
+    renderPurchaseRowsV81(r);
+    var farmCount=document.getElementById('farmCount'); if(farmCount) farmCount.textContent=r.farmRows.length;
+    var processCount=document.getElementById('processCount'); if(processCount) processCount.textContent=r.proc.length;
+    var fishCount=document.getElementById('fishCount'); if(fishCount) fishCount.textContent=r.fishNeed.length;
+  }
+  function installV81(){
+    decorateTitlesV81();
+    window.renderOrders=renderOrdersV81; try{renderOrders=renderOrdersV81;}catch(e){}
+    window.renderResultsOnly=renderResultsOnlyV81; try{renderResultsOnly=renderResultsOnlyV81;}catch(e){}
+    setTimeout(function(){try{decorateTitlesV81();renderOrdersV81();renderResultsOnlyV81();}catch(e){console.warn('[AXE COOK v81]',e);}},0);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',installV81); else installV81();
+  window.axeCookV81Debug=function(){return {version:'v81-svg-icon-system',scope:'orders purchase memo icons and comfortable block balance'};};
 })();
 </script>
 
