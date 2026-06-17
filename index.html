@@ -9530,3 +9530,77 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
   window.axeCookV108Debug=window.axeCookV109Debug;
 })();
 </script>
+
+<style>
+/* AXE COOK v110: 데이터 요리 상세 정보 compact chip 정렬 */
+#viewData .axe-info-grid-v108{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  align-items:center!important;
+  gap:7px!important;
+  margin:10px 0 10px!important;
+  max-width:720px!important;
+}
+#viewData .axe-info-v108{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:7px!important;
+  width:auto!important;
+  min-width:0!important;
+  max-width:100%!important;
+  min-height:0!important;
+  padding:7px 10px!important;
+  border-radius:999px!important;
+  border:1px solid rgba(255,255,255,.105)!important;
+  background:rgba(255,255,255,.04)!important;
+}
+#viewData .axe-info-label-v108{
+  margin:0!important;
+  font-size:11px!important;
+  line-height:1!important;
+  color:#9aa4b2!important;
+  font-weight:950!important;
+  white-space:nowrap!important;
+}
+#viewData .axe-info-value-v108{
+  font-size:13px!important;
+  line-height:1.15!important;
+  color:#f4f7fb!important;
+  font-weight:1000!important;
+  white-space:nowrap!important;
+}
+#viewData .axe-info-v108:first-child{
+  border-radius:13px!important;
+  max-width:520px!important;
+  padding:8px 11px!important;
+}
+#viewData .axe-info-v108:first-child .axe-info-label-v108{
+  flex:0 0 auto!important;
+}
+#viewData .axe-info-v108:first-child .axe-info-value-v108{
+  white-space:normal!important;
+  line-height:1.3!important;
+  word-break:keep-all!important;
+}
+#viewData .axe-cooktime-v108 .axe-info-value-v108{
+  color:#ffcf61!important;
+}
+#viewData .axe-process-mini-v87{
+  margin-top:8px!important;
+  gap:7px!important;
+  max-width:720px!important;
+}
+#viewData .axe-mini-chip-v87{
+  padding:7px 10px!important;
+  font-size:13px!important;
+}
+@media(max-width:840px){
+  #viewData .axe-info-grid-v108{display:flex!important;max-width:none!important;}
+  #viewData .axe-info-v108:first-child{max-width:100%!important;}
+}
+</style>
+<script>
+(function(){
+  window.axeCookV110Debug=function(){return {version:'v110-data-detail-chip-rebalance'};};
+})();
+</script>
