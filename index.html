@@ -11020,3 +11020,89 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
   window.axeCookV117Debug=function(){return {version:VERSION,button:!!document.getElementById('clearBtnVisible'),modalOpen:modalOpen,orders:(function(){try{return orders.length;}catch(e){return Array.isArray(window.orders)?window.orders.length:null;}})()};};
 })();
 </script>
+
+<!-- AXE COOK v118: 초기화 버튼 제거 / 삭제 버튼 중심 단일 작업 안정화 -->
+<style>
+  #viewHome #clearBtn,
+  #viewHome #clearBtnVisible,
+  #viewHome .reset-visible-v29,
+  #viewHome [data-axe-reset],
+  #viewHome [data-reset-workspace],
+  #viewHome button[id*="clear"],
+  #viewHome button[class*="reset-visible"]{
+    display:none!important;
+    visibility:hidden!important;
+    pointer-events:none!important;
+  }
+  #viewHome .panel-title{
+    align-items:center!important;
+  }
+</style>
+<script>
+(function(){
+  'use strict';
+  const VERSION='v118-no-reset-button';
+
+  function removeResetButtons(){
+    const selectors=[
+      '#viewHome #clearBtn',
+      '#viewHome #clearBtnVisible',
+      '#viewHome .reset-visible-v29',
+      '#viewHome [data-axe-reset]',
+      '#viewHome [data-reset-workspace]',
+      '#viewHome button[id*="clear"]',
+      '#viewHome button[class*="reset-visible"]'
+    ];
+    document.querySelectorAll(selectors.join(',')).forEach(btn=>{
+      try{ btn.remove(); }catch(e){
+        btn.style.display='none';
+        btn.style.pointerEvents='none';
+      }
+    });
+  }
+
+  function normalizeOrderTitle(){
+    const title=document.querySelector('#viewHome .panel-title');
+    if(!title) return;
+    removeResetButtons();
+    const count=(typeof orders!=='undefined' && Array.isArray(orders)) ? orders.length : (Array.isArray(window.orders)?window.orders.length:0);
+    const countEl=title.querySelector('#orderCount');
+    if(countEl) countEl.textContent=count+'개';
+  }
+
+  const oldRender=window.render;
+  if(typeof oldRender==='function'){
+    window.render=function(){
+      const r=oldRender.apply(this,arguments);
+      setTimeout(normalizeOrderTitle,0);
+      return r;
+    };
+    try{ render=window.render; }catch(e){}
+  }
+
+  function boot(){
+    removeResetButtons();
+    normalizeOrderTitle();
+  }
+
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot,{once:true}); else boot();
+  setTimeout(boot,100);
+  setTimeout(boot,500);
+  setTimeout(boot,1200);
+
+  try{
+    new MutationObserver(()=>{
+      clearTimeout(window.__axeV118NoReset);
+      window.__axeV118NoReset=setTimeout(boot,30);
+    }).observe(document.body,{childList:true,subtree:true});
+  }catch(e){}
+
+  window.axeCookV118Debug=function(){
+    return {
+      version:VERSION,
+      resetButtons:[...document.querySelectorAll('#viewHome #clearBtn,#viewHome #clearBtnVisible,#viewHome .reset-visible-v29')].length,
+      orders:(function(){try{return orders.length;}catch(e){return Array.isArray(window.orders)?window.orders.length:null;}})()
+    };
+  };
+})();
+</script>
