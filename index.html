@@ -1384,6 +1384,21 @@ body{
   .top-inner .axe-install-slot-v68{justify-self:start!important;order:4!important;margin-top:2px!important;}
 }
 
+
+
+/* AXE COOK v69: lightweight boot loading screen */
+.boot-loader-v69{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;background:radial-gradient(circle at 50% 8%,rgba(255,181,46,.14),transparent 30%),linear-gradient(180deg,rgba(8,9,12,.98),rgba(7,8,10,.965));backdrop-filter:blur(10px);transition:opacity .28s ease,visibility .28s ease;}
+.boot-loader-v69.is-leaving{opacity:0;visibility:hidden;pointer-events:none;}
+.boot-card-v69{width:min(360px,calc(100vw - 42px));border:1px solid rgba(255,181,46,.22);border-radius:22px;background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025)),rgba(7,9,12,.86);box-shadow:0 26px 90px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,255,255,.035);padding:22px 22px 18px;text-align:center;}
+.boot-mark-v69{width:58px;height:58px;margin:0 auto 14px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(135deg,#ffcf61,#ff9d00);color:#111;font-weight:1000;font-size:18px;letter-spacing:-.8px;box-shadow:0 14px 34px rgba(255,181,46,.2);}
+.boot-title-v69{font-size:18px;font-weight:1000;color:#f5f7fb;letter-spacing:.2px;margin-bottom:6px;}
+.boot-sub-v69{font-size:12px;font-weight:900;color:#9ea8b7;line-height:1.45;margin-bottom:15px;}
+.boot-bar-v69{height:7px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;border:1px solid rgba(255,255,255,.055);}
+.boot-bar-v69 span{display:block;width:42%;height:100%;border-radius:999px;background:linear-gradient(90deg,rgba(255,181,46,.15),#ffb52e,#ffd27a);animation:bootMoveV69 1.15s ease-in-out infinite;box-shadow:0 0 18px rgba(255,181,46,.28);}
+.boot-foot-v69{margin-top:11px;font-size:11px;font-weight:900;color:#747d8c;}
+@keyframes bootMoveV69{0%{transform:translateX(-115%)}55%{transform:translateX(95%)}100%{transform:translateX(245%)}}
+@media(max-width:560px){.boot-card-v69{border-radius:18px;padding:20px 18px 16px}.boot-mark-v69{width:52px;height:52px;font-size:16px}.boot-title-v69{font-size:17px}}
+
 </style>
 
 <link rel="manifest" href="./manifest.json">
@@ -1394,6 +1409,17 @@ body{
 <link rel="apple-touch-icon" href="./icon-192.png">
 </head>
 <body>
+
+<div id="bootLoaderV69" class="boot-loader-v69" role="status" aria-live="polite">
+  <div class="boot-card-v69">
+    <div class="boot-mark-v69">AXE</div>
+    <div class="boot-title-v69">AXE COOK</div>
+    <div class="boot-sub-v69">요리 데이터를 불러오는 중입니다.<br>작업공간을 준비하고 있습니다.</div>
+    <div class="boot-bar-v69"><span></span></div>
+    <div id="bootLoaderMsgV69" class="boot-foot-v69">Google Sheet 연결 확인 중</div>
+  </div>
+</div>
+
 <div class="app">
   <header class="top">
     <div class="top-inner">
@@ -6444,6 +6470,36 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bindInstallButtonV68);
   else bindInstallButtonV68();
   window.axeCookV68InstallDebug=function(){return {version:'v68-rebuilt',standalone:isStandaloneV68(),installable:isInstallableV68,hasPrompt:!!deferredPromptV68,homeActive:isHomeActiveV68()};};
+})();
+</script>
+
+
+
+<script id="axeCookV69BootLoadingScript">
+(function(){
+  var started=Date.now();
+  var hidden=false;
+  var messages=['Google Sheet 연결 확인 중','요리·재료 데이터 정리 중','작업공간 구성 중'];
+  var idx=0;
+  function qs(id){return document.getElementById(id);}
+  function setMsg(){var el=qs('bootLoaderMsgV69'); if(el){el.textContent=messages[idx%messages.length]; idx++;}}
+  function hideLoader(){
+    if(hidden)return; hidden=true;
+    var loader=qs('bootLoaderV69'); if(!loader)return;
+    var elapsed=Date.now()-started;
+    var delay=Math.max(0,520-elapsed);
+    setTimeout(function(){
+      loader.classList.add('is-leaving');
+      setTimeout(function(){if(loader&&loader.parentNode)loader.parentNode.removeChild(loader);},360);
+    },delay);
+  }
+  var msgTimer=setInterval(setMsg,900); setMsg();
+  var readyTimer=setInterval(function(){
+    if(window.AXE_COOK_BOOT_READY){clearInterval(readyTimer);clearInterval(msgTimer);hideLoader();}
+  },80);
+  window.addEventListener('load',function(){setTimeout(function(){if(window.AXE_COOK_BOOT_READY){clearInterval(readyTimer);clearInterval(msgTimer);hideLoader();}},80);});
+  setTimeout(function(){clearInterval(readyTimer);clearInterval(msgTimer);hideLoader();},10000);
+  window.axeCookV69LoadingDebug=function(){return {version:'v69',visible:!hidden,ready:!!window.AXE_COOK_BOOT_READY,elapsed:Date.now()-started};};
 })();
 </script>
 
