@@ -1165,20 +1165,10 @@ body{
         <div id="purchaseList" class="checklist compact-checklist"></div>
       </div>
 
-      <section class="assist-strip near-assist">
-        <details class="micro-block assist-chip">
-          <summary><span>농장</span><b id="farmCount">0</b></summary>
-          <div id="farmList" class="mini-list micro-list"></div>
-        </details>
-        <details class="micro-block assist-chip process-assist-v30">
-          <summary><span>가공</span><b id="processCount">0</b></summary>
-          <div id="processList" class="mini-list micro-list"></div>
-        </details>
-        <details class="micro-block assist-chip">
-          <summary><span>생선</span><b id="fishCount">0</b></summary>
-          <div id="fishList" class="mini-list micro-list"></div>
-        </details>
-      </section>
+      <div class="panel tool-panel memo-panel-v53">
+        <div class="panel-title"><span>작업 메모</span><small>개인 기록</small></div>
+        <textarea id="workMemoV53" class="memo-textarea-v53" placeholder="제작 중 메모를 입력하세요. 예: 주문자, 전달 위치, 우선 제작 순서"></textarea>
+      </div>
     </section>
     </section>
 
@@ -3450,6 +3440,158 @@ main.main.tool-main.app-shell-v23,
   #viewHome .compact-checklist{grid-template-columns:1fr!important;}
 }
 </style>
+
+
+<style id="axeCookV53DashboardPolish">
+/* AXE COOK v53: banner crop, icons, memo panel, process beside recipe */
+:root{
+  --axe-v53-shell:min(1500px,calc(100vw - 72px));
+  --axe-v53-left:minmax(480px,560px);
+  --axe-v53-right:minmax(680px,1fr);
+  --axe-v53-gap:16px;
+}
+/* 상단 탭 아이콘 */
+.top-tab-v23{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;}
+.top-tab-v23::before{font-size:15px!important;line-height:1!important;opacity:.96!important;}
+.top-tab-v23[data-view="home"]::before{content:'⌂';}
+.top-tab-v23[data-view="data"]::before{content:'▦';}
+.top-tab-v23[data-view="settings"]::before{content:'⚙';}
+
+/* 배너: AXE 로고가 보이도록 상단 중심 크롭, 하단 이질감 제거 */
+#viewHome .axe-hero-v50{
+  height:250px!important;
+  background-image:
+    linear-gradient(90deg,rgba(0,0,0,.48),rgba(0,0,0,.08) 32%,rgba(0,0,0,.08) 68%,rgba(0,0,0,.52)),
+    linear-gradient(180deg,rgba(0,0,0,.02) 0%,rgba(0,0,0,.08) 44%,rgba(6,7,9,.86) 100%),
+    url('./axe_banner.png')!important;
+  background-position:center 13%!important;
+  background-size:cover!important;
+  overflow:hidden!important;
+}
+#viewHome .axe-hero-v50::after{
+  height:62%!important;
+  background:linear-gradient(180deg,transparent 0%,rgba(6,7,9,.72) 74%,#06070a 100%)!important;
+}
+#viewHome .axe-hero-v50::before{
+  content:''!important;
+  position:absolute!important;
+  left:0!important;right:0!important;bottom:0!important;height:22px!important;
+  background:linear-gradient(180deg,rgba(6,7,9,0),#06070a)!important;
+  z-index:1!important;pointer-events:none!important;
+}
+#viewHome .axe-hero-label-v50{z-index:2!important;}
+
+/* 레이아웃: 좌측 검색/작업목록/메모, 우측 레시피/요약/구매 */
+#viewHome.app-view.active[data-view-panel="home"]{
+  grid-template-columns:var(--axe-v53-left) var(--axe-v53-right)!important;
+  gap:var(--axe-v53-gap)!important;
+}
+#viewHome .v21-search-command{grid-column:1/2!important;grid-row:2!important;min-height:150px!important;}
+#viewHome .recipe-work-panel{grid-column:2/3!important;grid-row:2!important;min-height:150px!important;}
+#viewHome .orders-panel{grid-column:1/2!important;grid-row:3!important;}
+#viewHome .summary-command{grid-column:2/3!important;grid-row:3!important;}
+#viewHome .memo-panel-v53{grid-column:1/2!important;grid-row:4!important;}
+#viewHome .purchase-panel{grid-column:2/3!important;grid-row:4 / span 2!important;}
+#viewHome .near-assist{display:none!important;}
+
+/* 제작 레시피 안에 가공 준비를 반반 표시 */
+#viewHome .recipe-work-panel.has-process-v30 .recipe-combo-v30,
+#viewHome .recipe-work-panel.has-process-v31 .recipe-combo-v30{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  gap:14px!important;
+  align-items:stretch!important;
+}
+#viewHome .recipe-work-panel:not(.has-process-v30):not(.has-process-v31) .recipe-combo-v30{
+  grid-template-columns:minmax(0,1fr)!important;
+}
+#viewHome .process-inline.recipe-side-process-v30{min-width:0!important;width:100%!important;}
+#viewHome .process-side-card-v30{
+  height:100%!important;
+  min-height:104px!important;
+  border:1px solid rgba(255,255,255,.075)!important;
+  border-radius:15px!important;
+  background:rgba(255,255,255,.026)!important;
+  padding:13px 14px!important;
+}
+#viewHome .process-side-title-v30::before{content:'⚒ ';color:var(--gold2);}
+
+/* 타이틀 아이콘 */
+#viewHome .orders-panel .panel-title>span::before{content:'▣ ';color:var(--gold2);}
+#viewHome .recipe-work-panel>.panel-title::before{content:'▤ ';color:var(--gold2);margin-right:6px;}
+#viewHome .purchase-panel>.panel-title::before{content:'☑ ';color:var(--gold2);margin-right:6px;}
+#viewHome .memo-panel-v53>.panel-title>span::before{content:'✎ ';color:var(--gold2);}
+#viewHome .v21-search-command .search-icon-v21{color:var(--gold2)!important;}
+
+/* 작업 메모 */
+#viewHome .memo-panel-v53{
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:18px!important;
+  border-radius:18px!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.052),rgba(255,255,255,.018)),rgba(0,0,0,.22)!important;
+  border:1px solid rgba(255,255,255,.095)!important;
+  box-shadow:0 18px 46px rgba(0,0,0,.29)!important;
+}
+.memo-textarea-v53{
+  width:100%!important;
+  min-height:120px!important;
+  resize:vertical!important;
+  border-radius:14px!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+  background:rgba(12,15,20,.82)!important;
+  color:var(--text)!important;
+  outline:none!important;
+  padding:12px 13px!important;
+  font:inherit!important;
+  font-size:14px!important;
+  font-weight:850!important;
+  line-height:1.5!important;
+}
+.memo-textarea-v53:focus{border-color:rgba(255,181,46,.44)!important;box-shadow:0 0 0 3px rgba(255,181,46,.08)!important;}
+
+/* 즐겨찾기 느낌 보강 */
+#viewHome .fav-strip-v21::before{
+  content:'★ 즐겨찾기';
+  flex:0 0 auto;
+  height:31px;
+  display:inline-flex;
+  align-items:center;
+  color:#d8dde6;
+  font-size:12px;
+  font-weight:1000;
+  margin-right:2px;
+}
+
+@media(max-width:1280px){
+  :root{--axe-v53-shell:calc(100vw - 28px);--axe-v53-left:minmax(0,1fr);--axe-v53-right:minmax(0,1fr);}
+  #viewHome.app-view.active[data-view-panel="home"]{grid-template-columns:1fr!important;}
+  #viewHome .v21-search-command,#viewHome .summary-command,#viewHome .orders-panel,#viewHome .recipe-work-panel,#viewHome .purchase-panel,#viewHome .memo-panel-v53{grid-column:1/-1!important;grid-row:auto!important;}
+  #viewHome .axe-hero-v50{height:210px!important;background-position:center 14%!important;}
+}
+@media(max-width:680px){
+  #viewHome .axe-hero-v50{height:150px!important;background-position:center 12%!important;}
+  #viewHome .recipe-work-panel.has-process-v30 .recipe-combo-v30,
+  #viewHome .recipe-work-panel.has-process-v31 .recipe-combo-v30{grid-template-columns:1fr!important;}
+  .memo-textarea-v53{min-height:96px!important;}
+}
+</style>
+
+
+<script id="axeCookV53MemoScript">
+(function(){
+  const KEY='axe_cook_v53_work_memo';
+  function bind(){
+    const memo=document.getElementById('workMemoV53');
+    if(!memo)return;
+    memo.value=localStorage.getItem(KEY)||'';
+    memo.addEventListener('input',()=>localStorage.setItem(KEY,memo.value));
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind);else bind();
+})();
+</script>
+
 <script>
 (function(){
   if(!('serviceWorker' in navigator)) return;
