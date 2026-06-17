@@ -1138,6 +1138,201 @@ body{
   #viewHome .axe-hero-label-v50{left:12px!important;bottom:12px!important;}
 }
 
+
+
+/* AXE COOK v57: recipe/process balance, no inner scroll for 3 process items, softer banner crop */
+:root{
+  --axe-v57-shell:min(1500px,calc(100vw - 72px));
+}
+#viewHome.app-view.active[data-view-panel="home"]{
+  grid-template-rows:225px 136px 136px 224px!important;
+}
+#viewHome .axe-hero-v50{
+  height:225px!important;
+  min-height:225px!important;
+  max-height:225px!important;
+}
+#viewHome .axe-hero-img-v55{
+  object-fit:cover!important;
+  object-position:center 38%!important;
+}
+
+/* 레시피 패널은 두 칼럼의 라인을 맞추는 용도라 기존 단일 제목은 숨김 */
+#viewHome .recipe-work-panel>.panel-title{
+  display:none!important;
+}
+#viewHome .recipe-work-panel{
+  padding:16px!important;
+}
+#viewHome .recipe-work-panel .recipe-combo-v30,
+#viewHome .recipe-work-panel.has-process-v30 .recipe-combo-v30,
+#viewHome .recipe-work-panel.has-process-v31 .recipe-combo-v30,
+#viewHome .recipe-work-panel.no-process-v30 .recipe-combo-v30,
+#viewHome .recipe-work-panel.no-process-v31 .recipe-combo-v30{
+  height:100%!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  gap:16px!important;
+  align-items:stretch!important;
+}
+#viewHome .recipe-work-list,
+#viewHome .compact-recipe-list,
+#viewHome .process-inline.recipe-side-process-v30{
+  position:relative!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:8px!important;
+  height:100%!important;
+  min-height:0!important;
+  overflow:visible!important;
+  padding:32px 0 0!important;
+}
+#viewHome .recipe-work-list::before,
+#viewHome .compact-recipe-list::before{
+  content:'제작 레시피';
+}
+#viewHome .process-inline.recipe-side-process-v30::before{
+  content:'가공 레시피';
+}
+#viewHome .recipe-work-list::before,
+#viewHome .compact-recipe-list::before,
+#viewHome .process-inline.recipe-side-process-v30::before{
+  position:absolute!important;
+  left:0!important;
+  top:0!important;
+  height:22px!important;
+  display:flex!important;
+  align-items:center!important;
+  color:#f3f6fb!important;
+  font-size:16px!important;
+  font-weight:1000!important;
+  line-height:1!important;
+}
+#viewHome .recipe-work-list::after,
+#viewHome .compact-recipe-list::after,
+#viewHome .process-inline.recipe-side-process-v30::after{
+  content:'';
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  top:27px!important;
+  height:1px!important;
+  background:rgba(255,255,255,.065)!important;
+}
+
+/* 제작/가공 카드 높이를 통일하고 세로 스크롤 없이 보이게 압축 */
+#viewHome .recipe-work-card,
+#viewHome .recipe-v13-card,
+#viewHome .process-side-card-v30,
+#viewHome .process-recipe-card-v31{
+  flex:0 0 auto!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  padding:9px 10px!important;
+  border-radius:12px!important;
+  overflow:hidden!important;
+}
+#viewHome .recipe-v13-head{
+  margin-bottom:6px!important;
+}
+#viewHome .recipe-v13-name{
+  font-size:15px!important;
+}
+#viewHome .recipe-v13-time{
+  height:21px!important;
+  font-size:11.5px!important;
+  padding:0 6px!important;
+}
+#viewHome .recipe-v13-mats{
+  gap:4px!important;
+  line-height:1.15!important;
+}
+#viewHome .recipe-v13-mat{
+  font-size:11px!important;
+  padding:3px 6px!important;
+  line-height:1.15!important;
+}
+#viewHome .recipe-v13-mat b{
+  font-size:10.8px!important;
+  min-width:16px!important;
+  height:16px!important;
+}
+
+/* 가공 레시피 제목은 칼럼 헤더가 담당하므로 내부 제목 제거 */
+#viewHome .process-side-title-v30,
+#viewHome .process-recipe-head-v31{
+  display:none!important;
+}
+#viewHome .process-side-list-v30{
+  display:grid!important;
+  gap:7px!important;
+  overflow:visible!important;
+  max-height:none!important;
+}
+#viewHome .process-side-row-v30{
+  min-height:50px!important;
+  padding:7px 8px!important;
+  border-radius:10px!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  gap:7px!important;
+}
+#viewHome .process-side-row-v30 b{
+  font-size:12.2px!important;
+  line-height:1.1!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+#viewHome .process-side-row-v30 small{
+  display:block!important;
+  font-size:9.6px!important;
+  line-height:1.16!important;
+  margin-top:3px!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+#viewHome .process-side-batch-v30{
+  height:20px!important;
+  min-width:36px!important;
+  padding:0 6px!important;
+  font-size:10.5px!important;
+}
+#viewHome .process-empty-v54,
+#viewHome .axe-process-empty-v54 .empty{
+  min-height:74px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  text-align:left!important;
+  padding:10px 12px!important;
+  font-size:12px!important;
+  color:#9da7b7!important;
+}
+
+/* 구매 체크리스트 침범 방지: 아래 패널은 항상 별도 행에 고정 */
+#viewHome .purchase-panel{
+  grid-row:4!important;
+  overflow:hidden!important;
+}
+#viewHome .compact-checklist{
+  max-height:calc(100% - 38px)!important;
+  overflow:auto!important;
+}
+
+@media(max-width:1280px){
+  #viewHome.app-view.active[data-view-panel="home"]{grid-template-rows:auto!important;}
+  #viewHome .axe-hero-v50{height:auto!important;min-height:0!important;max-height:none!important;}
+  #viewHome .axe-hero-img-v55{height:auto!important;object-fit:contain!important;object-position:center center!important;}
+  #viewHome .recipe-work-panel .recipe-combo-v30{height:auto!important;}
+}
+@media(max-width:760px){
+  #viewHome .recipe-work-list,
+  #viewHome .compact-recipe-list,
+  #viewHome .process-inline.recipe-side-process-v30{padding-top:30px!important;}
+  #viewHome .recipe-work-panel .recipe-combo-v30{grid-template-columns:1fr!important;}
+}
+
 </style>
 
 <link rel="manifest" href="./manifest.json">
