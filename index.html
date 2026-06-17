@@ -1403,6 +1403,7 @@ body{
 
 <link rel="manifest" href="./manifest.json">
 <meta name="theme-color" content="#0b0d10">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="AXE COOK">
@@ -2047,17 +2048,23 @@ function loadSheetPayloadJsonp(url){
     const cb='axeCookSheetCallback_'+Date.now()+'_'+Math.random().toString(36).slice(2);
     const sep=url.includes('?')?'&':'?';
     const script=document.createElement('script');
-    const timer=setTimeout(()=>{
-      cleanup();
-      reject(new Error('시트 데이터 로딩 시간이 초과되었습니다.'));
-    },3500);
-    function cleanup(){
+    let settled=false;
+    const finish=(ok,value)=>{
+      if(settled)return;
+      settled=true;
       clearTimeout(timer);
-      try{delete window[cb];}catch(e){window[cb]=undefined;}
       if(script && script.parentNode) script.parentNode.removeChild(script);
-    }
-    window[cb]=(payload)=>{cleanup();resolve(payload);};
-    script.onerror=()=>{cleanup();reject(new Error('Apps Script 연결에 실패했습니다.'))};
+      // 늦게 도착한 JSONP 응답이 콜백을 호출해도 콘솔 오류가 나지 않도록 잠시 no-op으로 남겨둠
+      setTimeout(()=>{try{delete window[cb];}catch(e){window[cb]=undefined;}},30000);
+      ok ? resolve(value) : reject(value);
+    };
+    const timer=setTimeout(()=>{
+      // 타임아웃 뒤에 응답이 도착해도 ReferenceError가 나지 않도록 콜백은 유지
+      window[cb]=function(){ /* late JSONP response ignored */ };
+      finish(false,new Error('시트 데이터 로딩 시간이 초과되었습니다.'));
+    },9000);
+    window[cb]=(payload)=>finish(true,payload);
+    script.onerror=()=>finish(false,new Error('Apps Script 연결에 실패했습니다.'));
     script.src=url+sep+'action=getData&callback='+encodeURIComponent(cb)+'&t='+Date.now();
     document.head.appendChild(script);
   });
@@ -2184,7 +2191,7 @@ function recipeRowsByFood(name){return DB.recipes.filter(r=>text(r['요리명'])
 function renderRecipeCard(name){const card=document.getElementById('recipeCard');if(!card)return;const f=getFood(name);const rows=recipeRowsByFood(name);if(!f){card.innerHTML='<div class="empty">요리를 선택하세요.</div>';return;}card.innerHTML=`<div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start"><div><div style="font-size:18px;font-weight:1000;color:var(--gold2)">${h(name)}</div><div class="chip-row"><span class="chip">${h(text(f['등급'])||'등급 미확인')}</span><span class="chip">1세트 ${getSetQty(f)}개</span><span class="chip">판매가 ${getSale(f).toLocaleString()}원</span></div></div><button class="btn primary" data-recipe-add="${h(name)}">추가</button></div><div style="margin-top:12px" class="mini-list">${rows.length?rows.map(r=>`<div class="mini-row"><span>${h(r['재료명'])}</span><strong>${h(r['필요수량'])}</strong></div>`).join(''):'<div class="empty">등록된 레시피가 없습니다.</div>'}</div><div style="margin-top:10px;color:var(--muted);font-size:12px;font-weight:850;line-height:1.5">효과: ${h(text(f['효과'])||'미확인')} · 지속시간: ${h(text(f['지속시간'])||'미확인')}</div>`;card.querySelector('[data-recipe-add]')?.addEventListener('click',e=>addOrder(e.currentTarget.dataset.recipeAdd,document.getElementById('setCount').value));}
 function renderDataView(){const box=document.getElementById('dataView');if(!box)return;let rows=[];if(activeTab==='foods'){rows=DB.foods.slice(0,100);box.innerHTML=`<table><thead><tr><th>요리명</th><th>등급</th><th>1세트</th><th>판매가</th><th>효과</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${h(r['요리명'])}</td><td>${h(r['등급'])}</td><td>${getSetQty(r)}</td><td>${getSale(r).toLocaleString()}</td><td>${h(r['효과'])}</td></tr>`).join('')}</tbody></table>`;}else if(activeTab==='materials'){rows=DB.materials;box.innerHTML=`<table><thead><tr><th>재료</th><th>구매처</th><th>묶음</th><th>가격</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${h(r['재료명'])}</td><td>${h(r['구매처'])}</td><td>${h(r['묶음수량'])}</td><td>${h(r['묶음가격'])}</td></tr>`).join('')}</tbody></table>`;}else if(activeTab==='processes'){rows=DB.processes;box.innerHTML=`<table><thead><tr><th>가공재료</th><th>하위재료</th><th>필요</th><th>결과</th><th>시간</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${h(r['가공재료명'])}</td><td>${h(r['하위재료명'])}</td><td>${h(r['필요수량'])}</td><td>${h(r['결과수량']||'')}</td><td>${h(r['가공시간'])}</td></tr>`).join('')}</tbody></table>`;}else{const foodNames=[...new Set(DB.recipes.map(r=>text(r['요리명'])).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ko'));const first=foodNames[0]||'';box.innerHTML=`<div class="recipe-browser"><div class="recipe-list">${foodNames.map((n,i)=>`<button class="recipe-pick ${i===0?'active':''}" data-recipe-food="${h(n)}">${h(n)}</button>`).join('')}</div><div id="recipeCard" class="recipe-card"></div></div>`;box.querySelectorAll('[data-recipe-food]').forEach(b=>b.addEventListener('click',()=>{box.querySelectorAll('.recipe-pick').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderRecipeCard(b.dataset.recipeFood);}));renderRecipeCard(first);}}
 function render(){renderSearch();renderFavorites();renderOrders();renderResultsOnly();renderDataView();}
-async function boot(){await loadSheetRawBeforeBoot();initDB();loadState();document.getElementById('foodSearch').addEventListener('input',renderSearch);document.getElementById('clearBtn')?.addEventListener('click',resetWorkspace);document.getElementById('clearBtnVisible')?.addEventListener('click',resetWorkspace);document.getElementById('calcBtn')?.addEventListener('click',()=>{renderResultsOnly();toast('계산 갱신 완료');});document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');activeTab=b.dataset.tab;renderDataView();}));if(!orders.length && localStorage.getItem(STORE_EMPTY)!=='true'){localStorage.setItem(STORE_EMPTY,'true');}render();AXE_COOK_BOOT_READY=true;window.axeCookV5Debug=()=>({version:VERSION, foods:DB.foods.length, recipes:DB.recipes.length, materials:DB.materials.length, orders:orders.length, mode:AXE_COOK_DATA_SOURCE, sheetMeta:AXE_COOK_SHEET_META, workspaceEmpty:localStorage.getItem(STORE_EMPTY)==='true', focus:'single-recipe-workflow-process-beside-recipe-reset-modal' }); window.axeCookV4Debug=window.axeCookV5Debug; window.axeCookV31Debug=window.axeCookV5Debug; window.axeCookV29Debug=window.axeCookV5Debug; window.axeCookV28Debug=window.axeCookV5Debug; window.axeCookV27Debug=window.axeCookV5Debug;}
+async function boot(){await loadSheetRawBeforeBoot();initDB();loadState();document.getElementById('foodSearch').addEventListener('input',renderSearch);document.getElementById('clearBtn')?.addEventListener('click',resetWorkspace);document.getElementById('clearBtnVisible')?.addEventListener('click',resetWorkspace);document.getElementById('calcBtn')?.addEventListener('click',()=>{renderResultsOnly();toast('계산 갱신 완료');});document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');activeTab=b.dataset.tab;renderDataView();}));if(!orders.length && localStorage.getItem(STORE_EMPTY)!=='true'){localStorage.setItem(STORE_EMPTY,'true');}render();AXE_COOK_BOOT_READY=true;window.AXE_COOK_BOOT_READY=true;window.axeCookV5Debug=()=>({version:VERSION, foods:DB.foods.length, recipes:DB.recipes.length, materials:DB.materials.length, orders:orders.length, mode:AXE_COOK_DATA_SOURCE, sheetMeta:AXE_COOK_SHEET_META, workspaceEmpty:localStorage.getItem(STORE_EMPTY)==='true', focus:'single-recipe-workflow-process-beside-recipe-reset-modal' }); window.axeCookV4Debug=window.axeCookV5Debug; window.axeCookV31Debug=window.axeCookV5Debug; window.axeCookV29Debug=window.axeCookV5Debug; window.axeCookV28Debug=window.axeCookV5Debug; window.axeCookV27Debug=window.axeCookV5Debug;}
 document.addEventListener('DOMContentLoaded',boot);
 
 window.axeCookV11Debug = function(){
@@ -6495,11 +6502,11 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
   }
   var msgTimer=setInterval(setMsg,900); setMsg();
   var readyTimer=setInterval(function(){
-    if(window.AXE_COOK_BOOT_READY){clearInterval(readyTimer);clearInterval(msgTimer);hideLoader();}
+    if(window.AXE_COOK_BOOT_READY || (typeof AXE_COOK_BOOT_READY!=='undefined' && AXE_COOK_BOOT_READY)){clearInterval(readyTimer);clearInterval(msgTimer);hideLoader();}
   },80);
-  window.addEventListener('load',function(){setTimeout(function(){if(window.AXE_COOK_BOOT_READY){clearInterval(readyTimer);clearInterval(msgTimer);hideLoader();}},80);});
-  setTimeout(function(){clearInterval(readyTimer);clearInterval(msgTimer);hideLoader();},4500);
-  window.axeCookV69LoadingDebug=function(){return {version:'v70-real-loading',visible:!hidden,ready:!!window.AXE_COOK_BOOT_READY,elapsed:Date.now()-started};};
+  window.addEventListener('load',function(){setTimeout(function(){if(window.AXE_COOK_BOOT_READY || (typeof AXE_COOK_BOOT_READY!=='undefined' && AXE_COOK_BOOT_READY)){clearInterval(readyTimer);clearInterval(msgTimer);hideLoader();}},80);});
+  setTimeout(function(){clearInterval(readyTimer);clearInterval(msgTimer);hideLoader();},9500);
+  window.axeCookV69LoadingDebug=function(){return {version:'v71-error-cleanup',visible:!hidden,ready:!!window.AXE_COOK_BOOT_READY,elapsed:Date.now()-started};};
 })();
 </script>
 
