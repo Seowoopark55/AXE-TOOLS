@@ -1,55 +1,77 @@
-const AXE_COOK_CACHE = 'axe-cook-v54-dashboard-aligned-20260617';
-const AXE_COOK_ASSETS = [
-  './',
-  './index.html',
-  './manifest.json',
-  './service-worker.js',
-  './icon-192.png',
-  './icon-512.png',
-  './axe_banner.png'
+const CACHE_NAME = 'axe-cook-v71';
+const CORE_ASSETS = [
+  '/',
+  '/index.html',
+  '/manifest.json',
+  '/axe_banner.png',
+  '/icon-192.png',
+  '/icon-512.png'
 ];
 
 self.addEventListener('install', event => {
+  self.skipWaiting();
   event.waitUntil(
-    caches.open(AXE_COOK_CACHE)
-      .then(cache => cache.addAll(AXE_COOK_ASSETS))
-      .then(() => self.skipWaiting())
+    caches.open(CACHE_NAME).then(cache =>
+      Promise.allSettled(CORE_ASSETS.map(url => cache.add(url)))
+    )
   );
 });
 
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys()
-      .then(keys => Promise.all(keys.filter(key => key !== AXE_COOK_CACHE).map(key => caches.delete(key))))
-      .then(() => self.clients.claim())
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key)))
+    ).then(() => self.clients.claim())
   );
 });
 
-self.addEventListener('fetch', event => {
-  const req = event.request;
-  const url = new URL(req.url);
-
-  if (url.hostname.includes('script.google.com') || url.hostname.includes('googleusercontent.com')) {
-    event.respondWith(fetch(req));
-    return;
+function isSafeRequest(request) {
+  try {
+    const url = new URL(request.url);
+    if (url.protocol !== 'http:' && url.protocol !== 'https:') return false;
+    if (request.method !== 'GET') return false;
+    return true;
+  } catch (e) {
+    return false;
   }
+}
 
-  if (req.mode === 'navigate') {
+self.addEventListener('fetch', event => {
+  const request = event.request;
+  if (!isSafeRequest(request)) return;
+
+  const url = new URL(request.url);
+
+  if (request.mode === 'navigate') {
     event.respondWith(
-      fetch(req).then(res => {
-        const copy = res.clone();
-        caches.open(AXE_COOK_CACHE).then(cache => cache.put('./index.html', copy));
-        return res;
-      }).catch(() => caches.match('./index.html'))
+      fetch(request)
+        .then(response => {
+          if (response && response.ok) {
+            const copy = response.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put('/index.html', copy)).catch(() => {});
+          }
+          return response;
+        })
+        .catch(() => caches.match('/index.html'))
     );
     return;
   }
 
+  // 확장프로그램, Apps Script, 외부 스크립트 응답은 캐시에 넣지 않음
+  if (url.origin !== self.location.origin) {
+    event.respondWith(fetch(request));
+    return;
+  }
+
   event.respondWith(
-    caches.match(req).then(cached => cached || fetch(req).then(res => {
-      const copy = res.clone();
-      caches.open(AXE_COOK_CACHE).then(cache => cache.put(req, copy));
-      return res;
-    }))
+    fetch(request)
+      .then(response => {
+        if (response && response.ok && response.type === 'basic') {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(request, copy)).catch(() => {});
+        }
+        return response;
+      })
+      .catch(() => caches.match(request))
   );
 });
