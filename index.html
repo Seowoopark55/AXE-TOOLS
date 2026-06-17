@@ -1408,6 +1408,41 @@ body{
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="AXE COOK">
 <link rel="apple-touch-icon" href="./icon-192.png">
+
+<style id="axeCookV72SkeletonStyle">
+/* AXE COOK v72: boot overlay -> skeleton loading */
+.boot-loader-v69{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;}
+body.axe-skeleton-active #viewHome .axe-skel-panel-v72,
+body.axe-skeleton-active #viewHome .axe-skel-card-v72,
+body.axe-skeleton-active #viewHome .axe-skel-row-v72,
+body.axe-skeleton-active #viewHome .axe-skel-chip-v72{
+  position:relative!important;
+  overflow:hidden!important;
+  background:linear-gradient(110deg,rgba(255,255,255,.045) 8%,rgba(255,181,46,.08) 18%,rgba(255,255,255,.045) 33%)!important;
+  background-size:240% 100%!important;
+  animation:axeSkelMoveV72 1.25s ease-in-out infinite!important;
+  border-color:rgba(255,255,255,.075)!important;
+}
+@keyframes axeSkelMoveV72{0%{background-position:120% 0}100%{background-position:-120% 0}}
+#viewHome .axe-skeleton-grid-v72{display:grid!important;gap:7px!important;width:100%!important;}
+#viewHome .axe-skel-order-v72{display:grid!important;grid-template-columns:minmax(0,1fr) 64px 44px!important;gap:7px!important;align-items:center!important;padding:9px 10px!important;border-radius:12px!important;border:1px solid rgba(255,255,255,.075)!important;background:rgba(255,255,255,.024)!important;}
+#viewHome .axe-skel-lines-v72{display:grid!important;gap:6px!important;min-width:0!important;}
+#viewHome .axe-skel-line-v72{height:12px!important;border-radius:999px!important;background:rgba(255,255,255,.065)!important;}
+#viewHome .axe-skel-line-v72.w80{width:80%!important}.axe-skel-line-v72.w62{width:62%!important}.axe-skel-line-v72.w45{width:45%!important}
+#viewHome .axe-skel-box-v72{height:34px!important;border-radius:11px!important;border:1px solid rgba(255,255,255,.07)!important;background:rgba(255,255,255,.045)!important;}
+#viewHome .axe-skel-recipe-v72{height:66px!important;border-radius:10px!important;border:1px solid rgba(255,255,255,.075)!important;padding:9px 10px!important;display:grid!important;gap:8px!important;background:rgba(255,255,255,.024)!important;}
+#viewHome .axe-skel-recipe-top-v72{display:flex!important;gap:6px!important;align-items:center!important;}
+#viewHome .axe-skel-pill-v72{height:21px!important;border-radius:999px!important;background:rgba(255,255,255,.065)!important;}
+#viewHome .axe-skel-pills-v72{display:flex!important;flex-wrap:wrap!important;gap:4px!important;}
+#viewHome .axe-skel-mat-v72{width:64px!important;height:22px!important;border-radius:999px!important;background:rgba(255,255,255,.055)!important;}
+#viewHome .axe-skel-check-v72{height:60px!important;border-radius:12px!important;border:1px solid rgba(255,255,255,.075)!important;padding:9px!important;display:grid!important;grid-template-columns:19px minmax(0,1fr) 56px!important;gap:7px!important;align-items:center!important;background:rgba(255,255,255,.024)!important;}
+#viewHome .axe-skel-dot-v72{width:16px!important;height:16px!important;border-radius:5px!important;background:rgba(255,255,255,.06)!important;}
+#viewHome .axe-skel-favs-v72{display:flex!important;gap:6px!important;overflow:hidden!important;}
+#viewHome .axe-skel-fav-v72{height:30px!important;width:84px!important;border-radius:999px!important;border:1px solid rgba(255,181,46,.14)!important;background:rgba(255,181,46,.055)!important;}
+body:not(.axe-skeleton-active) .axe-skeleton-only-v72{display:none!important;}
+@media(max-width:680px){#viewHome .axe-skel-check-wrap-v72{grid-template-columns:1fr!important;}#viewHome .axe-skel-order-v72{grid-template-columns:minmax(0,1fr) 58px 42px!important;}}
+</style>
+
 </head>
 <body>
 
@@ -6507,6 +6542,34 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
   window.addEventListener('load',function(){setTimeout(function(){if(window.AXE_COOK_BOOT_READY || (typeof AXE_COOK_BOOT_READY!=='undefined' && AXE_COOK_BOOT_READY)){clearInterval(readyTimer);clearInterval(msgTimer);hideLoader();}},80);});
   setTimeout(function(){clearInterval(readyTimer);clearInterval(msgTimer);hideLoader();},9500);
   window.axeCookV69LoadingDebug=function(){return {version:'v71-error-cleanup',visible:!hidden,ready:!!window.AXE_COOK_BOOT_READY,elapsed:Date.now()-started};};
+})();
+</script>
+
+
+<script id="axeCookV72SkeletonScript">
+(function(){
+  function byId(id){return document.getElementById(id);}
+  function isReady(){return !!(window.AXE_COOK_BOOT_READY || (typeof AXE_COOK_BOOT_READY!=='undefined' && AXE_COOK_BOOT_READY));}
+  function orderSkeleton(){return '<div class="axe-skeleton-grid-v72 axe-skeleton-only-v72"><div class="axe-skel-order-v72 axe-skel-card-v72"><div class="axe-skel-lines-v72"><i class="axe-skel-line-v72 w62"></i><i class="axe-skel-line-v72 w80"></i></div><i class="axe-skel-box-v72"></i><i class="axe-skel-box-v72"></i></div><div class="axe-skel-order-v72 axe-skel-card-v72"><div class="axe-skel-lines-v72"><i class="axe-skel-line-v72 w45"></i><i class="axe-skel-line-v72 w80"></i></div><i class="axe-skel-box-v72"></i><i class="axe-skel-box-v72"></i></div></div>';}
+  function recipeSkeleton(){
+    var card='<div class="axe-skel-recipe-v72 axe-skel-card-v72"><div class="axe-skel-recipe-top-v72"><i class="axe-skel-pill-v72" style="width:82px"></i><i class="axe-skel-pill-v72" style="width:58px"></i></div><div class="axe-skel-pills-v72"><i class="axe-skel-mat-v72"></i><i class="axe-skel-mat-v72" style="width:72px"></i><i class="axe-skel-mat-v72" style="width:56px"></i></div></div>';
+    return '<div class="axe-recipe-grid-v64 axe-skeleton-only-v72"><section class="axe-recipe-col-v64"><div class="axe-recipe-head-v64"><h3 class="axe-recipe-title-v64"><span class="ico-v64">▤</span><span>제작 레시피</span></h3></div><div class="axe-recipe-body-v64">'+card+card+'</div></section><section class="axe-recipe-col-v64"><div class="axe-recipe-head-v64"><h3 class="axe-recipe-title-v64"><span class="ico-v64">⚒</span><span>가공 레시피</span></h3></div><div class="axe-recipe-body-v64">'+card+card+'</div></section></div>';
+  }
+  function purchaseSkeleton(){return '<div class="compact-checklist axe-skel-check-wrap-v72 axe-skeleton-only-v72"><label class="axe-skel-check-v72 axe-skel-card-v72"><i class="axe-skel-dot-v72"></i><div class="axe-skel-lines-v72"><i class="axe-skel-line-v72 w62"></i><i class="axe-skel-line-v72 w80"></i></div><i class="axe-skel-box-v72"></i></label><label class="axe-skel-check-v72 axe-skel-card-v72"><i class="axe-skel-dot-v72"></i><div class="axe-skel-lines-v72"><i class="axe-skel-line-v72 w45"></i><i class="axe-skel-line-v72 w80"></i></div><i class="axe-skel-box-v72"></i></label><label class="axe-skel-check-v72 axe-skel-card-v72"><i class="axe-skel-dot-v72"></i><div class="axe-skel-lines-v72"><i class="axe-skel-line-v72 w80"></i><i class="axe-skel-line-v72 w62"></i></div><i class="axe-skel-box-v72"></i></label><label class="axe-skel-check-v72 axe-skel-card-v72"><i class="axe-skel-dot-v72"></i><div class="axe-skel-lines-v72"><i class="axe-skel-line-v72 w62"></i><i class="axe-skel-line-v72 w45"></i></div><i class="axe-skel-box-v72"></i></label></div>';}
+  function favSkeleton(){return '<div class="axe-skel-favs-v72 axe-skeleton-only-v72"><i class="axe-skel-fav-v72 axe-skel-chip-v72"></i><i class="axe-skel-fav-v72 axe-skel-chip-v72"></i><i class="axe-skel-fav-v72 axe-skel-chip-v72"></i></div>';}
+  function mountSkeleton(){
+    if(isReady())return;
+    document.body.classList.add('axe-skeleton-active');
+    var fav=byId('favStrip'); if(fav) fav.innerHTML=favSkeleton();
+    var order=byId('orderList'); if(order) order.innerHTML=orderSkeleton();
+    var recipePanel=document.querySelector('#viewHome .recipe-work-panel'); if(recipePanel) recipePanel.innerHTML=recipeSkeleton();
+    var purchase=byId('purchaseList'); if(purchase) purchase.innerHTML=purchaseSkeleton();
+  }
+  function unmountSkeleton(){document.body.classList.remove('axe-skeleton-active');}
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',mountSkeleton); else mountSkeleton();
+  var t=setInterval(function(){if(isReady()){clearInterval(t);unmountSkeleton();}},80);
+  setTimeout(function(){clearInterval(t);unmountSkeleton();},10000);
+  window.axeCookV72SkeletonDebug=function(){return {version:'v72-skeleton-loading',active:document.body.classList.contains('axe-skeleton-active'),ready:isReady()};};
 })();
 </script>
 
