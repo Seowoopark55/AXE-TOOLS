@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>AXE TOOLS - COOK v27 Workspace Reset</title>
+<title>AXE COOK</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23ffb52e'/%3E%3Ctext x='32' y='39' text-anchor='middle' font-size='22' font-family='Arial' font-weight='900' fill='%23111111'%3EAX%3C/text%3E%3C/svg%3E">
 <style>
 :root{--bg:#0b0d10;--line:rgba(255,255,255,.09);--muted:#8d95a3;--text:#f4f6fa;--sub:#c8ced8;--gold:#ffb52e;--gold2:#ffd27a;--ok:#63e6a3;--bad:#ff6f7d;--shadow:0 18px 55px rgba(0,0,0,.35)}
@@ -764,6 +764,13 @@ body{font-size:15.8px!important;}
 @media(max-width:640px){#settingsRootV44 .detail-line-v44{grid-template-columns:68px minmax(0,1fr)!important;}#settingsRootV44 .group-lines-v44{grid-template-columns:1fr!important;}}
 
 </style>
+
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#0b0d10">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="AXE COOK">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
 </head>
 <body>
 <div class="app">
@@ -1383,7 +1390,7 @@ fish_022	보카시오 록피시	1	분홍살생선	5	10초	TRUE	22
 fish_023	코르비나	1	흰살생선	6	10초	TRUE	23	
 fish_024	태평양 바라쿠다	1	분홍살생선	6	10초	TRUE	24	
 `};
-const VERSION='AXE_TOOLS_COOK_BETA_V29_RESET_VISIBLE';
+const VERSION='AXE_TOOLS_COOK_BETA_V47_PWA';
 const STORE_ORDERS='axe_cook_v1_orders', STORE_FAVS='axe_cook_v1_favs', STORE_CHECKS='axe_cook_v1_checks', STORE_EMPTY='axe_cook_v1_workspace_empty';
 const PROCESS_OUTPUT={'빵반죽':8,'식빵':8,'구운빵':8};
 let DB={foods:[],recipes:[],materials:[],processes:[],farm:[],aliases:[],fish:[],aliasMap:new Map()}, orders=[], favorites=[], checks={}, activeTab='foods';
@@ -2954,5 +2961,16 @@ window.axeCookV6Debug = window.axeCookV11Debug;
 })();
 </script>
 
+
+<script>
+(function(){
+  if(!('serviceWorker' in navigator)) return;
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('./service-worker.js').catch(function(err){
+      console.warn('[AXE COOK] service worker registration failed', err);
+    });
+  });
+})();
+</script>
 </body>
 </html>
