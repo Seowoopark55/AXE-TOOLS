@@ -9587,7 +9587,7 @@ window.addEventListener('load',function(){
 </style>
 
 
-<!-- AXE COOK v130-a: Workspace engine foundation, UI unchanged -->
+<!-- AXE COOK v130-b: Workspace engine + page tabs -->
 <script id="axe-v130a-workspace-engine">
 (function(){
   'use strict';
@@ -9613,7 +9613,9 @@ window.addEventListener('load',function(){
     return {
       id:safeNum(w&&w.id,i+1)||i+1,
       name:String((w&&w.name)||((i+1)+'')),
-      items:normalizeItems(w&&w.items)
+      items:normalizeItems(w&&w.items),
+      checks:(w&&w.checks&&typeof w.checks==='object')?w.checks:{},
+      memo:String((w&&w.memo)||'')
     };
   }
   function readJSON(key,fallback){
@@ -9659,21 +9661,104 @@ window.addEventListener('load',function(){
     currentWorkspace().items=normalized;
     return normalized;
   }
+  function readCurrentChecks(){
+    try{if(typeof checks!=='undefined'&&checks&&typeof checks==='object')return JSON.parse(JSON.stringify(checks));}catch(e){}
+    return readJSON(STORE_CHECKS_SAFE,{});
+  }
+  function writeCurrentChecks(obj){
+    var safe=(obj&&typeof obj==='object')?obj:{};
+    try{checks=safe;}catch(e){}
+    try{window.checks=safe;}catch(e){}
+    try{localStorage.setItem(STORE_CHECKS_SAFE,JSON.stringify(safe));}catch(e){}
+  }
+  function readCurrentMemo(){
+    var el=document.getElementById('workMemoV53');
+    if(el)return String(el.value||'');
+    try{return String(localStorage.getItem('axe_cook_v53_memo')||'');}catch(e){return '';}
+  }
+  function writeCurrentMemo(v){
+    var memo=String(v||'');
+    try{localStorage.setItem('axe_cook_v53_memo',memo);}catch(e){}
+    var el=document.getElementById('workMemoV53');
+    if(el)el.value=memo;
+  }
+  function captureActiveState(){
+    var w=currentWorkspace();
+    w.items=legacyOrders();
+    w.checks=readCurrentChecks();
+    w.memo=readCurrentMemo();
+    return w;
+  }
+  function applyActiveState(){
+    var w=currentWorkspace();
+    setGlobalOrders(w.items||[]);
+    writeCurrentChecks(w.checks||{});
+    writeCurrentMemo(w.memo||'');
+    try{localStorage.setItem(STORE_ORDERS_SAFE,JSON.stringify(w.items||[]));}catch(e){}
+    return w;
+  }
+  function renderSafe(){
+    try{if(typeof render==='function')render();}
+    catch(e){try{if(typeof renderResultsOnly==='function')renderResultsOnly();}catch(_){}}
+  }
+  function nextWorkspaceId(){
+    return workspaces.reduce(function(m,w){return Math.max(m,safeNum(w&&w.id,0));},0)+1;
+  }
+  function switchWorkspace(index){
+    initEngine();
+    var i=Math.floor(safeNum(index,activeWorkspace));
+    if(i<0||i>=workspaces.length)return false;
+    captureActiveState();
+    activeWorkspace=i;
+    applyActiveState();
+    saveWorkspaces();
+    renderSafe();
+    try{if(typeof window.axeRenderWorkspaceTabsV130b==='function')window.axeRenderWorkspaceTabsV130b();}catch(e){}
+    return true;
+  }
+  function createWorkspace(){
+    initEngine();
+    captureActiveState();
+    workspaces.push({id:nextWorkspaceId(),name:String(workspaces.length+1),items:[],checks:{},memo:''});
+    activeWorkspace=workspaces.length-1;
+    applyActiveState();
+    saveWorkspaces();
+    renderSafe();
+    try{if(typeof toast==='function')toast('새 작업 페이지 추가');}catch(e){}
+    try{if(typeof window.axeRenderWorkspaceTabsV130b==='function')window.axeRenderWorkspaceTabsV130b();}catch(e){}
+    return true;
+  }
+  function deleteWorkspace(index){
+    initEngine();
+    if(workspaces.length<=1)return false;
+    var i=Math.floor(safeNum(index,activeWorkspace));
+    if(i<0||i>=workspaces.length)return false;
+    workspaces.splice(i,1);
+    activeWorkspace=Math.max(0,Math.min(i,workspaces.length-1));
+    workspaces.forEach(function(w,n){ if(!w.name||/^\d+$/.test(String(w.name)))w.name=String(n+1); });
+    applyActiveState();
+    saveWorkspaces();
+    renderSafe();
+    try{if(typeof toast==='function')toast('작업 페이지 삭제 완료');}catch(e){}
+    try{if(typeof window.axeRenderWorkspaceTabsV130b==='function')window.axeRenderWorkspaceTabsV130b();}catch(e){}
+    return true;
+  }
   function persistLegacyState(){
     try{localStorage.setItem(STORE_ORDERS_SAFE,JSON.stringify(currentItems()));}catch(e){}
     try{if(typeof favorites!=='undefined')localStorage.setItem(STORE_FAVS_SAFE,JSON.stringify(favorites||[]));}catch(e){}
     try{if(typeof checks!=='undefined')localStorage.setItem(STORE_CHECKS_SAFE,JSON.stringify(checks||{}));}catch(e){}
   }
   function afterMutation(){
-    syncOrdersToActive();
+    captureActiveState();
     saveWorkspaces();
     persistLegacyState();
     syncActiveToOrders();
+    try{if(typeof window.axeRenderWorkspaceTabsV130b==='function')window.axeRenderWorkspaceTabsV130b();}catch(e){}
   }
   function initEngine(){
     if(booted)return;
     loadWorkspaces();
-    syncActiveToOrders();
+    applyActiveState();
     saveWorkspaces();
     persistLegacyState();
     booted=true;
@@ -9748,8 +9833,13 @@ window.addEventListener('load',function(){
     currentItems:currentItems,
     syncActiveToOrders:syncActiveToOrders,
     syncOrdersToActive:syncOrdersToActive,
-    save:function(){syncOrdersToActive();saveWorkspaces();persistLegacyState();},
-    resetToLegacy:function(){workspaces=[{id:1,name:'1',items:legacyOrders()}];activeWorkspace=0;saveWorkspaces();syncActiveToOrders();}
+    captureActiveState:captureActiveState,
+    applyActiveState:applyActiveState,
+    switchWorkspace:switchWorkspace,
+    createWorkspace:createWorkspace,
+    deleteWorkspace:deleteWorkspace,
+    save:function(){captureActiveState();saveWorkspaces();persistLegacyState();syncActiveToOrders();},
+    resetToLegacy:function(){workspaces=[{id:1,name:'1',items:legacyOrders(),checks:readCurrentChecks(),memo:readCurrentMemo()}];activeWorkspace=0;saveWorkspaces();applyActiveState();}
   };
   window.axeCookV130aDebug=function(){
     initEngine();
@@ -9764,6 +9854,86 @@ window.addEventListener('load',function(){
   };
 
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initEngine,{once:true});else initEngine();
+})();
+
+</script>
+
+<!-- AXE COOK v130-b: Workspace page tab UI -->
+<script id="axe-v130b-workspace-tabs">
+(function(){
+  'use strict';
+  function esc(s){return String(s==null?'':s).replace(/[&<>'"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c];});}
+  function injectStyle(){
+    if(document.getElementById('axeWorkspaceTabsV130bStyle'))return;
+    var st=document.createElement('style');
+    st.id='axeWorkspaceTabsV130bStyle';
+    st.textContent='\
+      .workspace-tabs-v130b{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 10px;padding:8px 9px;border:1px solid rgba(255,255,255,.075);border-radius:13px;background:rgba(255,255,255,.025)}\
+      .workspace-tabs-left-v130b{display:flex;align-items:center;gap:6px;min-width:0;overflow:auto;padding-bottom:1px}.workspace-tab-v130b,.workspace-add-v130b,.workspace-del-v130b{height:28px;min-width:30px;padding:0 10px;border-radius:999px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.035);color:#c8ced8;font-size:11px;font-weight:1000;white-space:nowrap}.workspace-tab-v130b.active{background:linear-gradient(135deg,#ffcf61,#ffb52e);border-color:rgba(255,181,46,.8);color:#17100a}.workspace-add-v130b{border-color:rgba(255,181,46,.28);color:#ffd27a;background:rgba(255,181,46,.07)}.workspace-del-v130b{color:#ff9aa3;border-color:rgba(255,111,125,.25);background:rgba(255,111,125,.06)}.workspace-del-v130b:disabled{opacity:.35;cursor:not-allowed}.axe-page-modal-v130b{position:fixed;inset:0;z-index:999999;display:none;place-items:center;background:rgba(0,0,0,.56);backdrop-filter:blur(5px)}.axe-page-modal-v130b.show{display:grid}.axe-page-modal-card-v130b{width:min(360px,calc(100vw - 34px));border:1px solid rgba(255,181,46,.2);border-radius:18px;background:#111318;box-shadow:0 22px 70px rgba(0,0,0,.45);padding:18px}.axe-page-modal-title-v130b{font-size:16px;font-weight:1000;color:#f2f5fb;margin-bottom:8px}.axe-page-modal-msg-v130b{font-size:13px;line-height:1.5;color:#aeb7c5;font-weight:850;margin-bottom:16px}.axe-page-modal-actions-v130b{display:flex;justify-content:flex-end;gap:8px}.axe-page-modal-actions-v130b .danger{background:rgba(255,111,125,.12);border-color:rgba(255,111,125,.32);color:#ffc3c8}\
+      @media(max-width:680px){.workspace-tabs-v130b{align-items:flex-start;flex-direction:column}.workspace-tabs-left-v130b{width:100%}}';
+    document.head.appendChild(st);
+  }
+  function getEngine(){return window.axeWorkspaceEngine||null;}
+  function labelForWorkspace(w,i){
+    var items=(w&&Array.isArray(w.items))?w.items:[];
+    if(items.length===1&&items[0]&&items[0].name)return items[0].name;
+    return (w&&w.name)?w.name:String(i+1);
+  }
+  function ensureHost(){
+    var orderList=document.getElementById('orderList');
+    if(!orderList)return null;
+    var host=document.getElementById('workspaceTabsV130b');
+    if(!host){
+      host=document.createElement('div');
+      host.id='workspaceTabsV130b';
+      host.className='workspace-tabs-v130b';
+      orderList.parentNode.insertBefore(host,orderList);
+    }
+    return host;
+  }
+  function confirmDelete(pageName){
+    return new Promise(function(resolve){
+      var root=document.getElementById('axePageModalV130b');
+      if(!root){root=document.createElement('div');root.id='axePageModalV130b';root.className='axe-page-modal-v130b';document.body.appendChild(root);}
+      root.innerHTML='<div class="axe-page-modal-card-v130b" role="dialog" aria-modal="true"><div class="axe-page-modal-title-v130b">작업 페이지를 삭제할까요?</div><div class="axe-page-modal-msg-v130b">'+esc(pageName)+' 페이지의 작업목록, 체크상태, 메모가 삭제됩니다.</div><div class="axe-page-modal-actions-v130b"><button type="button" class="btn danger" data-yes>삭제</button><button type="button" class="btn ghost" data-no>취소</button></div></div>';
+      function close(v){root.classList.remove('show');resolve(v);} root.classList.add('show');
+      root.querySelector('[data-yes]').onclick=function(){close(true);};
+      root.querySelector('[data-no]').onclick=function(){close(false);};
+      root.onclick=function(e){if(e.target===root)close(false);};
+    });
+  }
+  function renderTabs(){
+    injectStyle();
+    var eng=getEngine();
+    var host=ensureHost();
+    if(!eng||!host)return;
+    try{if(typeof eng.captureActiveState==='function')eng.captureActiveState();}catch(e){}
+    var list=Array.isArray(eng.workspaces)?eng.workspaces:[];
+    var active=Number(eng.activeWorkspace)||0;
+    var html='<div class="workspace-tabs-left-v130b">';
+    list.forEach(function(w,i){html+='<button type="button" class="workspace-tab-v130b '+(i===active?'active':'')+'" data-ws-index="'+i+'">'+esc(labelForWorkspace(w,i))+'</button>';});
+    html+='<button type="button" class="workspace-add-v130b" data-ws-add>+</button></div>';
+    html+='<button type="button" class="workspace-del-v130b" data-ws-delete '+(list.length<=1?'disabled':'')+'>×</button>';
+    host.innerHTML=html;
+    host.querySelectorAll('[data-ws-index]').forEach(function(btn){btn.onclick=function(){var idx=Number(btn.getAttribute('data-ws-index')); if(eng.switchWorkspace)eng.switchWorkspace(idx);};});
+    var add=host.querySelector('[data-ws-add]'); if(add)add.onclick=function(){if(eng.createWorkspace)eng.createWorkspace();};
+    var del=host.querySelector('[data-ws-delete]'); if(del)del.onclick=async function(){
+      if(del.disabled)return;
+      var current=(eng.workspaces||[])[Number(eng.activeWorkspace)||0];
+      var name=labelForWorkspace(current,Number(eng.activeWorkspace)||0);
+      var ok=await confirmDelete(name);
+      if(ok&&eng.deleteWorkspace)eng.deleteWorkspace(Number(eng.activeWorkspace)||0);
+    };
+  }
+  window.axeRenderWorkspaceTabsV130b=renderTabs;
+  function delayed(){renderTabs();setTimeout(renderTabs,80);setTimeout(renderTabs,400);}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',delayed,{once:true});else delayed();
+  var oldRender=window.render;
+  if(typeof oldRender==='function'&&!oldRender.__axeV130bWrapped){
+    var wrapped=function(){var out=oldRender.apply(this,arguments);try{renderTabs();}catch(e){}return out;};
+    wrapped.__axeV130bWrapped=true;
+    window.render=wrapped;try{render=wrapped;}catch(e){}
+  }
 })();
 </script>
 
