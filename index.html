@@ -1525,8 +1525,16 @@ body{
   #viewData .axe-info-grid-v87{max-width:none!important;}
 }
 </style>
+
+<style id="v119-brand-splash">
+#axeBrandSplash{position:fixed;inset:0;z-index:999999;background:#0b0d10;display:flex;align-items:center;justify-content:center;transition:opacity .25s ease}
+#axeBrandSplash.hide{opacity:0;pointer-events:none}
+#axeBrandSplash img{width:min(320px,60vw);opacity:0;animation:axeFade .35s ease forwards, axeScale 1.2s ease forwards}
+@keyframes axeFade{to{opacity:1}}
+@keyframes axeScale{from{transform:scale(.97)}to{transform:scale(1.03)}}
+</style>
 </head>
-<body>
+<body><div id="axeBrandSplash"><img src="axe.png" alt="AXE"></div>
 
 <div id="bootLoaderV69" class="boot-loader-v69" role="status" aria-label="AXE COOK 시작 화면">
   <div class="boot-card-v69">
@@ -9467,6 +9475,15 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
 })();
 </script>
 
+
+<script>
+window.addEventListener('load',function(){
+ setTimeout(function(){
+  var s=document.getElementById('axeBrandSplash');
+  if(s){s.classList.add('hide');setTimeout(()=>s.remove(),300);}
+ },800);
+});
+</script>
 </body>
 </html>
 
