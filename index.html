@@ -9395,3 +9395,137 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
   setTimeout(tagNames,0);
 })();
 </script>
+
+<style>
+/* AXE COOK v108: 데이터 요리 상세 조리시간 최종 흡수 */
+#viewData .axe-info-grid-v108{
+  display:grid!important;
+  grid-template-columns:minmax(0,1.45fr) minmax(150px,.65fr) minmax(150px,.65fr)!important;
+  gap:8px!important;
+  margin:12px 0 12px!important;
+  max-width:760px!important;
+}
+#viewData .axe-info-v108{
+  border:1px solid rgba(255,255,255,.08)!important;
+  background:rgba(255,255,255,.035)!important;
+  border-radius:13px!important;
+  padding:9px 10px!important;
+  min-height:54px!important;
+}
+#viewData .axe-info-label-v108{
+  font-size:10.5px!important;
+  color:#8f98a6!important;
+  font-weight:950!important;
+  margin-bottom:5px!important;
+}
+#viewData .axe-info-value-v108{
+  font-size:14px!important;
+  color:#f4f7fb!important;
+  font-weight:1000!important;
+  line-height:1.35!important;
+}
+#viewData .axe-cooktime-v108 .axe-info-value-v108{
+  color:#ffcf61!important;
+}
+#viewData .axe-detail-badges-v87{margin-top:7px!important;}
+#viewData .axe-line-list-v87{max-width:760px!important;}
+@media(max-width:840px){#viewData .axe-info-grid-v108{grid-template-columns:1fr!important;max-width:none!important}}
+</style>
+<script>
+(function(){
+  'use strict';
+  function t(v){return (v==null?'':String(v)).trim();}
+  function e(v){return t(v).replace(/[&<>'"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c];});}
+  function norm(v){return t(v).toLowerCase().replace(/\s+/g,'');}
+  function isOn(v){var x=t(v).toUpperCase();return !x||x==='TRUE'||x==='Y'||x==='YES'||x==='1'||x==='사용'||x==='O';}
+  function setQty(food){var v=t(food&&food['1세트수량']);return v||'1';}
+  function cookTime(food){
+    var v=t(food&&food['조리시간']);
+    if(!v) v=t(food&&food['중간수치']);
+    if(!v) v=t(food&&food['시간']);
+    if(!v) return '미확인';
+    if(v==='미확인') return v;
+    return /[초분]/.test(v) ? v : (v+'초');
+  }
+  function getFoodLocal(name){
+    if(typeof getFood==='function') return getFood(name)||{};
+    return ((window.DB&&DB.foods)||[]).find(function(r){return t(r['요리명'])===name;})||{};
+  }
+  function foodRecipes(name){return ((window.DB&&DB.recipes)||[]).filter(function(r){return t(r['요리명'])===name;});}
+  function grouped(list,key){var m=new Map();(list||[]).forEach(function(r){var n=t(r[key]);if(!n)return;if(!m.has(n))m.set(n,[]);m.get(n).push(r);});return Array.from(m.entries()).sort(function(a,b){return a[0].localeCompare(b[0],'ko');});}
+  function searchOk(name){var input=document.getElementById('dataSearchV87');var q=norm(input?input.value:'');return !q||norm(name).includes(q);}
+  function favButton(name){
+    var on=(window.favorites||[]).includes(name);
+    return '<button class="btn ghost axe-data-action-v94 axe-fav-btn-v94 '+(on?'is-fav':'')+'" type="button" data-fav-v108="'+e(name)+'" title="'+(on?'즐겨찾기 해제':'즐겨찾기 추가')+'"><span class="star-v94">'+(on?'★':'☆')+'</span></button>';
+  }
+  function head(name,badges,action){
+    return '<div class="axe-detail-head-v94"><div class="axe-detail-main-v94"><div class="axe-detail-title-row-v94"><div class="axe-detail-title-v87">'+e(name)+'</div>'+(action?'<div class="axe-data-actions-v94"><button class="btn primary axe-data-action-v94 axe-work-v94" type="button" data-add-v108="'+e(name)+'">작업+</button>'+favButton(name)+'</div>':'')+'</div>'+(badges?'<div class="axe-detail-badges-v87">'+badges+'</div>':'')+'</div></div>';
+  }
+  function line(name,qty){return '<div class="axe-mini-chip-v87"><span>'+e(name)+'</span>'+(t(qty)?' <b>'+e(qty)+'</b>':'')+'</div>';}
+  function foodDetail(name){
+    var food=getFoodLocal(name), rec=foodRecipes(name);
+    var badges='<span class="axe-badge-v87">'+e(t(food['등급'])||'등급 미확인')+'</span><span class="axe-badge-v87 gold">1세트 '+e(setQty(food))+'개</span>';
+    var effect=t(food['효과'])||'미확인';
+    var duration=t(food['지속시간'])||'미확인';
+    var ct=cookTime(food);
+    var mats=rec.length?rec.map(function(r){return line(r['재료명'],r['필요수량']);}).join(''):'<span class="axe-mini-chip-v87">등록된 레시피가 없습니다.</span>';
+    return head(name,badges,true)+
+      '<div class="axe-info-grid-v108"><div class="axe-info-v108"><div class="axe-info-label-v108">효과</div><div class="axe-info-value-v108">'+e(effect)+'</div></div><div class="axe-info-v108"><div class="axe-info-label-v108">지속시간</div><div class="axe-info-value-v108">'+e(duration)+'</div></div><div class="axe-info-v108 axe-cooktime-v108"><div class="axe-info-label-v108">조리시간</div><div class="axe-info-value-v108">'+e(ct)+'</div></div></div>'+ 
+      '<div class="axe-process-mini-v87">'+mats+'</div>';
+  }
+  function materialDetail(name,rows){
+    var chips=(rows||[]).map(function(r){var where=t(r['구매처'])||'-';var pack=t(r['묶음수량'])||'1';var price=t(r['묶음가격'])||'-';return '<span class="axe-mini-chip-v87">'+e(where)+' · '+e(pack)+'개 묶음 <b>'+e(price)+'원</b></span>';}).join('');
+    return head(name,'',false)+'<div class="axe-process-mini-v87">'+(chips||'<span class="axe-mini-chip-v87">데이터가 없습니다.</span>')+'</div>';
+  }
+  function processDetail(name,rows){
+    var time=t(((rows||[]).find(function(r){return t(r['가공시간']);})||{})['가공시간'])||'미확인';
+    var mats=(rows||[]).filter(function(r){return t(r['하위재료명']);}).map(function(r){return line(r['하위재료명'],r['필요수량']);}).join('');
+    return head(name,'<span class="axe-badge-v87 gold">가공시간 '+e(time)+'</span>',false)+'<div class="axe-process-mini-v87">'+(mats||'<span class="axe-mini-chip-v87">하위재료 미확인</span>')+'</div>';
+  }
+  function bindDetail(detail,show,current){
+    detail.querySelectorAll('[data-add-v108]').forEach(function(b){b.addEventListener('click',function(){if(typeof addOrder==='function')addOrder(b.dataset.addV108,1);});});
+    detail.querySelectorAll('[data-fav-v108]').forEach(function(b){b.addEventListener('click',function(){if(typeof toggleFavorite==='function')toggleFavorite(b.dataset.favV108); if(typeof renderFavorites==='function')renderFavorites(); show(current);});});
+  }
+  function renderBrowser(box,items,detailFn){
+    items=items.filter(function(it){return searchOk(it[0]);});
+    if(!items.length){box.innerHTML='<div class="axe-empty-v87">검색 결과가 없습니다.</div>';return;}
+    var current=items[0][0];
+    box.innerHTML='<div class="axe-data-browser-v87"><div class="axe-data-list-v87">'+items.map(function(it,i){return '<button class="axe-data-pick-v87 '+(i===0?'active':'')+'" type="button" data-name-v108="'+e(it[0])+'"><span>'+e(it[0])+'</span></button>';}).join('')+'</div><div id="axeDataDetailV108" class="axe-data-detail-v87"></div></div>';
+    function show(name){current=name;var target=items.find(function(it){return it[0]===name;})||items[0];var detail=document.getElementById('axeDataDetailV108');if(detail){detail.innerHTML=detailFn(target[0],target[1]);bindDetail(detail,show,current);}}
+    box.querySelectorAll('[data-name-v108]').forEach(function(b){b.addEventListener('click',function(){box.querySelectorAll('.axe-data-pick-v87').forEach(function(x){x.classList.remove('active');});b.classList.add('active');show(b.dataset.nameV108);});});
+    show(current);
+  }
+  function syncTabs(){
+    document.querySelectorAll('#viewData [data-tab="recipes"]').forEach(function(el){el.remove();});
+    if(typeof activeTab!=='undefined' && activeTab==='recipes') activeTab='foods';
+  }
+  window.renderDataView=function(){
+    syncTabs();
+    var input=document.getElementById('dataSearchV87'), clear=document.getElementById('dataSearchClearV87');
+    if(input&&!input.dataset.v108Bound){input.dataset.v108Bound='1';input.addEventListener('input',function(){if(clear)clear.hidden=!input.value;window.renderDataView();});}
+    if(clear&&!clear.dataset.v108Bound){clear.dataset.v108Bound='1';clear.addEventListener('click',function(){if(input){input.value='';input.focus();}clear.hidden=true;window.renderDataView();});}
+    var box=document.getElementById('dataView');if(!box)return;
+    if(!window.DB||!Array.isArray(DB.foods)){box.innerHTML='<div class="axe-empty-v87">시트 데이터를 불러오는 중입니다.</div>';return;}
+    if(typeof activeTab==='undefined') window.activeTab='foods';
+    if(activeTab==='foods'){
+      var foods=(DB.foods||[]).filter(function(r){return isOn(r['사용여부']);}).map(function(r){return [t(r['요리명']),r];}).filter(function(x){return x[0];}).sort(function(a,b){return a[0].localeCompare(b[0],'ko');});
+      renderBrowser(box,foods,function(name){return foodDetail(name);});
+    }else if(activeTab==='materials'){
+      renderBrowser(box,grouped((DB.materials||[]).filter(function(r){return isOn(r['사용여부']);}),'재료명'),materialDetail);
+    }else if(activeTab==='processes'){
+      renderBrowser(box,grouped((DB.processes||[]).filter(function(r){return isOn(r['사용여부']);}),'가공재료명'),processDetail);
+    }else{
+      activeTab='foods'; window.renderDataView();
+    }
+  };
+  try{renderDataView=window.renderDataView;}catch(err){}
+  document.addEventListener('click',function(ev){
+    var tab=ev.target&&ev.target.closest&&ev.target.closest('#viewData [data-tab]');
+    if(!tab)return;
+    setTimeout(function(){syncTabs();try{window.renderDataView();}catch(e){}},0);
+  },true);
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(function(){syncTabs();try{window.renderDataView();}catch(e){}},0);});
+  setTimeout(function(){syncTabs();try{window.renderDataView();}catch(e){}},250);
+  window.axeCookV108Debug=function(){return {version:'v108-final-data-cooktime-override', hasCooktime:true};};
+})();
+</script>
