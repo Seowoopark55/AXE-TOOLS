@@ -1,4 +1,4 @@
-const AXE_COOK_CACHE = 'axe-cook-v51-banner-layout-20260617';
+const AXE_COOK_CACHE = 'axe-cook-v52-dashboard-fix-20260617';
 const AXE_COOK_ASSETS = [
   './',
   './index.html',
