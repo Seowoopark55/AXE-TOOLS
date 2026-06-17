@@ -727,6 +727,20 @@ body{font-size:15.8px!important;}
   .recipe-work-panel.has-process-v31 .process-recipe-card-v31{min-height:0!important;}
 }
 
+
+
+/* AXE COOK v37: settings function binding + edit/new state visibility */
+.setting-editor-v36{border:1px solid rgba(255,255,255,.08);border-radius:17px;background:rgba(0,0,0,.18);padding:15px}
+.setting-list-v36{border:1px solid rgba(255,255,255,.08);border-radius:17px;background:rgba(0,0,0,.18);padding:15px;min-width:0}
+.setting-editor-head-v36,.setting-list-head-v36{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.setting-mode-v37{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:999px;border:1px solid rgba(99,230,163,.22);background:rgba(99,230,163,.07);color:#b9f7d5;font-size:11px;font-weight:1000;white-space:nowrap}
+.setting-mode-v37.edit{border-color:rgba(255,181,46,.28);background:rgba(255,181,46,.09);color:var(--gold2)}
+.setting-mode-v37.dirty{border-color:rgba(255,111,125,.28);background:rgba(255,111,125,.08);color:#ffc3c8}
+.setting-editor-v36.is-editing{border-color:rgba(255,181,46,.34);box-shadow:0 0 0 3px rgba(255,181,46,.055)}
+.setting-editor-v36.is-dirty{border-color:rgba(255,111,125,.35);box-shadow:0 0 0 3px rgba(255,111,125,.055)}
+.settings-row-v36.is-selected{background:rgba(255,181,46,.12)!important;border-color:rgba(255,181,46,.18)}
+.settings-form-v36.is-readonly-id input[readonly]{opacity:.72}
+
 </style>
 </head>
 <body>
@@ -2527,254 +2541,48 @@ window.axeCookV6Debug = window.axeCookV11Debug;
 .settings-tabs-v36{margin-bottom:12px}
 @media(max-width:900px){.settings-work-v36{grid-template-columns:1fr}.settings-list-body-v36{max-height:360px}}
 </style>
-<script id="axeCookV36FunctionalSettingsScript">
+
+
+
+<script id="axeCookV37FunctionalSettingsFixScript">
 (function(){
-  const VERSION_V36='AXE_COOK_v36_FUNCTIONAL_SETTINGS';
+  const VERSION_V37='AXE_COOK_v37_SETTINGS_BINDING_FIX';
   let manageKind='foods';
   let currentRecord=null;
+  let currentMode='new';
+  let dirty=false;
+  let bound=false;
 
   const CFG={
-    foods:{
-      title:'요리 추가·수정', idKey:'food_id', srcId:'id', listTitle:'요리명',
-      rows:()=>DB.foods,
-      fields:[
-        ['food_id','id','ID','text',true],['food_name','요리명','요리명','text',false],['grade','등급','등급','select:맛있는|무난한|역겨운|미확인',false],
-        ['set_qty','1세트수량','1세트수량','number',false],['sale_price','세트판매가','세트판매가','number',false],
-        ['effect','효과','효과','textarea',false],['effect_time','지속시간','지속시간','text',false],['cook_time','조리시간','조리시간','text',false],
-        ['is_active','사용여부','사용여부','select:TRUE|FALSE',false],['sort_order','정렬','정렬','number',false],['memo','비고','비고','textarea',false]
-      ],
-      newId:()=>nextIdV36('cook_',DB.foods,'id')
-    },
-    materials:{
-      title:'재료 추가·수정', idKey:'material_id', srcId:'id', listTitle:'재료명',
-      rows:()=>DB.materials,
-      fields:[
-        ['material_id','id','ID','text',true],['material_name','재료명','재료명','text',false],['source','구매처','구매처','text',false],
-        ['bundle_qty','묶음수량','묶음수량','number',false],['bundle_price','묶음가격','묶음가격','number',false],['unit_price','개당가격','개당가격','number',false],
-        ['obtain_type','획득구분','획득구분','select:구매|채집|가공|고정단가',false],['is_active','사용여부','사용여부','select:TRUE|FALSE',false],
-        ['is_primary','우선구매','우선구매','select:TRUE|FALSE',false],['sort_order','정렬','정렬','number',false],['memo','비고','비고','textarea',false]
-      ],
-      newId:()=>nextIdV36('mat_',DB.materials,'id')
-    },
-    recipes:{
-      title:'레시피 추가·수정', idKey:'recipe_id', srcId:'id', listTitle:'요리명',
-      rows:()=>DB.recipes,
-      fields:[
-        ['recipe_id','id','ID','text',true],['food_name','요리명','요리명','text',false],['material_name','재료명','재료명','text',false],
-        ['required_qty','필요수량','필요수량','number',false],['material_type','재료구분','재료구분','text',false],
-        ['is_active','사용여부','사용여부','select:TRUE|FALSE',false],['sort_order','정렬','정렬','number',false],['memo','비고','비고','textarea',false]
-      ],
-      newId:()=>nextIdV36('recipe_',DB.recipes,'id')
-    },
-    processes:{
-      title:'가공 추가·수정', idKey:'process_id', srcId:'id', listTitle:'가공재료명',
-      rows:()=>DB.processes,
-      fields:[
-        ['process_id','id','ID','text',true],['process_material_name','가공재료명','가공재료명','text',false],['input_material_name','하위재료명','하위재료명','text',false],
-        ['required_qty','필요수량','필요수량','number',false],['result_qty','결과수량','결과수량','number',false],['process_time','가공시간','가공시간','text',false],
-        ['is_active','사용여부','사용여부','select:TRUE|FALSE',false],['sort_order','정렬','정렬','number',false],['memo','비고','비고','textarea',false]
-      ],
-      newId:()=>nextIdV36('proc_',DB.processes,'id')
-    },
-    farm:{
-      title:'농장재료 추가·수정', idKey:'farm_id', srcId:'id', listTitle:'재료명',
-      rows:()=>DB.farm,
-      fields:[
-        ['farm_id','id','ID','text',true],['material_name','재료명','재료명','text',false],['source','획득처','획득처','text',false],
-        ['is_active','사용여부','사용여부','select:TRUE|FALSE',false],['sort_order','정렬','정렬','number',false],['memo','비고','비고','textarea',false]
-      ],
-      newId:()=>nextIdV36('farm_',DB.farm,'id')
-    },
-    aliases:{
-      title:'별칭 추가·수정', idKey:'alias_name', srcId:'입력명', listTitle:'입력명',
-      rows:()=>DB.aliases,
-      fields:[
-        ['alias_name','입력명','입력명','text',true],['standard_name','표준명','표준명','text',false],
-        ['alias_type','구분','구분','select:재료|요리|기타',false],['is_active','사용여부','사용여부','select:TRUE|FALSE',false],['memo','비고','비고','textarea',false]
-      ],
-      newId:()=>''
-    },
-    fish:{
-      title:'생선변환 추가·수정', idKey:'fish_id', srcId:'id', listTitle:'생선명',
-      rows:()=>DB.fish,
-      fields:[
-        ['fish_id','id','ID','text',true],['fish_name','생선명','생선명','text',false],['input_qty','투입수량','투입수량','number',false],
-        ['result_material_name','결과재료','결과재료','text',false],['result_qty','결과수량','결과수량','number',false],['process_time','가공시간','가공시간','text',false],
-        ['is_active','사용여부','사용여부','select:TRUE|FALSE',false],['sort_order','정렬','정렬','number',false],['memo','비고','비고','textarea',false]
-      ],
-      newId:()=>nextIdV36('fish_',DB.fish,'id')
-    }
+    foods:{title:'요리 추가·수정',idKey:'food_id',srcId:'id',listTitle:'요리명',rows:()=>DB.foods,fields:[['food_id','id','ID','text',true],['food_name','요리명','요리명','text',false],['grade','등급','등급','select:맛있는|무난한|역겨운|미확인',false],['set_qty','1세트수량','1세트수량','number',false],['sale_price','세트판매가','세트판매가','number',false],['effect','효과','효과','textarea',false],['effect_time','지속시간','지속시간','text',false],['cook_time','조리시간','조리시간','text',false],['is_active','사용여부','사용여부','select:TRUE|FALSE',false],['sort_order','정렬','정렬','number',false],['memo','비고','비고','textarea',false]],newId:()=>nextIdV37('cook_',DB.foods,'id')},
+    materials:{title:'재료 추가·수정',idKey:'material_id',srcId:'id',listTitle:'재료명',rows:()=>DB.materials,fields:[['material_id','id','ID','text',true],['material_name','재료명','재료명','text',false],['source','구매처','구매처','text',false],['bundle_qty','묶음수량','묶음수량','number',false],['bundle_price','묶음가격','묶음가격','number',false],['unit_price','개당가격','개당가격','number',false],['obtain_type','획득구분','획득구분','select:구매|채집|가공|고정단가',false],['is_active','사용여부','사용여부','select:TRUE|FALSE',false],['is_primary','우선구매','우선구매','select:TRUE|FALSE',false],['sort_order','정렬','정렬','number',false],['memo','비고','비고','textarea',false]],newId:()=>nextIdV37('mat_',DB.materials,'id')},
+    recipes:{title:'레시피 추가·수정',idKey:'recipe_id',srcId:'id',listTitle:'요리명',rows:()=>DB.recipes,fields:[['recipe_id','id','ID','text',true],['food_name','요리명','요리명','text',false],['material_name','재료명','재료명','text',false],['required_qty','필요수량','필요수량','number',false],['material_type','재료구분','재료구분','text',false],['is_active','사용여부','사용여부','select:TRUE|FALSE',false],['sort_order','정렬','정렬','number',false],['memo','비고','비고','textarea',false]],newId:()=>nextIdV37('recipe_',DB.recipes,'id')},
+    processes:{title:'가공 추가·수정',idKey:'process_id',srcId:'id',listTitle:'가공재료명',rows:()=>DB.processes,fields:[['process_id','id','ID','text',true],['process_material_name','가공재료명','가공재료명','text',false],['input_material_name','하위재료명','하위재료명','text',false],['required_qty','필요수량','필요수량','number',false],['result_qty','결과수량','결과수량','number',false],['process_time','가공시간','가공시간','text',false],['is_active','사용여부','사용여부','select:TRUE|FALSE',false],['sort_order','정렬','정렬','number',false],['memo','비고','비고','textarea',false]],newId:()=>nextIdV37('proc_',DB.processes,'id')},
+    farm:{title:'농장재료 추가·수정',idKey:'farm_id',srcId:'id',listTitle:'재료명',rows:()=>DB.farm,fields:[['farm_id','id','ID','text',true],['material_name','재료명','재료명','text',false],['source','획득처','획득처','text',false],['is_active','사용여부','사용여부','select:TRUE|FALSE',false],['sort_order','정렬','정렬','number',false],['memo','비고','비고','textarea',false]],newId:()=>nextIdV37('farm_',DB.farm,'id')},
+    aliases:{title:'별칭 추가·수정',idKey:'alias_name',srcId:'입력명',listTitle:'입력명',rows:()=>DB.aliases,fields:[['alias_name','입력명','입력명','text',false],['standard_name','표준명','표준명','text',false],['alias_type','구분','구분','select:재료|요리|기타',false],['is_active','사용여부','사용여부','select:TRUE|FALSE',false],['memo','비고','비고','textarea',false]],newId:()=>''},
+    fish:{title:'생선변환 추가·수정',idKey:'fish_id',srcId:'id',listTitle:'생선명',rows:()=>DB.fish,fields:[['fish_id','id','ID','text',true],['fish_name','생선명','생선명','text',false],['input_qty','투입수량','투입수량','number',false],['result_material_name','결과재료','결과재료','text',false],['result_qty','결과수량','결과수량','number',false],['process_time','가공시간','가공시간','text',false],['is_active','사용여부','사용여부','select:TRUE|FALSE',false],['sort_order','정렬','정렬','number',false],['memo','비고','비고','textarea',false]],newId:()=>nextIdV37('fish_',DB.fish,'id')}
   };
 
-  function nextIdV36(prefix,rows,key){
-    let max=0;
-    (rows||[]).forEach(r=>{
-      const raw=String(r[key]||'');
-      const m=raw.match(/(\d+)$/);
-      if(m) max=Math.max(max,Number(m[1]));
-    });
-    return prefix+String(max+1).padStart(4,'0');
-  }
-  function sourceValueV36(row,src){
-    if(!row) return '';
-    return row[src] == null ? '' : row[src];
-  }
-  function makeBlankV36(kind){
-    const cfg=CFG[kind], obj={};
-    cfg.fields.forEach(f=>obj[f[0]]='');
-    obj[cfg.idKey]=cfg.newId();
-    if('is_active' in obj) obj.is_active='TRUE';
-    if('source' in obj && kind==='farm') obj.source='농장';
-    return obj;
-  }
-  function recordFromDbV36(kind,row){
-    const cfg=CFG[kind], obj={};
-    cfg.fields.forEach(([api,src])=>obj[api]=sourceValueV36(row,src));
-    return obj;
-  }
-  function renderSettingsFormV36(){
-    const cfg=CFG[manageKind];
-    const box=document.getElementById('settingsForm');
-    const title=document.getElementById('settingsEditorTitle');
-    if(!box||!cfg) return;
-    title.textContent=cfg.title;
-    if(!currentRecord) currentRecord=makeBlankV36(manageKind);
-    box.innerHTML=cfg.fields.map(([api,src,label,type,readonly])=>{
-      const val=currentRecord[api] == null ? '' : currentRecord[api];
-      if(String(type).startsWith('select:')){
-        const opts=String(type).slice(7).split('|');
-        return `<div class="settings-field-v36"><label>${h(label)}</label><select data-field="${h(api)}" ${readonly?'disabled':''}>${opts.map(o=>`<option value="${h(o)}" ${String(val)===o?'selected':''}>${h(o)}</option>`).join('')}</select></div>`;
-      }
-      if(type==='textarea'){
-        return `<div class="settings-field-v36"><label>${h(label)}</label><textarea data-field="${h(api)}" ${readonly?'readonly':''}>${h(val)}</textarea></div>`;
-      }
-      return `<div class="settings-field-v36"><label>${h(label)}</label><input data-field="${h(api)}" type="${type==='number'?'number':'text'}" value="${h(val)}" ${readonly?'readonly':''}></div>`;
-    }).join('');
-  }
-  function collectSettingsRecordV36(){
-    const cfg=CFG[manageKind], obj={};
-    document.querySelectorAll('#settingsForm [data-field]').forEach(el=>obj[el.dataset.field]=el.value.trim());
-    if(!obj[cfg.idKey]){
-      obj[cfg.idKey]=cfg.newId();
-    }
-    return obj;
-  }
-  function mainTextV36(kind,row){
-    if(kind==='recipes') return `${row['요리명']||''} / ${row['재료명']||''}`;
-    if(kind==='processes') return `${row['가공재료명']||''} / ${row['하위재료명']||''}`;
-    if(kind==='aliases') return `${row['입력명']||''} → ${row['표준명']||''}`;
-    if(kind==='fish') return `${row['생선명']||''} → ${row['결과재료']||''}`;
-    return row[CFG[kind].listTitle] || row['재료명'] || row['요리명'] || row['id'] || '';
-  }
-  function metaTextV36(kind,row){
-    if(kind==='foods') return `등급 ${row['등급']||'-'} · 1세트 ${row['1세트수량']||'-'} · 판매가 ${row['세트판매가']||'-'}`;
-    if(kind==='materials') return `${row['구매처']||'-'} · 묶음 ${row['묶음수량']||'-'} · 가격 ${row['묶음가격']||'-'}`;
-    if(kind==='recipes') return `필요 ${row['필요수량']||'-'} · ${row['사용여부']||'TRUE'}`;
-    if(kind==='processes') return `필요 ${row['필요수량']||'-'} · 결과 ${row['결과수량']||'-'} · ${row['가공시간']||'-'}`;
-    if(kind==='farm') return `${row['획득처']||'농장'} · ${row['사용여부']||'TRUE'}`;
-    if(kind==='aliases') return `${row['구분']||'재료'} · ${row['사용여부']||'TRUE'}`;
-    if(kind==='fish') return `투입 ${row['투입수량']||'-'} · 결과 ${row['결과수량']||'-'} · ${row['가공시간']||'-'}`;
-    return '';
-  }
-  function renderSettingsListV36(){
-    const box=document.getElementById('settingsList');
-    const q=text(document.getElementById('settingsSearch')?.value||'').toLowerCase();
-    const rows=(CFG[manageKind].rows()||[]).filter(r=>(mainTextV36(manageKind,r)+' '+metaTextV36(manageKind,r)).toLowerCase().includes(q)).slice(0,250);
-    if(!box) return;
-    if(!rows.length){box.innerHTML='<div class="empty">표시할 항목이 없습니다.</div>';return;}
-    box.innerHTML=rows.map((r,i)=>`<div class="settings-row-v36"><div class="settings-row-main-v36"><div class="settings-row-title-v36">${h(mainTextV36(manageKind,r))}</div><div class="settings-row-meta-v36">${h(metaTextV36(manageKind,r))}</div></div><div class="settings-row-actions-v36"><button class="btn ghost" data-edit-idx="${i}">수정</button></div></div>`).join('');
-    box.querySelectorAll('[data-edit-idx]').forEach(btn=>{
-      btn.addEventListener('click',()=>{
-        currentRecord=recordFromDbV36(manageKind,rows[Number(btn.dataset.editIdx)]);
-        renderSettingsFormV36();
-        toast('수정할 항목을 불러왔습니다');
-      });
-    });
-  }
-  function renderSettingsV36(){
-    if(!document.getElementById('settingsForm')) return;
-    document.querySelectorAll('#settingsTabs .tab').forEach(b=>b.classList.toggle('active',b.dataset.manage===manageKind));
-    if(!currentRecord) currentRecord=makeBlankV36(manageKind);
-    renderSettingsFormV36();
-    renderSettingsListV36();
-  }
-  function apiJsonpV36(action,params){
-    const url=String(AXE_COOK_SHEET_API_URL||'').trim();
-    if(!url || !/^https?:\/\//.test(url)) return Promise.reject(new Error('Apps Script URL이 없습니다.'));
-    return new Promise((resolve,reject)=>{
-      const cb='axeCookV36Cb_'+Date.now()+'_'+Math.random().toString(36).slice(2);
-      const script=document.createElement('script');
-      const query=new URLSearchParams(Object.assign({},params,{action,callback:cb,t:Date.now()}));
-      const sep=url.includes('?')?'&':'?';
-      const timer=setTimeout(()=>{cleanup();reject(new Error('요청 시간이 초과되었습니다.'));},12000);
-      function cleanup(){clearTimeout(timer);try{delete window[cb];}catch(e){window[cb]=undefined;}if(script.parentNode)script.parentNode.removeChild(script);}
-      window[cb]=(payload)=>{cleanup();resolve(payload);};
-      script.onerror=()=>{cleanup();reject(new Error('Apps Script 연결 실패'));};
-      script.src=url+sep+query.toString();
-      document.head.appendChild(script);
-    });
-  }
-  async function reloadSheetV36(msg){
-    await loadSheetRawBeforeBoot();
-    initDB();
-    currentRecord=makeBlankV36(manageKind);
-    render();
-    renderSettingsV36();
-    if(msg) toast(msg);
-  }
-  async function saveSettingsV36(){
-    const record=collectSettingsRecordV36();
-    if(!confirm('현재 항목을 Google Sheet에 저장할까요?')) return;
-    try{
-      toast('저장 요청 중');
-      const payload=await apiJsonpV36('saveRecord',{kind:manageKind,payload:JSON.stringify(record)});
-      if(!payload || !payload.ok) throw new Error(payload && payload.error ? payload.error : '저장 실패');
-      await reloadSheetV36('저장 완료');
-    }catch(e){
-      console.error(e);
-      toast('저장 실패: '+e.message);
-    }
-  }
-  async function disableSettingsV36(){
-    const cfg=CFG[manageKind];
-    const record=collectSettingsRecordV36();
-    const id=record[cfg.idKey];
-    if(!id){toast('미사용 처리할 ID가 없습니다');return;}
-    if(!confirm('현재 항목을 미사용 처리할까요?')) return;
-    try{
-      const payload=await apiJsonpV36('deleteRecord',{kind:manageKind,id:id});
-      if(!payload || !payload.ok) throw new Error(payload && payload.error ? payload.error : '처리 실패');
-      await reloadSheetV36('미사용 처리 완료');
-    }catch(e){
-      console.error(e);
-      toast('처리 실패: '+e.message);
-    }
-  }
-  function bindSettingsV36(){
-    document.querySelectorAll('#settingsTabs .tab').forEach(b=>b.addEventListener('click',()=>{
-      manageKind=b.dataset.manage;
-      currentRecord=makeBlankV36(manageKind);
-      renderSettingsV36();
-    }));
-    document.getElementById('settingsNewBtn')?.addEventListener('click',()=>{currentRecord=makeBlankV36(manageKind);renderSettingsFormV36();toast('새 항목 입력 상태입니다');});
-    document.getElementById('settingsSaveBtn')?.addEventListener('click',saveSettingsV36);
-    document.getElementById('settingsDisableBtn')?.addEventListener('click',disableSettingsV36);
-    document.getElementById('settingsReloadBtn')?.addEventListener('click',()=>reloadSheetV36('시트 새로고침 완료'));
-    document.getElementById('settingsSearch')?.addEventListener('input',renderSettingsListV36);
-  }
-  const prevBoot=boot;
-  boot=async function(){
-    const out=await prevBoot.apply(this,arguments);
-    try{bindSettingsV36();currentRecord=makeBlankV36(manageKind);renderSettingsV36();}catch(e){console.warn('[AXE COOK v36] settings init failed',e);}
-    window.axeCookV36Debug=function(){return {version:VERSION_V36,manageKind,source:AXE_COOK_DATA_SOURCE,hasSettings:!!document.getElementById('settingsForm'),previous:window.axeCookV35Debug?window.axeCookV35Debug():null};};
-    return out;
-  };
-  const prevRender=render;
-  render=function(){
-    const out=prevRender.apply(this,arguments);
-    try{renderSettingsListV36();}catch(e){}
-    return out;
-  };
+  function nextIdV37(prefix,rows,key){let max=0;(rows||[]).forEach(r=>{const m=String(r[key]||'').match(/(\d+)$/);if(m)max=Math.max(max,Number(m[1]));});return prefix+String(max+1).padStart(4,'0');}
+  function sourceValueV37(row,src){return row && row[src]!=null ? row[src] : '';}
+  function makeBlankV37(kind){const cfg=CFG[kind],obj={};cfg.fields.forEach(f=>obj[f[0]]='');obj[cfg.idKey]=cfg.newId();if('is_active'in obj)obj.is_active='TRUE';if('source'in obj&&kind==='farm')obj.source='농장';return obj;}
+  function recordFromDbV37(kind,row){const obj={};CFG[kind].fields.forEach(([api,src])=>obj[api]=sourceValueV37(row,src));return obj;}
+  function setModeV37(mode,isDirty=false){currentMode=mode;dirty=isDirty;const editor=document.querySelector('.setting-editor-v36');let badge=document.getElementById('settingsModeBadge');const head=document.querySelector('.setting-editor-head-v36');if(head&&!badge){badge=document.createElement('span');badge.id='settingsModeBadge';badge.className='setting-mode-v37';head.insertBefore(badge,head.querySelector('#settingsNewBtn'));}if(badge){badge.className='setting-mode-v37 '+(dirty?'dirty':mode==='edit'?'edit':'');badge.textContent=dirty?(mode==='edit'?'수정중 · 미저장':'새 항목 · 미저장'):(mode==='edit'?'수정중':'새 항목');}if(editor){editor.classList.toggle('is-editing',mode==='edit');editor.classList.toggle('is-dirty',dirty);}}
+  function markDirtyV37(){setModeV37(currentMode,true);}
+  function renderSettingsFormV37(){const cfg=CFG[manageKind],box=document.getElementById('settingsForm'),title=document.getElementById('settingsEditorTitle');if(!box||!cfg)return;if(title)title.textContent=cfg.title;if(!currentRecord)currentRecord=makeBlankV37(manageKind);box.classList.add('is-readonly-id');box.innerHTML=cfg.fields.map(([api,src,label,type,readonly])=>{const val=currentRecord[api]==null?'':currentRecord[api];if(String(type).startsWith('select:')){const opts=String(type).slice(7).split('|');return `<div class="settings-field-v36"><label>${h(label)}</label><select data-field="${h(api)}" ${readonly?'disabled':''}>${opts.map(o=>`<option value="${h(o)}" ${String(val)===o?'selected':''}>${h(o)}</option>`).join('')}</select></div>`;}if(type==='textarea')return `<div class="settings-field-v36"><label>${h(label)}</label><textarea data-field="${h(api)}" ${readonly?'readonly':''}>${h(val)}</textarea></div>`;return `<div class="settings-field-v36"><label>${h(label)}</label><input data-field="${h(api)}" type="${type==='number'?'number':'text'}" value="${h(val)}" ${readonly?'readonly':''}></div>`;}).join('');box.querySelectorAll('[data-field]').forEach(el=>el.addEventListener('input',markDirtyV37));setModeV37(currentMode,dirty);}
+  function collectSettingsRecordV37(){const cfg=CFG[manageKind],obj={};document.querySelectorAll('#settingsForm [data-field]').forEach(el=>obj[el.dataset.field]=String(el.value||'').trim());if(!obj[cfg.idKey])obj[cfg.idKey]=cfg.newId();return obj;}
+  function mainTextV37(kind,row){if(kind==='recipes')return `${row['요리명']||''} / ${row['재료명']||''}`;if(kind==='processes')return `${row['가공재료명']||''} / ${row['하위재료명']||''}`;if(kind==='aliases')return `${row['입력명']||''} → ${row['표준명']||''}`;if(kind==='fish')return `${row['생선명']||''} → ${row['결과재료']||''}`;return row[CFG[kind].listTitle]||row['재료명']||row['요리명']||row['id']||'';}
+  function metaTextV37(kind,row){if(kind==='foods')return `등급 ${row['등급']||'-'} · 1세트 ${row['1세트수량']||'-'} · 판매가 ${row['세트판매가']||'-'}`;if(kind==='materials')return `${row['구매처']||'-'} · 묶음 ${row['묶음수량']||'-'} · 가격 ${row['묶음가격']||'-'}`;if(kind==='recipes')return `필요 ${row['필요수량']||'-'} · ${row['사용여부']||'TRUE'}`;if(kind==='processes')return `필요 ${row['필요수량']||'-'} · 결과 ${row['결과수량']||'-'} · ${row['가공시간']||'-'}`;if(kind==='farm')return `${row['획득처']||'농장'} · ${row['사용여부']||'TRUE'}`;if(kind==='aliases')return `${row['구분']||'재료'} · ${row['사용여부']||'TRUE'}`;if(kind==='fish')return `투입 ${row['투입수량']||'-'} · 결과 ${row['결과수량']||'-'} · ${row['가공시간']||'-'}`;return '';}
+  function renderSettingsListV37(){const box=document.getElementById('settingsList');if(!box||!CFG[manageKind])return;const q=text(document.getElementById('settingsSearch')?.value||'').toLowerCase();const rows=(CFG[manageKind].rows()||[]).filter(r=>(mainTextV37(manageKind,r)+' '+metaTextV37(manageKind,r)).toLowerCase().includes(q)).slice(0,300);if(!rows.length){box.innerHTML='<div class="empty">표시할 항목이 없습니다.</div>';return;}const selectedId=currentRecord?currentRecord[CFG[manageKind].idKey]:'';box.innerHTML=rows.map((r,i)=>{const rec=recordFromDbV37(manageKind,r);const id=rec[CFG[manageKind].idKey];return `<div class="settings-row-v36 ${String(id)===String(selectedId)&&currentMode==='edit'?'is-selected':''}"><div class="settings-row-main-v36"><div class="settings-row-title-v36">${h(mainTextV37(manageKind,r))}</div><div class="settings-row-meta-v36">${h(metaTextV37(manageKind,r))}</div></div><div class="settings-row-actions-v36"><button class="btn ghost" data-edit-idx="${i}">수정</button></div></div>`;}).join('');box.querySelectorAll('[data-edit-idx]').forEach(btn=>btn.addEventListener('click',()=>{currentRecord=recordFromDbV37(manageKind,rows[Number(btn.dataset.editIdx)]);currentMode='edit';dirty=false;renderSettingsFormV37();renderSettingsListV37();toast('수정중 상태로 불러왔습니다');}));}
+  function renderSettingsV37(){if(!document.getElementById('settingsForm'))return;document.querySelectorAll('#settingsTabs .tab').forEach(b=>b.classList.toggle('active',b.dataset.manage===manageKind));if(!currentRecord){currentRecord=makeBlankV37(manageKind);currentMode='new';dirty=false;}renderSettingsFormV37();renderSettingsListV37();}
+  function apiJsonpV37(action,params){const url=String(AXE_COOK_SHEET_API_URL||'').trim();if(!url||!/^https?:\/\//.test(url))return Promise.reject(new Error('Apps Script URL이 없습니다.'));return new Promise((resolve,reject)=>{const cb='axeCookV37Cb_'+Date.now()+'_'+Math.random().toString(36).slice(2);const script=document.createElement('script');const query=new URLSearchParams(Object.assign({},params,{action,callback:cb,t:Date.now()}));const sep=url.includes('?')?'&':'?';const timer=setTimeout(()=>{cleanup();reject(new Error('요청 시간이 초과되었습니다.'));},12000);function cleanup(){clearTimeout(timer);try{delete window[cb];}catch(e){window[cb]=undefined;}if(script.parentNode)script.parentNode.removeChild(script);}window[cb]=payload=>{cleanup();resolve(payload);};script.onerror=()=>{cleanup();reject(new Error('Apps Script 연결 실패'));};script.src=url+sep+query.toString();document.head.appendChild(script);});}
+  async function reloadSheetV37(msg){await loadSheetRawBeforeBoot();initDB();currentRecord=makeBlankV37(manageKind);currentMode='new';dirty=false;render();renderSettingsV37();if(msg)toast(msg);}
+  async function saveSettingsV37(){const record=collectSettingsRecordV37();if(!confirm((currentMode==='edit'?'수정중인 항목':'새 항목')+'을 Google Sheet에 저장할까요?'))return;try{toast('저장 요청 중');const payload=await apiJsonpV37('saveRecord',{kind:manageKind,payload:JSON.stringify(record)});if(!payload||!payload.ok)throw new Error(payload&&payload.error?payload.error:'저장 실패');await reloadSheetV37('저장 완료');}catch(e){console.error(e);toast('저장 실패: '+e.message);}}
+  async function disableSettingsV37(){const cfg=CFG[manageKind],record=collectSettingsRecordV37(),id=record[cfg.idKey];if(!id){toast('미사용 처리할 ID가 없습니다');return;}if(!confirm('현재 항목을 미사용 처리할까요?'))return;try{const payload=await apiJsonpV37('deleteRecord',{kind:manageKind,id:id});if(!payload||!payload.ok)throw new Error(payload&&payload.error?payload.error:'처리 실패');await reloadSheetV37('미사용 처리 완료');}catch(e){console.error(e);toast('처리 실패: '+e.message);}}
+  function bindSettingsV37(){if(bound)return;bound=true;document.getElementById('settingsTabs')?.addEventListener('click',e=>{const btn=e.target.closest('[data-manage]');if(!btn)return;manageKind=btn.dataset.manage;currentRecord=makeBlankV37(manageKind);currentMode='new';dirty=false;renderSettingsV37();});document.getElementById('settingsNewBtn')?.addEventListener('click',()=>{currentRecord=makeBlankV37(manageKind);currentMode='new';dirty=false;renderSettingsFormV37();renderSettingsListV37();toast('새 항목 입력 상태입니다');});document.getElementById('settingsSaveBtn')?.addEventListener('click',saveSettingsV37);document.getElementById('settingsDisableBtn')?.addEventListener('click',disableSettingsV37);document.getElementById('settingsReloadBtn')?.addEventListener('click',()=>reloadSheetV37('시트 새로고침 완료'));document.getElementById('settingsSearch')?.addEventListener('input',renderSettingsListV37);}
+  function initSettingsV37(){try{bindSettingsV37();currentRecord=currentRecord||makeBlankV37(manageKind);renderSettingsV37();window.axeCookV37Debug=()=>({version:VERSION_V37,manageKind,currentMode,dirty,bound,source:AXE_COOK_DATA_SOURCE});}catch(e){console.warn('[AXE COOK v37] settings init failed',e);}}
+  const oldRender=typeof render==='function'?render:null;if(oldRender){render=function(){const out=oldRender.apply(this,arguments);try{renderSettingsListV37();}catch(e){}return out;};}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(initSettingsV37,0));else setTimeout(initSettingsV37,0);
 })();
 </script>
 
