@@ -1621,6 +1621,7 @@ body{
       <div class="summary-command-head">
         <div class="panel-title no-margin">작업 요약 <small>현재 제작 기준</small></div>
         <div class="summary-actions">
+          <button class="btn bad" id="clearBtn">작업공간 초기화</button>
           <button class="btn primary" id="calcBtn">계산 갱신</button>
         </div>
       </div>
@@ -1629,7 +1630,7 @@ body{
     </section>
     <section class="workspace-column">
       <div class="panel tool-panel orders-panel">
-        <div class="panel-title"><span>작업 목록 <small id="orderCount">0개</small></span></div>
+        <div class="panel-title"><span>작업 목록 <small id="orderCount">0개</small></span><button class="btn bad reset-visible-v29" id="clearBtnVisible" type="button">작업공간 초기화</button></div>
         <div id="orderList" class="order-list compact-order-list"></div>
       </div>
 
@@ -7549,7 +7550,7 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
     if(o){
       var n=(typeof orders!=='undefined'&&orders)?orders.length:0;
       o.dataset.v79='1';
-      o.innerHTML='<span class="orders-title-v79"><span class="orders-icon-v79" aria-hidden="true"></span><span>작업 목록</span><small id="orderCount">'+n+'개</small></span>';
+      o.innerHTML='<span class="orders-title-v79"><span class="orders-icon-v79" aria-hidden="true"></span><span>작업 목록</span><small id="orderCount">'+n+'개</small></span><button class="btn bad reset-visible-v29" id="clearBtnVisible" type="button">작업공간 초기화</button>';
       var reset=document.getElementById('clearBtnVisible');
       if(reset && !reset.dataset.v79){
         reset.dataset.v79='1';
@@ -9584,154 +9585,6 @@ window.addEventListener('load',function(){
 #viewSettings .v116-field [data-g="time"]{border-color:rgba(255,181,46,.22)!important;background:rgba(255,181,46,.035)!important;}
 @media(max-width:720px){#viewSettings .v116-recipe-lines.v126-process-lines .v116-recipe-line{grid-template-columns:1fr 80px 80px 34px!important;}}
 </style>
-
-
-<style id="axeCookV129StabilizedBaselineStyle">
-/* AXE COOK v129: stable baseline layer — visual output preserved, unstable reset/page remnants isolated */
-#viewHome .axe-hero-label-v50{display:none!important;}
-#clearBtn,#clearBtnVisible,.reset-visible-v29{display:none!important;visibility:hidden!important;pointer-events:none!important;}
-.brand .logo{
-  width:42px!important;height:38px!important;border-radius:12px!important;
-  background:url('./axe.png') center center/cover no-repeat!important;
-  color:transparent!important;font-size:0!important;text-indent:-9999px!important;
-  box-shadow:0 10px 26px rgba(255,181,46,.15)!important;
-}
-#viewHome .orders-panel .panel-title{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;}
-#viewHome .orders-panel .panel-title .axe-title-v129{display:inline-flex!important;align-items:center!important;gap:8px!important;font-weight:1000!important;color:#f8fbff!important;}
-#viewHome .orders-panel .panel-title small{display:inline-flex!important;align-items:center!important;height:24px!important;padding:0 8px!important;border-radius:999px!important;background:rgba(255,255,255,.07)!important;border:1px solid rgba(255,255,255,.09)!important;color:#cfd6e2!important;font-size:12px!important;margin-left:5px!important;}
-.axe-v129-block-modal{position:fixed;inset:0;z-index:999998;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.58);backdrop-filter:blur(5px);}
-.axe-v129-block-modal.show{display:flex;}
-.axe-v129-block-box{width:min(430px,calc(100vw - 36px));border:1px solid rgba(255,181,46,.26);border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025)),#101318;box-shadow:0 26px 80px rgba(0,0,0,.48);padding:22px;}
-.axe-v129-block-box b{display:block;font-size:18px;line-height:1.25;color:#f4f6fa;margin-bottom:10px;}
-.axe-v129-block-box p{margin:0;color:#b9c2d0;font-size:14px;font-weight:900;line-height:1.55;}
-.axe-v129-block-actions{display:flex;justify-content:flex-end;margin-top:18px;}
-.axe-v129-block-actions button{height:40px;padding:0 18px;border-radius:13px;border:1px solid rgba(255,181,46,.55);background:linear-gradient(135deg,#ffcf61,#ffb52e);color:#15100a;font-weight:1000;}
-</style>
-
-<script id="axeCookV129StabilizedBaselineScript">
-(function(){
-  'use strict';
-  var VERSION='v129-stabilized-baseline';
-  function $(id){return document.getElementById(id);}
-  function esc(s){
-    try{ if(typeof h==='function') return h(s); }catch(e){}
-    return String(s==null?'':s).replace(/[&<>'"]/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m];});
-  }
-  function toNum(v,d){
-    try{ if(typeof num==='function') return num(v,d||0); }catch(e){}
-    var n=Number(String(v==null?'':v).replace(/,/g,'').trim()); return Number.isFinite(n)?n:(d||0);
-  }
-  function getOrders(){try{return Array.isArray(orders)?orders:[];}catch(e){return [];}}
-  function setOrders(v){try{orders=Array.isArray(v)?v:[];}catch(e){}}
-  function getChecks(){try{return checks&&typeof checks==='object'?checks:{};}catch(e){return {};}}
-  function setChecks(v){try{checks=v&&typeof v==='object'?v:{};}catch(e){}}
-  function callSave(){try{if(typeof saveState==='function')saveState();}catch(e){}}
-  function callRender(){try{if(typeof render==='function')render();return;}catch(e){} try{if(typeof renderAll==='function')renderAll();}catch(e){}}
-  function food(name){try{return typeof getFood==='function'?getFood(name):null;}catch(e){return null;}}
-  function setQty(f){try{return typeof getSetQty==='function'?getSetQty(f):1;}catch(e){return 1;}}
-  function sale(f){try{return typeof getSale==='function'?getSale(f):0;}catch(e){return 0;}}
-  function notify(msg){try{if(typeof toast==='function')toast(msg);else console.log(msg);}catch(e){console.log(msg);}}
-  function removeResetButtons(){
-    ['clearBtn','clearBtnVisible'].forEach(function(id){var el=$(id); if(el&&el.parentNode)el.parentNode.removeChild(el);});
-    document.querySelectorAll('.reset-visible-v29').forEach(function(el){if(el&&el.parentNode)el.parentNode.removeChild(el);});
-  }
-  function ensureOrderTitle(){
-    var title=document.querySelector('#viewHome .orders-panel .panel-title');
-    if(!title)return;
-    var n=getOrders().length;
-    title.innerHTML='<span class="axe-title-v129"><span style="color:var(--gold2);font-weight:1000">≡</span><span>작업 목록</span><small id="orderCount">'+n+'개</small></span>';
-  }
-  function ensureModal(){
-    var modal=$('axeV129BlockModal');
-    if(modal)return modal;
-    modal=document.createElement('div');
-    modal.id='axeV129BlockModal';
-    modal.className='axe-v129-block-modal';
-    modal.innerHTML='<div class="axe-v129-block-box" role="dialog" aria-modal="true"><b id="axeV129BlockTitle">현재 작업목록에 음식이 있습니다.</b><p id="axeV129BlockText">한 번에 한 종류의 음식만 작업할 수 있습니다. 작업목록의 삭제 버튼으로 기존 음식을 지운 뒤 새 음식을 등록해 주세요.</p><div class="axe-v129-block-actions"><button type="button" id="axeV129BlockOk">확인</button></div></div>';
-    document.body.appendChild(modal);
-    modal.addEventListener('click',function(e){if(e.target===modal)hideModal();});
-    var ok=modal.querySelector('#axeV129BlockOk'); if(ok)ok.addEventListener('click',hideModal);
-    document.addEventListener('keydown',function(e){if(e.key==='Escape')hideModal();});
-    return modal;
-  }
-  function showModal(title,text){
-    var modal=ensureModal();
-    var t=$('axeV129BlockTitle'), p=$('axeV129BlockText');
-    if(t)t.textContent=title||'현재 작업목록에 음식이 있습니다.';
-    if(p)p.textContent=text||'한 번에 한 종류의 음식만 작업할 수 있습니다. 작업목록의 삭제 버튼으로 기존 음식을 지운 뒤 새 음식을 등록해 주세요.';
-    modal.classList.add('show');
-    setTimeout(function(){var ok=$('axeV129BlockOk');if(ok)ok.focus();},30);
-  }
-  function hideModal(){var modal=$('axeV129BlockModal'); if(modal)modal.classList.remove('show');}
-  function stableAddOrder(name,sets){
-    var f=food(name);
-    if(!f){notify('요리를 찾을 수 없습니다.');return;}
-    sets=Math.max(1,Math.floor(toNum(sets,1)));
-    var cur=getOrders();
-    if(cur.length && cur[0].name!==name){
-      showModal('현재 작업목록에 음식이 있습니다.','한 번에 한 종류의 음식만 작업할 수 있습니다. 작업목록의 삭제 버튼으로 기존 음식을 지운 뒤 새 음식을 등록해 주세요.');
-      return;
-    }
-    if(cur.length && cur[0].name===name) cur[0].sets+=sets;
-    else {cur=[{name:name,sets:sets}]; setChecks({}); try{localStorage.setItem('axe_cook_v1_checks','{}');}catch(e){}}
-    setOrders(cur);
-    try{localStorage.removeItem('axe_cook_v1_workspace_empty');}catch(e){}
-    callSave(); callRender();
-    notify(name+' '+sets+'세트 작업 시작');
-  }
-  function stableRemoveOrder(name){
-    var next=getOrders().filter(function(o){return o.name!==name;});
-    setOrders(next);
-    if(!next.length){setChecks({}); try{localStorage.setItem('axe_cook_v1_workspace_empty','true');localStorage.setItem('axe_cook_v1_checks','{}');}catch(e){}}
-    callSave(); callRender();
-    notify('작업목록에서 삭제했습니다');
-  }
-  function stableUpdateSets(name,val){
-    var cur=getOrders();
-    var o=cur.find(function(x){return x.name===name;});
-    if(o){o.sets=Math.max(1,Math.floor(toNum(val,1)));setOrders(cur);callSave();try{if(typeof renderResultsOnly==='function')renderResultsOnly();}catch(e){} stableRenderOrders();}
-  }
-  function stableRenderOrders(){
-    removeResetButtons(); ensureOrderTitle();
-    var count=$('orderCount'); if(count) count.textContent=getOrders().length+'개';
-    var box=$('orderList'); if(!box)return;
-    var cur=getOrders();
-    if(!cur.length){box.innerHTML='<div class="empty">만들 음식을 추가하세요.</div>';return;}
-    box.innerHTML=cur.slice(0,1).map(function(o){
-      var f=food(o.name), sq=setQty(f), total=toNum(o.sets,1)*sq;
-      return '<div class="order-row"><div class="order-main-v21"><div class="order-name" data-axe-fullname="'+esc(o.name)+'" title="'+esc(o.name)+'">'+esc(o.name)+'</div><div class="order-sub"><span class="order-meta-v81"><span>세트 구성 <b>'+esc(sq)+'</b>개</span></span><span class="order-meta-v81 order-total-v81"><span>총 <b>'+esc(total)+'</b>개 제작</span></span></div></div><div class="order-row-controls-v21"><input class="num" type="number" min="1" value="'+esc(o.sets)+'" data-set="'+esc(o.name)+'"><button class="btn bad" data-del="'+esc(o.name)+'">삭제</button></div></div>';
-    }).join('');
-    box.querySelectorAll('[data-set]').forEach(function(i){i.addEventListener('change',function(){stableUpdateSets(i.dataset.set,i.value);});});
-    box.querySelectorAll('[data-del]').forEach(function(b){b.addEventListener('click',function(){stableRemoveOrder(b.dataset.del);});});
-  }
-  function stableDecorateTitles(){
-    var p=document.querySelector('#viewHome .purchase-panel .panel-title');
-    if(p && !p.querySelector('.axe-title-v81')) p.innerHTML='<span class="axe-title-v81"><span>▱</span><span>구매 체크리스트</span></span>';
-    ensureOrderTitle();
-    var m=document.querySelector('#viewHome .memo-panel-v53 .panel-title');
-    if(m && !m.querySelector('.axe-title-v81'))m.innerHTML='<span class="axe-title-v81"><span>작업 메모</span></span>';
-  }
-  function applyOverrides(){
-    try{addOrder=stableAddOrder;}catch(e){}
-    try{removeOrder=stableRemoveOrder;}catch(e){}
-    try{updateSets=stableUpdateSets;}catch(e){}
-    try{renderOrders=stableRenderOrders;}catch(e){}
-    try{decorateTitlesV81=stableDecorateTitles;}catch(e){}
-    removeResetButtons(); ensureOrderTitle();
-    var hero=document.querySelector('#viewHome .axe-hero-label-v50'); if(hero&&hero.parentNode)hero.parentNode.removeChild(hero);
-    var img=document.querySelector('#viewHome .axe-hero-img-v55'); if(img)img.alt='AXE COOK banner';
-    var logo=document.querySelector('.brand .logo'); if(logo){logo.textContent='';logo.setAttribute('aria-label','AXE');}
-  }
-  function boot(){
-    applyOverrides(); stableRenderOrders();
-    var root=document.getElementById('viewHome')||document.body;
-    try{new MutationObserver(function(){applyOverrides();}).observe(root,{childList:true,subtree:true});}catch(e){}
-    window.axeCookV129Debug=function(){return {version:VERSION,orders:getOrders(),checks:Object.keys(getChecks()).length,resetButtons:document.querySelectorAll('#clearBtn,#clearBtnVisible,.reset-visible-v29').length,stabilized:true,next:'page feature can be rebuilt on stableAddOrder/stableRenderOrders'};};
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(boot,260);}); else setTimeout(boot,260);
-})();
-</script>
-
 </body>
 </html>
 
