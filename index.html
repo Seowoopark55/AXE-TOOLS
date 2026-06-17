@@ -6356,5 +6356,161 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
 })();
 </script>
 
+
+<style id="axeCookV67InstallButtonStyle">
+/* v67: PWA install button in settings */
+.axe-install-v67{
+  display:none;
+  align-items:center;
+  gap:8px;
+  justify-content:flex-end;
+  flex-wrap:wrap;
+}
+.axe-install-v67.show{display:flex!important;}
+.axe-install-btn-v67{
+  height:34px!important;
+  padding:0 13px!important;
+  border-radius:999px!important;
+  border:1px solid rgba(255,181,46,.42)!important;
+  background:linear-gradient(135deg,rgba(255,207,97,.98),rgba(255,181,46,.98))!important;
+  color:#15100a!important;
+  font-size:12.5px!important;
+  font-weight:1000!important;
+  box-shadow:0 10px 24px rgba(255,181,46,.14)!important;
+}
+.axe-install-btn-v67:disabled{
+  opacity:.5!important;
+  cursor:not-allowed!important;
+  transform:none!important;
+}
+.axe-install-note-v67{
+  color:#9aa4b5;
+  font-size:11px;
+  font-weight:900;
+  white-space:nowrap;
+}
+@media(max-width:720px){
+  .axe-install-v67{justify-content:flex-start;width:100%;}
+  .axe-install-note-v67{white-space:normal;}
+}
+</style>
+<script id="axeCookV67InstallButtonScript">
+(function(){
+  let deferredInstallPromptV67=null;
+  let buttonReadyV67=false;
+
+  function isStandaloneV67(){
+    return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) ||
+           (window.navigator && window.navigator.standalone === true);
+  }
+
+  function toastV67(msg){
+    if(typeof toast==='function') toast(msg);
+    else console.log('[AXE COOK]', msg);
+  }
+
+  function ensureInstallBoxV67(){
+    const settings=document.getElementById('viewSettings');
+    if(!settings) return null;
+    const head=settings.querySelector('.page-head-v23');
+    if(!head) return null;
+    let box=document.getElementById('axeInstallBoxV67');
+    if(box) return box;
+
+    box=document.createElement('div');
+    box.id='axeInstallBoxV67';
+    box.className='axe-install-v67';
+    box.innerHTML='<button id="axeInstallBtnV67" class="btn axe-install-btn-v67" type="button">AXE COOK 설치하기</button><span id="axeInstallNoteV67" class="axe-install-note-v67">설치 후 앱 창으로 실행됩니다.</span>';
+
+    const oldPill=head.querySelector('.pill.ok, .pill');
+    if(oldPill) oldPill.replaceWith(box);
+    else head.appendChild(box);
+
+    const btn=box.querySelector('#axeInstallBtnV67');
+    btn.addEventListener('click', async function(){
+      if(isStandaloneV67()){
+        hideInstallBoxV67();
+        return;
+      }
+      if(!deferredInstallPromptV67){
+        toastV67('주소창의 설치 아이콘을 이용해 설치할 수 있습니다.');
+        return;
+      }
+      try{
+        deferredInstallPromptV67.prompt();
+        const result=await deferredInstallPromptV67.userChoice;
+        deferredInstallPromptV67=null;
+        if(result && result.outcome==='accepted'){
+          toastV67('AXE COOK 설치를 시작했습니다.');
+          hideInstallBoxV67();
+        }else{
+          toastV67('설치를 취소했습니다.');
+          updateInstallBoxV67();
+        }
+      }catch(err){
+        console.warn('[AXE COOK v67] install prompt failed', err);
+        toastV67('설치 팝업을 열 수 없습니다. 주소창 설치 아이콘을 확인해주세요.');
+      }
+    });
+    return box;
+  }
+
+  function hideInstallBoxV67(){
+    const box=document.getElementById('axeInstallBoxV67');
+    if(box) box.classList.remove('show');
+  }
+
+  function updateInstallBoxV67(){
+    const box=ensureInstallBoxV67();
+    if(!box) return;
+    const btn=box.querySelector('#axeInstallBtnV67');
+    const note=box.querySelector('#axeInstallNoteV67');
+    if(isStandaloneV67()){
+      box.classList.remove('show');
+      return;
+    }
+    if(deferredInstallPromptV67){
+      box.classList.add('show');
+      btn.disabled=false;
+      btn.textContent='AXE COOK 설치하기';
+      note.textContent='설치 후 앱 창으로 실행됩니다.';
+      buttonReadyV67=true;
+    }else if(buttonReadyV67){
+      box.classList.add('show');
+      btn.disabled=true;
+      btn.textContent='설치 확인중';
+      note.textContent='주소창 설치 아이콘이 보이면 설치할 수 있습니다.';
+    }else{
+      box.classList.remove('show');
+    }
+  }
+
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    deferredInstallPromptV67=e;
+    updateInstallBoxV67();
+  });
+
+  window.addEventListener('appinstalled', function(){
+    deferredInstallPromptV67=null;
+    hideInstallBoxV67();
+    toastV67('AXE COOK 설치 완료');
+  });
+
+  function bootV67(){
+    ensureInstallBoxV67();
+    updateInstallBoxV67();
+    setTimeout(updateInstallBoxV67, 1200);
+  }
+
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', bootV67);
+  else bootV67();
+
+  window.axeCookV67InstallDebug=function(){
+    return {standalone:isStandaloneV67(), hasDeferredPrompt:!!deferredInstallPromptV67, version:'v67-install-button'};
+  };
+})();
+</script>
+
 </body>
 </html>
