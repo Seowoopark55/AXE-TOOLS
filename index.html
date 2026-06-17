@@ -764,59 +764,106 @@ body{font-size:15.8px!important;}
 @media(max-width:640px){#settingsRootV44 .detail-line-v44{grid-template-columns:68px minmax(0,1fr)!important;}#settingsRootV44 .group-lines-v44{grid-template-columns:1fr!important;}}
 
 
-/* AXE COOK v49: side-only AXE atmosphere background */
-html,body{
-  min-height:100%;
+
+/* AXE COOK v50: banner dashboard layout */
+.axe-hero-v50{
+  grid-column:1/-1!important;
+  position:relative!important;
+  width:100%!important;
+  height:190px!important;
+  border:1px solid rgba(255,255,255,.11)!important;
+  border-radius:18px!important;
+  overflow:hidden!important;
+  margin:0 0 12px!important;
+  background-image:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.38)),url('./axe_banner.png')!important;
+  background-size:cover!important;
+  background-position:center center!important;
+  box-shadow:0 18px 55px rgba(0,0,0,.38), inset 0 0 0 1px rgba(255,255,255,.025)!important;
 }
-body{
-  position:relative;
-  overflow-x:hidden;
-}
-body::before{
+.axe-hero-v50::after{
   content:'';
-  position:fixed;
-  top:50%;
-  left:max(18px,calc(50% + 430px));
-  width:clamp(360px,30vw,620px);
-  aspect-ratio:1/1;
-  z-index:0;
+  position:absolute;
+  inset:auto 0 0 0;
+  height:44%;
+  background:linear-gradient(180deg,transparent,rgba(7,8,10,.74));
   pointer-events:none;
-  background-image:url('./axe.png?v=49');
-  background-repeat:no-repeat;
-  background-position:center;
-  background-size:contain;
-  opacity:.075;
-  filter:grayscale(.18) saturate(.78) brightness(.58);
-  transform:translateY(-45%);
 }
-body::after{
-  content:'';
-  position:fixed;
-  inset:0;
-  z-index:0;
-  pointer-events:none;
-  background:
-    radial-gradient(circle at calc(50% + 560px) 44%,rgba(255,181,46,.045),transparent 24%),
-    radial-gradient(circle at calc(50% - 520px) 72%,rgba(255,181,46,.026),transparent 26%),
-    linear-gradient(90deg,rgba(255,181,46,.018),transparent 18%,transparent 82%,rgba(255,181,46,.018));
+.axe-hero-label-v50{
+  position:absolute;
+  left:18px;
+  bottom:14px;
+  z-index:2;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 11px;
+  border-radius:999px;
+  border:1px solid rgba(255,181,46,.22);
+  background:rgba(8,10,13,.48);
+  backdrop-filter:blur(10px);
+  color:#ffcf61;
+  font-size:12px;
+  font-weight:1000;
+  letter-spacing:.1px;
 }
-.app{
-  position:relative;
-  z-index:1;
+.axe-hero-label-v50 small{color:#d5dbe5;font-weight:900;opacity:.92;}
+.app-shell-v23{max-width:1280px!important;}
+.app-view[data-view-panel="home"].active{
+  display:grid!important;
+  grid-template-columns:minmax(360px,.95fr) minmax(520px,1.55fr)!important;
+  gap:12px!important;
+  align-items:start!important;
 }
-.top{
-  z-index:50;
+#viewHome .v21-search-command{grid-column:1/2!important;grid-row:2!important;margin:0!important;}
+#viewHome .summary-command{display:block!important;grid-column:2/3!important;grid-row:3!important;margin:0!important;}
+#viewHome .workspace-column{display:contents!important;}
+#viewHome .orders-panel{grid-column:1/2!important;grid-row:3!important;margin:0!important;}
+#viewHome .recipe-work-panel{grid-column:2/3!important;grid-row:2!important;margin:0!important;min-height:150px!important;}
+#viewHome .purchase-panel{grid-column:2/3!important;grid-row:4 / span 2!important;margin:0!important;}
+#viewHome .near-assist{grid-column:1/2!important;grid-row:4!important;margin:0!important;}
+#viewHome .summary-command-head{display:none!important;}
+#viewHome .summary-grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:0!important;margin:0!important;}
+#viewHome .summary{border-radius:0!important;border-width:0 1px 0 0!important;border-color:rgba(255,255,255,.08)!important;background:transparent!important;text-align:center!important;padding:18px 12px!important;}
+#viewHome .summary:first-child{border-radius:14px 0 0 14px!important;}
+#viewHome .summary:last-child{border-right:0!important;border-radius:0 14px 14px 0!important;}
+#viewHome .summary-label{font-size:12px!important;margin-bottom:8px!important;color:#b8c0cc!important;}
+#viewHome .summary-value{font-size:28px!important;line-height:1!important;}
+#viewHome .search-hub,
+#viewHome .summary-command,
+#viewHome .workspace-column{width:100%!important;max-width:none!important;}
+#viewHome .v21-search-command,
+#viewHome .orders-panel,
+#viewHome .recipe-work-panel,
+#viewHome .purchase-panel,
+#viewHome .summary-command,
+#viewHome .near-assist{border-radius:18px!important;}
+#viewHome .search-box-v21{height:48px!important;}
+#viewHome .quick-row-v21{grid-template-columns:1fr!important;}
+#viewHome .set-mini-v21{display:none!important;}
+#viewHome .compact-checklist{grid-template-columns:repeat(2,minmax(0,1fr))!important;width:100%!important;}
+#viewHome .check-row{min-height:76px!important;}
+#viewHome .recipe-work-panel.has-process-v31 .recipe-combo-v30,
+#viewHome .recipe-work-panel.has-process-v30 .recipe-combo-v30{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;}
+#viewHome .recipe-work-card{min-height:92px!important;}
+#viewHome .favorite-inline{display:none!important;}
+#viewHome .fav-strip-v21{padding-top:4px!important;}
+#viewHome .fav{height:31px!important;font-size:12.5px!important;}
+#viewHome .panel-title{font-size:16px!important;}
+#viewHome .order-name,
+#viewHome .check-name{font-size:15px!important;}
+#viewHome .recipe-v13-name{font-size:17px!important;}
+#viewHome .recipe-v13-time{font-size:14px!important;}
+@media(max-width:980px){
+  .app-view[data-view-panel="home"].active{grid-template-columns:1fr!important;}
+  .axe-hero-v50{height:170px!important;}
+  #viewHome .v21-search-command,#viewHome .summary-command,#viewHome .orders-panel,#viewHome .recipe-work-panel,#viewHome .purchase-panel,#viewHome .near-assist{grid-column:1/-1!important;grid-row:auto!important;}
+  #viewHome .compact-checklist{grid-template-columns:1fr!important;}
 }
-@media(max-width:1180px){
-  body::before{
-    left:auto;
-    right:-210px;
-    opacity:.045;
-  }
-}
-@media(max-width:760px){
-  body::before{display:none;}
-  body::after{background:radial-gradient(circle at 50% 0%,rgba(255,181,46,.055),transparent 34%);}
+@media(max-width:640px){
+  .axe-hero-v50{height:138px!important;border-radius:14px!important;background-position:center center!important;}
+  .axe-hero-label-v50{left:12px;bottom:10px;font-size:11px;padding:7px 9px;}
+  #viewHome .summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+  #viewHome .summary{border-width:0 0 1px 0!important;}
 }
 
 </style>
@@ -852,6 +899,10 @@ body::after{
   </header>
   <main class="main tool-main app-shell-v23">
     <section id="viewHome" class="app-view active" data-view-panel="home">
+      <div class="axe-hero-v50" role="img" aria-label="AXE company banner">
+        <div class="axe-hero-label-v50">AXE COOK <small>TEAM WORKSPACE</small></div>
+      </div>
+
     <section class="panel search-command v21-search-command">
       <div class="search-hub">
         <div class="search-box-v21">
@@ -1446,7 +1497,7 @@ fish_022	보카시오 록피시	1	분홍살생선	5	10초	TRUE	22
 fish_023	코르비나	1	흰살생선	6	10초	TRUE	23	
 fish_024	태평양 바라쿠다	1	분홍살생선	6	10초	TRUE	24	
 `};
-const VERSION='AXE_TOOLS_COOK_BETA_V48_AXE_BG';
+const VERSION='AXE_TOOLS_COOK_BETA_V47_PWA';
 const STORE_ORDERS='axe_cook_v1_orders', STORE_FAVS='axe_cook_v1_favs', STORE_CHECKS='axe_cook_v1_checks', STORE_EMPTY='axe_cook_v1_workspace_empty';
 const PROCESS_OUTPUT={'빵반죽':8,'식빵':8,'구운빵':8};
 let DB={foods:[],recipes:[],materials:[],processes:[],farm:[],aliases:[],fish:[],aliasMap:new Map()}, orders=[], favorites=[], checks={}, activeTab='foods';
