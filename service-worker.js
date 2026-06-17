@@ -1,4 +1,4 @@
-const CACHE_NAME = 'axe-cook-v71';
+const CACHE_NAME = 'axe-cook-v72';
 const CORE_ASSETS = [
   '/',
   '/index.html',
