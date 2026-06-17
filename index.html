@@ -9858,19 +9858,33 @@ window.addEventListener('load',function(){
 
 </script>
 
-<!-- AXE COOK v130-b: Workspace page tab UI -->
-<script id="axe-v130b-workspace-tabs">
+<!-- AXE COOK v130-c: Workspace tabs inline in 작업 목록 title -->
+<script id="axe-v130c-workspace-tabs-inline">
 (function(){
   'use strict';
   function esc(s){return String(s==null?'':s).replace(/[&<>'"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c];});}
   function injectStyle(){
-    if(document.getElementById('axeWorkspaceTabsV130bStyle'))return;
+    if(document.getElementById('axeWorkspaceTabsV130cStyle'))return;
     var st=document.createElement('style');
-    st.id='axeWorkspaceTabsV130bStyle';
+    st.id='axeWorkspaceTabsV130cStyle';
     st.textContent='\
-      .workspace-tabs-v130b{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 10px;padding:8px 9px;border:1px solid rgba(255,255,255,.075);border-radius:13px;background:rgba(255,255,255,.025)}\
-      .workspace-tabs-left-v130b{display:flex;align-items:center;gap:6px;min-width:0;overflow:auto;padding-bottom:1px}.workspace-tab-v130b,.workspace-add-v130b,.workspace-del-v130b{height:28px;min-width:30px;padding:0 10px;border-radius:999px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.035);color:#c8ced8;font-size:11px;font-weight:1000;white-space:nowrap}.workspace-tab-v130b.active{background:linear-gradient(135deg,#ffcf61,#ffb52e);border-color:rgba(255,181,46,.8);color:#17100a}.workspace-add-v130b{border-color:rgba(255,181,46,.28);color:#ffd27a;background:rgba(255,181,46,.07)}.workspace-del-v130b{color:#ff9aa3;border-color:rgba(255,111,125,.25);background:rgba(255,111,125,.06)}.workspace-del-v130b:disabled{opacity:.35;cursor:not-allowed}.axe-page-modal-v130b{position:fixed;inset:0;z-index:999999;display:none;place-items:center;background:rgba(0,0,0,.56);backdrop-filter:blur(5px)}.axe-page-modal-v130b.show{display:grid}.axe-page-modal-card-v130b{width:min(360px,calc(100vw - 34px));border:1px solid rgba(255,181,46,.2);border-radius:18px;background:#111318;box-shadow:0 22px 70px rgba(0,0,0,.45);padding:18px}.axe-page-modal-title-v130b{font-size:16px;font-weight:1000;color:#f2f5fb;margin-bottom:8px}.axe-page-modal-msg-v130b{font-size:13px;line-height:1.5;color:#aeb7c5;font-weight:850;margin-bottom:16px}.axe-page-modal-actions-v130b{display:flex;justify-content:flex-end;gap:8px}.axe-page-modal-actions-v130b .danger{background:rgba(255,111,125,.12);border-color:rgba(255,111,125,.32);color:#ffc3c8}\
-      @media(max-width:680px){.workspace-tabs-v130b{align-items:flex-start;flex-direction:column}.workspace-tabs-left-v130b{width:100%}}';
+      #workspaceTabsV130b,#workspaceTabsV130c{display:none!important}\
+      .workspace-tabs-inline-v130c{display:inline-flex!important;align-items:center!important;gap:5px!important;margin-left:8px!important;vertical-align:middle!important;max-width:min(360px,42vw)!important;overflow:auto!important;white-space:nowrap!important;scrollbar-width:none!important}\
+      .workspace-tabs-inline-v130c::-webkit-scrollbar{display:none!important}\
+      .workspace-tab-v130c,.workspace-add-v130c,.workspace-del-v130c{height:24px!important;min-width:25px!important;padding:0 8px!important;border-radius:999px!important;border:1px solid rgba(255,255,255,.11)!important;background:rgba(255,255,255,.035)!important;color:#c8ced8!important;font-size:10.5px!important;font-weight:1000!important;line-height:22px!important;white-space:nowrap!important}\
+      .workspace-tab-v130c.active{background:linear-gradient(135deg,#ffcf61,#ffb52e)!important;border-color:rgba(255,181,46,.8)!important;color:#17100a!important}\
+      .workspace-add-v130c{border-color:rgba(255,181,46,.3)!important;color:#ffd27a!important;background:rgba(255,181,46,.07)!important}\
+      .workspace-del-v130c{margin-left:auto!important;color:#ff9aa3!important;border-color:rgba(255,111,125,.25)!important;background:rgba(255,111,125,.06)!important}\
+      .workspace-del-v130c:disabled{opacity:.35!important;cursor:not-allowed!important}\
+      .axe-page-modal-v130c{position:fixed!important;inset:0!important;z-index:999999!important;display:none!important;place-items:center!important;background:rgba(0,0,0,.56)!important;backdrop-filter:blur(5px)!important}\
+      .axe-page-modal-v130c.show{display:grid!important}\
+      .axe-page-modal-card-v130c{width:min(360px,calc(100vw - 34px))!important;border:1px solid rgba(255,181,46,.2)!important;border-radius:18px!important;background:#111318!important;box-shadow:0 22px 70px rgba(0,0,0,.45)!important;padding:18px!important}\
+      .axe-page-modal-title-v130c{font-size:16px!important;font-weight:1000!important;color:#f2f5fb!important;margin-bottom:8px!important}\
+      .axe-page-modal-msg-v130c{font-size:13px!important;line-height:1.5!important;color:#aeb7c5!important;font-weight:850!important;margin-bottom:16px!important}\
+      .axe-page-modal-actions-v130c{display:flex!important;justify-content:flex-end!important;gap:8px!important}\
+      .axe-page-modal-actions-v130c .danger{background:rgba(255,111,125,.12)!important;border-color:rgba(255,111,125,.32)!important;color:#ffc3c8!important}\
+      .orders-panel .panel-title{align-items:center!important}.orders-panel .panel-title>span{display:flex!important;align-items:center!important;gap:0!important;min-width:0!important;flex-wrap:wrap!important}\
+      @media(max-width:680px){.workspace-tabs-inline-v130c{max-width:100%!important;margin-left:6px!important}.workspace-tab-v130c,.workspace-add-v130c,.workspace-del-v130c{height:23px!important;min-width:24px!important;padding:0 7px!important;font-size:10px!important}}';
     document.head.appendChild(st);
   }
   function getEngine(){return window.axeWorkspaceEngine||null;}
@@ -9879,23 +9893,28 @@ window.addEventListener('load',function(){
     if(items.length===1&&items[0]&&items[0].name)return items[0].name;
     return (w&&w.name)?w.name:String(i+1);
   }
+  function removeOldBlock(){
+    var old=document.getElementById('workspaceTabsV130b');
+    if(old&&old.parentNode)old.parentNode.removeChild(old);
+  }
   function ensureHost(){
-    var orderList=document.getElementById('orderList');
-    if(!orderList)return null;
-    var host=document.getElementById('workspaceTabsV130b');
+    removeOldBlock();
+    var title=document.querySelector('.orders-panel .panel-title span');
+    if(!title)return null;
+    var host=document.getElementById('workspaceTabsV130c');
     if(!host){
-      host=document.createElement('div');
-      host.id='workspaceTabsV130b';
-      host.className='workspace-tabs-v130b';
-      orderList.parentNode.insertBefore(host,orderList);
+      host=document.createElement('span');
+      host.id='workspaceTabsV130c';
+      host.className='workspace-tabs-inline-v130c';
+      title.appendChild(host);
     }
     return host;
   }
   function confirmDelete(pageName){
     return new Promise(function(resolve){
-      var root=document.getElementById('axePageModalV130b');
-      if(!root){root=document.createElement('div');root.id='axePageModalV130b';root.className='axe-page-modal-v130b';document.body.appendChild(root);}
-      root.innerHTML='<div class="axe-page-modal-card-v130b" role="dialog" aria-modal="true"><div class="axe-page-modal-title-v130b">작업 페이지를 삭제할까요?</div><div class="axe-page-modal-msg-v130b">'+esc(pageName)+' 페이지의 작업목록, 체크상태, 메모가 삭제됩니다.</div><div class="axe-page-modal-actions-v130b"><button type="button" class="btn danger" data-yes>삭제</button><button type="button" class="btn ghost" data-no>취소</button></div></div>';
+      var root=document.getElementById('axePageModalV130c');
+      if(!root){root=document.createElement('div');root.id='axePageModalV130c';root.className='axe-page-modal-v130c';document.body.appendChild(root);}
+      root.innerHTML='<div class="axe-page-modal-card-v130c" role="dialog" aria-modal="true"><div class="axe-page-modal-title-v130c">작업 페이지를 삭제할까요?</div><div class="axe-page-modal-msg-v130c">'+esc(pageName)+' 페이지의 작업목록, 체크상태, 메모가 삭제됩니다.</div><div class="axe-page-modal-actions-v130c"><button type="button" class="btn danger" data-yes>삭제</button><button type="button" class="btn ghost" data-no>취소</button></div></div>';
       function close(v){root.classList.remove('show');resolve(v);} root.classList.add('show');
       root.querySelector('[data-yes]').onclick=function(){close(true);};
       root.querySelector('[data-no]').onclick=function(){close(false);};
@@ -9910,14 +9929,15 @@ window.addEventListener('load',function(){
     try{if(typeof eng.captureActiveState==='function')eng.captureActiveState();}catch(e){}
     var list=Array.isArray(eng.workspaces)?eng.workspaces:[];
     var active=Number(eng.activeWorkspace)||0;
-    var html='<div class="workspace-tabs-left-v130b">';
-    list.forEach(function(w,i){html+='<button type="button" class="workspace-tab-v130b '+(i===active?'active':'')+'" data-ws-index="'+i+'">'+esc(labelForWorkspace(w,i))+'</button>';});
-    html+='<button type="button" class="workspace-add-v130b" data-ws-add>+</button></div>';
-    html+='<button type="button" class="workspace-del-v130b" data-ws-delete '+(list.length<=1?'disabled':'')+'>×</button>';
+    var html='';
+    list.forEach(function(w,i){html+='<button type="button" class="workspace-tab-v130c '+(i===active?'active':'')+'" data-ws-index="'+i+'">'+esc(labelForWorkspace(w,i))+'</button>';});
+    html+='<button type="button" class="workspace-add-v130c" data-ws-add>+</button>';
+    html+='<button type="button" class="workspace-del-v130c" data-ws-delete '+(list.length<=1?'disabled':'')+'>×</button>';
     host.innerHTML=html;
-    host.querySelectorAll('[data-ws-index]').forEach(function(btn){btn.onclick=function(){var idx=Number(btn.getAttribute('data-ws-index')); if(eng.switchWorkspace)eng.switchWorkspace(idx);};});
-    var add=host.querySelector('[data-ws-add]'); if(add)add.onclick=function(){if(eng.createWorkspace)eng.createWorkspace();};
-    var del=host.querySelector('[data-ws-delete]'); if(del)del.onclick=async function(){
+    host.querySelectorAll('[data-ws-index]').forEach(function(btn){btn.onclick=function(e){e.preventDefault();e.stopPropagation();var idx=Number(btn.getAttribute('data-ws-index')); if(eng.switchWorkspace)eng.switchWorkspace(idx);};});
+    var add=host.querySelector('[data-ws-add]'); if(add)add.onclick=function(e){e.preventDefault();e.stopPropagation();if(eng.createWorkspace)eng.createWorkspace();};
+    var del=host.querySelector('[data-ws-delete]'); if(del)del.onclick=async function(e){
+      e.preventDefault();e.stopPropagation();
       if(del.disabled)return;
       var current=(eng.workspaces||[])[Number(eng.activeWorkspace)||0];
       var name=labelForWorkspace(current,Number(eng.activeWorkspace)||0);
@@ -9926,12 +9946,13 @@ window.addEventListener('load',function(){
     };
   }
   window.axeRenderWorkspaceTabsV130b=renderTabs;
+  window.axeRenderWorkspaceTabsV130c=renderTabs;
   function delayed(){renderTabs();setTimeout(renderTabs,80);setTimeout(renderTabs,400);}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',delayed,{once:true});else delayed();
   var oldRender=window.render;
-  if(typeof oldRender==='function'&&!oldRender.__axeV130bWrapped){
+  if(typeof oldRender==='function'&&!oldRender.__axeV130cWrapped){
     var wrapped=function(){var out=oldRender.apply(this,arguments);try{renderTabs();}catch(e){}return out;};
-    wrapped.__axeV130bWrapped=true;
+    wrapped.__axeV130cWrapped=true;
     window.render=wrapped;try{render=wrapped;}catch(e){}
   }
 })();
