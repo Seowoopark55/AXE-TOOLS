@@ -1386,18 +1386,45 @@ body{
 
 
 
-/* AXE COOK v69: lightweight boot loading screen */
-.boot-loader-v69{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;background:radial-gradient(circle at 50% 8%,rgba(255,181,46,.14),transparent 30%),linear-gradient(180deg,rgba(8,9,12,.98),rgba(7,8,10,.965));backdrop-filter:blur(10px);transition:opacity .28s ease,visibility .28s ease;}
-.boot-loader-v69.is-leaving{opacity:0;visibility:hidden;pointer-events:none;}
-.boot-card-v69{width:min(360px,calc(100vw - 42px));border:1px solid rgba(255,181,46,.22);border-radius:22px;background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025)),rgba(7,9,12,.86);box-shadow:0 26px 90px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,255,255,.035);padding:22px 22px 18px;text-align:center;}
-.boot-mark-v69{width:58px;height:58px;margin:0 auto 14px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(135deg,#ffcf61,#ff9d00);color:#111;font-weight:1000;font-size:18px;letter-spacing:-.8px;box-shadow:0 14px 34px rgba(255,181,46,.2);}
-.boot-title-v69{font-size:18px;font-weight:1000;color:#f5f7fb;letter-spacing:.2px;margin-bottom:6px;}
-.boot-sub-v69{font-size:12px;font-weight:900;color:#9ea8b7;line-height:1.45;margin-bottom:15px;}
-.boot-bar-v69{height:7px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;border:1px solid rgba(255,255,255,.055);}
-.boot-bar-v69 span{display:block;width:42%;height:100%;border-radius:999px;background:linear-gradient(90deg,rgba(255,181,46,.15),#ffb52e,#ffd27a);animation:bootMoveV69 1.15s ease-in-out infinite;box-shadow:0 0 18px rgba(255,181,46,.28);}
-.boot-foot-v69{margin-top:11px;font-size:11px;font-weight:900;color:#747d8c;}
-@keyframes bootMoveV69{0%{transform:translateX(-115%)}55%{transform:translateX(95%)}100%{transform:translateX(245%)}}
-@media(max-width:560px){.boot-card-v69{border-radius:18px;padding:20px 18px 16px}.boot-mark-v69{width:52px;height:52px;font-size:16px}.boot-title-v69{font-size:17px}}
+/* AXE COOK v73: welcome splash boot screen */
+.boot-loader-v69{
+  position:fixed;inset:0;z-index:99999;display:grid;place-items:center;
+  background:
+    radial-gradient(circle at 50% 10%,rgba(255,181,46,.13),transparent 34%),
+    linear-gradient(180deg,rgba(7,8,11,.985),rgba(8,9,12,.965));
+  backdrop-filter:blur(12px);
+  transition:opacity .32s ease,visibility .32s ease,transform .32s ease;
+}
+.boot-loader-v69.is-leaving{opacity:0;visibility:hidden;pointer-events:none;transform:scale(1.01)}
+.boot-card-v69{
+  width:min(560px,calc(100vw - 46px));
+  border:1px solid rgba(255,181,46,.20);
+  border-radius:24px;
+  background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025)),rgba(8,10,14,.86);
+  box-shadow:0 28px 95px rgba(0,0,0,.58),inset 0 0 0 1px rgba(255,255,255,.035);
+  padding:16px 16px 18px;
+  overflow:hidden;
+}
+.boot-hero-v73{
+  position:relative;height:170px;border-radius:18px;overflow:hidden;
+  background:#0d1015;border:1px solid rgba(255,255,255,.08);
+  box-shadow:inset 0 -80px 90px rgba(0,0,0,.45);
+}
+.boot-hero-v73::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.18) 44%,rgba(0,0,0,.72));
+  pointer-events:none;
+}
+.boot-hero-v73 img{width:100%;height:100%;object-fit:cover;object-position:center 42%;display:block;filter:saturate(1.04) contrast(1.03)}
+.boot-brandline-v73{position:absolute;left:18px;right:18px;bottom:15px;z-index:2;display:flex;align-items:flex-end;justify-content:space-between;gap:14px}
+.boot-title-v69{font-size:27px;font-weight:1000;color:#fff;letter-spacing:.4px;line-height:1;text-shadow:0 10px 28px rgba(0,0,0,.55)}
+.boot-badge-v73{height:28px;display:inline-flex;align-items:center;border-radius:999px;border:1px solid rgba(255,181,46,.30);background:rgba(255,181,46,.10);color:#ffd27a;padding:0 10px;font-size:11.5px;font-weight:1000;white-space:nowrap;backdrop-filter:blur(8px)}
+.boot-sub-v69{margin:14px 2px 0;text-align:center;font-size:13px;font-weight:950;color:#d9dfe9;line-height:1.45;letter-spacing:-.1px}
+.boot-foot-v69{margin-top:6px;text-align:center;font-size:11.5px;font-weight:900;color:#8791a0;min-height:17px}
+.boot-pulse-v73{width:7px;height:7px;border-radius:50%;background:#ffb52e;display:inline-block;margin-right:7px;box-shadow:0 0 0 0 rgba(255,181,46,.45);animation:axePulseV73 1.45s ease-in-out infinite;vertical-align:1px}
+.boot-mark-v69,.boot-bar-v69{display:none!important}
+@keyframes axePulseV73{0%{box-shadow:0 0 0 0 rgba(255,181,46,.45)}70%{box-shadow:0 0 0 8px rgba(255,181,46,0)}100%{box-shadow:0 0 0 0 rgba(255,181,46,0)}}
+@media(max-width:560px){.boot-card-v69{width:calc(100vw - 30px);border-radius:20px;padding:12px 12px 15px}.boot-hero-v73{height:138px;border-radius:16px}.boot-brandline-v73{left:14px;right:14px;bottom:12px}.boot-title-v69{font-size:23px}.boot-badge-v73{display:none}.boot-sub-v69{font-size:12.2px}}
 
 </style>
 
@@ -1408,51 +1435,20 @@ body{
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="AXE COOK">
 <link rel="apple-touch-icon" href="./icon-192.png">
-
-<style id="axeCookV72SkeletonStyle">
-/* AXE COOK v72: boot overlay -> skeleton loading */
-.boot-loader-v69{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;}
-body.axe-skeleton-active #viewHome .axe-skel-panel-v72,
-body.axe-skeleton-active #viewHome .axe-skel-card-v72,
-body.axe-skeleton-active #viewHome .axe-skel-row-v72,
-body.axe-skeleton-active #viewHome .axe-skel-chip-v72{
-  position:relative!important;
-  overflow:hidden!important;
-  background:linear-gradient(110deg,rgba(255,255,255,.045) 8%,rgba(255,181,46,.08) 18%,rgba(255,255,255,.045) 33%)!important;
-  background-size:240% 100%!important;
-  animation:axeSkelMoveV72 1.25s ease-in-out infinite!important;
-  border-color:rgba(255,255,255,.075)!important;
-}
-@keyframes axeSkelMoveV72{0%{background-position:120% 0}100%{background-position:-120% 0}}
-#viewHome .axe-skeleton-grid-v72{display:grid!important;gap:7px!important;width:100%!important;}
-#viewHome .axe-skel-order-v72{display:grid!important;grid-template-columns:minmax(0,1fr) 64px 44px!important;gap:7px!important;align-items:center!important;padding:9px 10px!important;border-radius:12px!important;border:1px solid rgba(255,255,255,.075)!important;background:rgba(255,255,255,.024)!important;}
-#viewHome .axe-skel-lines-v72{display:grid!important;gap:6px!important;min-width:0!important;}
-#viewHome .axe-skel-line-v72{height:12px!important;border-radius:999px!important;background:rgba(255,255,255,.065)!important;}
-#viewHome .axe-skel-line-v72.w80{width:80%!important}.axe-skel-line-v72.w62{width:62%!important}.axe-skel-line-v72.w45{width:45%!important}
-#viewHome .axe-skel-box-v72{height:34px!important;border-radius:11px!important;border:1px solid rgba(255,255,255,.07)!important;background:rgba(255,255,255,.045)!important;}
-#viewHome .axe-skel-recipe-v72{height:66px!important;border-radius:10px!important;border:1px solid rgba(255,255,255,.075)!important;padding:9px 10px!important;display:grid!important;gap:8px!important;background:rgba(255,255,255,.024)!important;}
-#viewHome .axe-skel-recipe-top-v72{display:flex!important;gap:6px!important;align-items:center!important;}
-#viewHome .axe-skel-pill-v72{height:21px!important;border-radius:999px!important;background:rgba(255,255,255,.065)!important;}
-#viewHome .axe-skel-pills-v72{display:flex!important;flex-wrap:wrap!important;gap:4px!important;}
-#viewHome .axe-skel-mat-v72{width:64px!important;height:22px!important;border-radius:999px!important;background:rgba(255,255,255,.055)!important;}
-#viewHome .axe-skel-check-v72{height:60px!important;border-radius:12px!important;border:1px solid rgba(255,255,255,.075)!important;padding:9px!important;display:grid!important;grid-template-columns:19px minmax(0,1fr) 56px!important;gap:7px!important;align-items:center!important;background:rgba(255,255,255,.024)!important;}
-#viewHome .axe-skel-dot-v72{width:16px!important;height:16px!important;border-radius:5px!important;background:rgba(255,255,255,.06)!important;}
-#viewHome .axe-skel-favs-v72{display:flex!important;gap:6px!important;overflow:hidden!important;}
-#viewHome .axe-skel-fav-v72{height:30px!important;width:84px!important;border-radius:999px!important;border:1px solid rgba(255,181,46,.14)!important;background:rgba(255,181,46,.055)!important;}
-body:not(.axe-skeleton-active) .axe-skeleton-only-v72{display:none!important;}
-@media(max-width:680px){#viewHome .axe-skel-check-wrap-v72{grid-template-columns:1fr!important;}#viewHome .axe-skel-order-v72{grid-template-columns:minmax(0,1fr) 58px 42px!important;}}
-</style>
-
 </head>
 <body>
 
 <div id="bootLoaderV69" class="boot-loader-v69" role="status" aria-live="polite">
   <div class="boot-card-v69">
-    <div class="boot-mark-v69">AXE</div>
-    <div class="boot-title-v69">AXE COOK</div>
-    <div class="boot-sub-v69">요리 데이터를 불러오는 중입니다.<br>작업공간을 준비하고 있습니다.</div>
-    <div class="boot-bar-v69"><span></span></div>
-    <div id="bootLoaderMsgV69" class="boot-foot-v69">Google Sheet 연결 확인 중</div>
+    <div class="boot-hero-v73">
+      <img src="./axe_banner.png" alt="AXE COOK">
+      <div class="boot-brandline-v73">
+        <div class="boot-title-v69">AXE COOK</div>
+        <div class="boot-badge-v73">WORKSPACE</div>
+      </div>
+    </div>
+    <div class="boot-sub-v69"><span class="boot-pulse-v73"></span>요리 작업공간 준비 중</div>
+    <div id="bootLoaderMsgV69" class="boot-foot-v69">레시피 데이터 동기화 중</div>
   </div>
 </div>
 
@@ -6521,7 +6517,7 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
 (function(){
   var started=Date.now();
   var hidden=false;
-  var messages=['Google Sheet 연결 확인 중','요리·재료 데이터 정리 중','작업공간 구성 중'];
+  var messages=['레시피 데이터 동기화 중','재료 계산 기준 확인 중','작업공간 구성 중'];
   var idx=0;
   function qs(id){return document.getElementById(id);}
   function setMsg(){var el=qs('bootLoaderMsgV69'); if(el){el.textContent=messages[idx%messages.length]; idx++;}}
@@ -6529,7 +6525,7 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
     if(hidden)return; hidden=true;
     var loader=qs('bootLoaderV69'); if(!loader)return;
     var elapsed=Date.now()-started;
-    var delay=Math.max(0,420-elapsed);
+    var delay=Math.max(0,720-elapsed);
     setTimeout(function(){
       loader.classList.add('is-leaving');
       setTimeout(function(){if(loader&&loader.parentNode)loader.parentNode.removeChild(loader);},360);
@@ -6541,35 +6537,7 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
   },80);
   window.addEventListener('load',function(){setTimeout(function(){if(window.AXE_COOK_BOOT_READY || (typeof AXE_COOK_BOOT_READY!=='undefined' && AXE_COOK_BOOT_READY)){clearInterval(readyTimer);clearInterval(msgTimer);hideLoader();}},80);});
   setTimeout(function(){clearInterval(readyTimer);clearInterval(msgTimer);hideLoader();},9500);
-  window.axeCookV69LoadingDebug=function(){return {version:'v71-error-cleanup',visible:!hidden,ready:!!window.AXE_COOK_BOOT_READY,elapsed:Date.now()-started};};
-})();
-</script>
-
-
-<script id="axeCookV72SkeletonScript">
-(function(){
-  function byId(id){return document.getElementById(id);}
-  function isReady(){return !!(window.AXE_COOK_BOOT_READY || (typeof AXE_COOK_BOOT_READY!=='undefined' && AXE_COOK_BOOT_READY));}
-  function orderSkeleton(){return '<div class="axe-skeleton-grid-v72 axe-skeleton-only-v72"><div class="axe-skel-order-v72 axe-skel-card-v72"><div class="axe-skel-lines-v72"><i class="axe-skel-line-v72 w62"></i><i class="axe-skel-line-v72 w80"></i></div><i class="axe-skel-box-v72"></i><i class="axe-skel-box-v72"></i></div><div class="axe-skel-order-v72 axe-skel-card-v72"><div class="axe-skel-lines-v72"><i class="axe-skel-line-v72 w45"></i><i class="axe-skel-line-v72 w80"></i></div><i class="axe-skel-box-v72"></i><i class="axe-skel-box-v72"></i></div></div>';}
-  function recipeSkeleton(){
-    var card='<div class="axe-skel-recipe-v72 axe-skel-card-v72"><div class="axe-skel-recipe-top-v72"><i class="axe-skel-pill-v72" style="width:82px"></i><i class="axe-skel-pill-v72" style="width:58px"></i></div><div class="axe-skel-pills-v72"><i class="axe-skel-mat-v72"></i><i class="axe-skel-mat-v72" style="width:72px"></i><i class="axe-skel-mat-v72" style="width:56px"></i></div></div>';
-    return '<div class="axe-recipe-grid-v64 axe-skeleton-only-v72"><section class="axe-recipe-col-v64"><div class="axe-recipe-head-v64"><h3 class="axe-recipe-title-v64"><span class="ico-v64">▤</span><span>제작 레시피</span></h3></div><div class="axe-recipe-body-v64">'+card+card+'</div></section><section class="axe-recipe-col-v64"><div class="axe-recipe-head-v64"><h3 class="axe-recipe-title-v64"><span class="ico-v64">⚒</span><span>가공 레시피</span></h3></div><div class="axe-recipe-body-v64">'+card+card+'</div></section></div>';
-  }
-  function purchaseSkeleton(){return '<div class="compact-checklist axe-skel-check-wrap-v72 axe-skeleton-only-v72"><label class="axe-skel-check-v72 axe-skel-card-v72"><i class="axe-skel-dot-v72"></i><div class="axe-skel-lines-v72"><i class="axe-skel-line-v72 w62"></i><i class="axe-skel-line-v72 w80"></i></div><i class="axe-skel-box-v72"></i></label><label class="axe-skel-check-v72 axe-skel-card-v72"><i class="axe-skel-dot-v72"></i><div class="axe-skel-lines-v72"><i class="axe-skel-line-v72 w45"></i><i class="axe-skel-line-v72 w80"></i></div><i class="axe-skel-box-v72"></i></label><label class="axe-skel-check-v72 axe-skel-card-v72"><i class="axe-skel-dot-v72"></i><div class="axe-skel-lines-v72"><i class="axe-skel-line-v72 w80"></i><i class="axe-skel-line-v72 w62"></i></div><i class="axe-skel-box-v72"></i></label><label class="axe-skel-check-v72 axe-skel-card-v72"><i class="axe-skel-dot-v72"></i><div class="axe-skel-lines-v72"><i class="axe-skel-line-v72 w62"></i><i class="axe-skel-line-v72 w45"></i></div><i class="axe-skel-box-v72"></i></label></div>';}
-  function favSkeleton(){return '<div class="axe-skel-favs-v72 axe-skeleton-only-v72"><i class="axe-skel-fav-v72 axe-skel-chip-v72"></i><i class="axe-skel-fav-v72 axe-skel-chip-v72"></i><i class="axe-skel-fav-v72 axe-skel-chip-v72"></i></div>';}
-  function mountSkeleton(){
-    if(isReady())return;
-    document.body.classList.add('axe-skeleton-active');
-    var fav=byId('favStrip'); if(fav) fav.innerHTML=favSkeleton();
-    var order=byId('orderList'); if(order) order.innerHTML=orderSkeleton();
-    var recipePanel=document.querySelector('#viewHome .recipe-work-panel'); if(recipePanel) recipePanel.innerHTML=recipeSkeleton();
-    var purchase=byId('purchaseList'); if(purchase) purchase.innerHTML=purchaseSkeleton();
-  }
-  function unmountSkeleton(){document.body.classList.remove('axe-skeleton-active');}
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',mountSkeleton); else mountSkeleton();
-  var t=setInterval(function(){if(isReady()){clearInterval(t);unmountSkeleton();}},80);
-  setTimeout(function(){clearInterval(t);unmountSkeleton();},10000);
-  window.axeCookV72SkeletonDebug=function(){return {version:'v72-skeleton-loading',active:document.body.classList.contains('axe-skeleton-active'),ready:isReady()};};
+  window.axeCookV69LoadingDebug=function(){return {version:'v73-welcome-splash',visible:!hidden,ready:!!window.AXE_COOK_BOOT_READY,elapsed:Date.now()-started};};
 })();
 </script>
 
