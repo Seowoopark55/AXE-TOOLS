@@ -3579,6 +3579,163 @@ main.main.tool-main.app-shell-v23,
 </style>
 
 
+
+
+<style id="axeCookV54AlignedDashboard">
+/* AXE COOK v54: 실제 적용용 배너 + 카드 라인 정렬 + 레시피/가공 반반 고정 */
+:root{
+  --axe-v54-shell:min(1560px,calc(100vw - 96px));
+  --axe-v54-left:520px;
+  --axe-v54-gap:16px;
+}
+.top-inner{max-width:var(--axe-v54-shell)!important;width:100%!important;}
+.app-shell-v23,.tool-main,.main{max-width:var(--axe-v54-shell)!important;width:100%!important;padding:16px 0 28px!important;}
+#viewHome.app-view.active[data-view-panel="home"]{
+  display:grid!important;
+  grid-template-columns:var(--axe-v54-left) minmax(0,1fr)!important;
+  grid-auto-rows:auto!important;
+  gap:var(--axe-v54-gap)!important;
+  align-items:stretch!important;
+}
+#viewHome .axe-hero-v50{
+  grid-column:1/-1!important;
+  grid-row:1!important;
+  height:292px!important;
+  min-height:292px!important;
+  border-radius:18px!important;
+  background-image:linear-gradient(90deg,rgba(0,0,0,.10),rgba(0,0,0,0) 40%,rgba(0,0,0,.16)),url('./axe_banner.png')!important;
+  background-position:center center!important;
+  background-size:cover!important;
+  border:1px solid rgba(255,255,255,.12)!important;
+  overflow:hidden!important;
+  box-shadow:0 20px 58px rgba(0,0,0,.28)!important;
+}
+#viewHome .axe-hero-v50::before,
+#viewHome .axe-hero-v50::after{display:none!important;content:none!important;}
+#viewHome .axe-hero-label-v50{
+  left:24px!important;bottom:22px!important;z-index:2!important;
+  height:40px!important;padding:0 20px!important;border-radius:999px!important;
+  border:1px solid rgba(255,181,46,.35)!important;background:rgba(6,7,9,.58)!important;
+  backdrop-filter:blur(8px)!important;color:var(--gold2)!important;
+  font-size:15px!important;font-weight:1000!important;letter-spacing:.2px!important;
+}
+#viewHome .axe-hero-label-v50 small{font-size:13px!important;color:#f3f6fb!important;margin-left:6px!important;}
+
+/* 카드 위치: 좌/우 라인 균등 정렬 */
+#viewHome .v21-search-command{grid-column:1/2!important;grid-row:2!important;height:172px!important;min-height:172px!important;}
+#viewHome .recipe-work-panel{grid-column:2/3!important;grid-row:2!important;height:172px!important;min-height:172px!important;}
+#viewHome .orders-panel{grid-column:1/2!important;grid-row:3!important;height:142px!important;min-height:142px!important;}
+#viewHome .summary-command{grid-column:2/3!important;grid-row:3!important;height:142px!important;min-height:142px!important;}
+#viewHome .memo-panel-v53{grid-column:1/2!important;grid-row:4!important;min-height:198px!important;}
+#viewHome .purchase-panel{grid-column:2/3!important;grid-row:4 / span 2!important;min-height:296px!important;}
+#viewHome .near-assist{display:none!important;}
+
+#viewHome .panel,
+#viewHome .v21-search-command,
+#viewHome .orders-panel,
+#viewHome .recipe-work-panel,
+#viewHome .summary-command,
+#viewHome .purchase-panel,
+#viewHome .memo-panel-v53{
+  width:100%!important;max-width:none!important;margin:0!important;
+  border-radius:18px!important;padding:18px!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.050),rgba(255,255,255,.018)),rgba(0,0,0,.22)!important;
+  border:1px solid rgba(255,255,255,.095)!important;
+  box-shadow:0 18px 46px rgba(0,0,0,.28)!important;
+}
+#viewHome .panel-title{font-size:20px!important;margin-bottom:14px!important;line-height:1.2!important;}
+#viewHome .panel-title small{font-size:13px!important;}
+
+/* 상단 탭 및 타이틀 아이콘을 목업 톤으로 정리 */
+.top-tab-v23{gap:9px!important;}
+.top-tab-v23[data-view="home"]::before{content:'⌂'!important;}
+.top-tab-v23[data-view="data"]::before{content:'▦'!important;}
+.top-tab-v23[data-view="settings"]::before{content:'⚙'!important;}
+#viewHome .orders-panel .panel-title>span::before{content:'▣ '!important;color:var(--gold2)!important;}
+#viewHome .recipe-work-panel>.panel-title::before{content:'▤ '!important;color:var(--gold2)!important;margin-right:8px!important;}
+#viewHome .purchase-panel>.panel-title::before{content:'▱ '!important;color:var(--gold2)!important;margin-right:8px!important;}
+#viewHome .memo-panel-v53>.panel-title>span::before{content:'✎ '!important;color:var(--gold2)!important;}
+#viewHome .fav-strip-v21::before{content:'★ 즐겨찾기'!important;color:#f3f6fb!important;font-size:13px!important;font-weight:1000!important;}
+
+/* 검색 박스 */
+#viewHome .search-hub{width:100%!important;max-width:none!important;margin:0!important;}
+#viewHome .search-box-v21{height:54px!important;border-radius:15px!important;grid-template-columns:44px minmax(0,1fr)!important;}
+#viewHome .search-input-v21{height:52px!important;font-size:16px!important;}
+#viewHome .quick-row-v21{margin-top:14px!important;grid-template-columns:1fr!important;}
+#viewHome .set-mini-v21{display:none!important;}
+#viewHome .fav-strip-v21{gap:8px!important;align-items:center!important;}
+#viewHome .fav{height:31px!important;font-size:13px!important;}
+
+/* 제작 레시피 옆 가공 레시피: 항상 반반 배치 */
+#viewHome .recipe-work-panel .recipe-combo-v30,
+#viewHome .recipe-work-panel.has-process-v30 .recipe-combo-v30,
+#viewHome .recipe-work-panel.has-process-v31 .recipe-combo-v30,
+#viewHome .recipe-work-panel.no-process-v30 .recipe-combo-v30,
+#viewHome .recipe-work-panel.no-process-v31 .recipe-combo-v30{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  gap:14px!important;
+  align-items:stretch!important;
+  height:calc(100% - 36px)!important;
+}
+#viewHome .recipe-work-card,
+#viewHome .process-side-card-v30{
+  height:100%!important;min-height:96px!important;width:100%!important;max-width:none!important;margin:0!important;
+  border-radius:15px!important;border:1px solid rgba(255,255,255,.075)!important;
+  background:rgba(255,255,255,.026)!important;padding:14px!important;
+}
+#viewHome .process-inline.recipe-side-process-v30{display:block!important;min-width:0!important;width:100%!important;}
+#viewHome .process-side-title-v30{font-size:16px!important;margin-bottom:10px!important;color:#f4f6fa!important;}
+#viewHome .process-side-title-v30::before{content:'⚒ ';color:var(--gold2)!important;}
+#viewHome .process-empty-v54{padding:0!important;border:0!important;background:transparent!important;text-align:left!important;color:#9aa4b5!important;}
+
+/* 작업 요약 */
+#viewHome .summary-command{display:flex!important;align-items:center!important;}
+#viewHome .summary-command-head{display:none!important;}
+#viewHome .summary-grid{width:100%!important;display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:0!important;margin:0!important;}
+#viewHome .summary{border:0!important;border-radius:0!important;background:transparent!important;text-align:center!important;padding:12px 10px!important;border-right:1px solid rgba(255,255,255,.10)!important;}
+#viewHome .summary:last-child{border-right:0!important;}
+#viewHome .summary-label{font-size:13px!important;color:#c8ced8!important;margin-bottom:8px!important;}
+#viewHome .summary-value{font-size:34px!important;line-height:1!important;}
+
+/* 작업 목록 */
+#viewHome .order-row{height:70px!important;grid-template-columns:minmax(0,1fr) 80px 58px!important;gap:10px!important;padding:12px!important;border-radius:14px!important;}
+#viewHome .order-name{font-size:17px!important;}
+#viewHome .order-sub{font-size:12.5px!important;}
+#viewHome .order-row .num{height:40px!important;font-size:18px!important;}
+#viewHome .order-row .btn{height:40px!important;}
+
+/* 메모 */
+#viewHome .memo-textarea-v53{min-height:124px!important;border-radius:14px!important;font-size:15px!important;}
+
+/* 구매 체크리스트 */
+#viewHome .compact-checklist{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;width:100%!important;}
+#viewHome .check-row{min-height:82px!important;padding:14px!important;border-radius:15px!important;grid-template-columns:22px minmax(0,1fr) 74px!important;gap:12px!important;}
+#viewHome .check-name{font-size:18px!important;}
+#viewHome .check-sub{font-size:12.5px!important;}
+#viewHome .check-bundle{height:26px!important;font-size:13px!important;}
+#viewHome .check-cost{font-size:13px!important;}
+
+@media(max-width:1280px){
+  :root{--axe-v54-shell:calc(100vw - 28px);--axe-v54-left:minmax(0,1fr);}
+  #viewHome.app-view.active[data-view-panel="home"]{grid-template-columns:1fr!important;}
+  #viewHome .axe-hero-v50,#viewHome .v21-search-command,#viewHome .recipe-work-panel,#viewHome .orders-panel,#viewHome .summary-command,#viewHome .memo-panel-v53,#viewHome .purchase-panel{grid-column:1/-1!important;grid-row:auto!important;}
+  #viewHome .axe-hero-v50{height:220px!important;min-height:220px!important;}
+}
+@media(max-width:760px){
+  .top-inner{padding:10px!important;}
+  .app-shell-v23,.tool-main,.main{padding:10px!important;}
+  #viewHome .axe-hero-v50{height:156px!important;min-height:156px!important;border-radius:14px!important;}
+  #viewHome .axe-hero-label-v50{left:12px!important;bottom:12px!important;height:32px!important;font-size:12px!important;padding:0 12px!important;}
+  #viewHome .recipe-work-panel .recipe-combo-v30{grid-template-columns:1fr!important;height:auto!important;}
+  #viewHome .compact-checklist{grid-template-columns:1fr!important;}
+  #viewHome .summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+  #viewHome .summary:nth-child(2){border-right:0!important;}
+  #viewHome .summary{border-bottom:1px solid rgba(255,255,255,.08)!important;}
+  #viewHome .summary:nth-child(n+3){border-bottom:0!important;}
+}
+</style>
+
 <script id="axeCookV53MemoScript">
 (function(){
   const KEY='axe_cook_v53_work_memo';
@@ -3602,5 +3759,41 @@ main.main.tool-main.app-shell-v23,
   });
 })();
 </script>
+
+
+<script id="axeCookV54ProcessPatch">
+(function(){
+  function patchProcessCard(){
+    const panel=document.querySelector('#viewHome .recipe-work-panel');
+    const proc=document.getElementById('processInline');
+    if(!panel||!proc)return;
+    panel.classList.add('has-process-v30','has-process-v31');
+    panel.classList.remove('no-process-v30','no-process-v31');
+    if(!proc.innerHTML.trim()){
+      proc.innerHTML='<div class="process-side-card-v30 axe-process-empty-v54"><div class="process-side-title-v30"><span>가공 레시피</span><small>준비 현황</small></div><div class="empty process-empty-v54">등록된 가공 레시피가 없습니다.</div></div>';
+    }else{
+      const title=proc.querySelector('.process-side-title-v30 span');
+      if(title) title.textContent='가공 레시피';
+    }
+  }
+  function wrap(fnName){
+    const old=window[fnName];
+    if(typeof old!=='function')return;
+    window[fnName]=function(){
+      const out=old.apply(this,arguments);
+      setTimeout(patchProcessCard,0);
+      return out;
+    };
+  }
+  function init(){
+    wrap('renderResultsOnly');
+    wrap('render');
+    patchProcessCard();
+    setTimeout(patchProcessCard,400);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
+
 </body>
 </html>
