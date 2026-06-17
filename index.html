@@ -7447,6 +7447,266 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
   #viewHome .order-sub{flex-wrap:wrap!important;}
   #viewHome .order-total-text-v79{border-left:0!important;padding-left:0!important;}
 }
+
+/* AXE COOK v80: visual scale rebalance - recipe-panel level comfort */
+#viewHome .purchase-panel,
+#viewHome .orders-panel{
+  padding:14px 16px!important;
+}
+
+/* section titles: keep icon beside title, but reduce heavy dashboard scale */
+#viewHome .purchase-panel .panel-title,
+#viewHome .orders-panel .panel-title{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:10px!important;
+  min-height:30px!important;
+  margin-bottom:12px!important;
+}
+#viewHome .section-title-v79,
+#viewHome .orders-title-v79{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:8px!important;
+  font-size:18px!important;
+  line-height:1.1!important;
+  font-weight:1000!important;
+  color:#f3f6fb!important;
+  letter-spacing:-.2px!important;
+  text-shadow:none!important;
+}
+#viewHome .section-icon-v79,
+#viewHome .orders-icon-v79{
+  width:17px!important;
+  height:17px!important;
+  flex:0 0 17px!important;
+  border:2px solid #ffbd36!important;
+  border-radius:4px!important;
+  box-shadow:none!important;
+  transform:none!important;
+}
+#viewHome .section-icon-v79::after,
+#viewHome .orders-icon-v79::after{
+  display:none!important;
+  content:none!important;
+}
+#viewHome .orders-title-v79 small,
+#viewHome #orderCount{
+  height:22px!important;
+  min-width:31px!important;
+  padding:0 8px!important;
+  border-radius:999px!important;
+  font-size:12px!important;
+  line-height:22px!important;
+  background:rgba(255,255,255,.055)!important;
+  border:1px solid rgba(255,255,255,.09)!important;
+  color:#b9c2cf!important;
+}
+
+/* purchase checklist: reduce oversized badge/card, keep main info clear */
+#viewHome .compact-checklist{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:8px!important;
+}
+#viewHome .check-row{
+  display:grid!important;
+  grid-template-columns:20px minmax(0,1fr) 68px!important;
+  gap:10px!important;
+  align-items:center!important;
+  min-height:72px!important;
+  padding:11px 12px!important;
+  border-radius:14px!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.042),rgba(255,255,255,.015)),rgba(5,7,10,.32)!important;
+  border:1px solid rgba(255,255,255,.085)!important;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.16)!important;
+}
+#viewHome .check-row input{
+  width:17px!important;
+  height:17px!important;
+  margin:0!important;
+  accent-color:#ffb52e!important;
+  align-self:center!important;
+}
+#viewHome .check-info-v79,
+#viewHome .check-row>div:nth-of-type(1){
+  min-width:0!important;
+  align-self:center!important;
+}
+#viewHome .check-name{
+  font-size:16px!important;
+  line-height:1.16!important;
+  font-weight:1000!important;
+  color:#f4f6fa!important;
+  letter-spacing:-.2px!important;
+  margin:0!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+#viewHome .check-sub{
+  margin-top:5px!important;
+  font-size:11.5px!important;
+  line-height:1.24!important;
+  font-weight:850!important;
+  color:#aeb8c8!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+#viewHome .check-sub b{
+  color:#dfe6f2!important;
+  font-weight:1000!important;
+}
+#viewHome .check-right{
+  width:68px!important;
+  min-width:68px!important;
+  max-width:68px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+}
+#viewHome .check-bundle{
+  height:32px!important;
+  min-width:62px!important;
+  padding:0 11px!important;
+  border-radius:999px!important;
+  font-size:16px!important;
+  line-height:1!important;
+  font-weight:1000!important;
+  color:#15100a!important;
+  background:linear-gradient(135deg,#ffd46b,#ffb52e)!important;
+  border:1px solid rgba(255,181,46,.78)!important;
+  box-shadow:0 10px 22px rgba(255,181,46,.16)!important;
+}
+#viewHome .check-cost{display:none!important;}
+
+/* order list: downscale to match the recipe/process panels */
+#viewHome #clearBtnVisible{
+  height:32px!important;
+  border-radius:11px!important;
+  padding:0 11px!important;
+  font-size:11.5px!important;
+  box-shadow:none!important;
+}
+#viewHome #clearBtnVisible::before{
+  font-size:13px!important;
+  margin-right:6px!important;
+}
+#viewHome .compact-order-list{
+  gap:8px!important;
+}
+#viewHome .order-row{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  gap:12px!important;
+  align-items:center!important;
+  min-height:68px!important;
+  padding:12px 14px!important;
+  border-radius:14px!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.040),rgba(255,255,255,.014)),rgba(5,7,10,.32)!important;
+  border:1px solid rgba(255,255,255,.085)!important;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)!important;
+}
+#viewHome .order-main-v21{
+  display:flex!important;
+  align-items:center!important;
+  gap:13px!important;
+  min-width:0!important;
+  flex-wrap:nowrap!important;
+}
+#viewHome .order-name{
+  min-width:64px!important;
+  max-width:150px!important;
+  font-size:18px!important;
+  line-height:1.12!important;
+  font-weight:1000!important;
+  letter-spacing:-.25px!important;
+  color:#f5f7fb!important;
+}
+#viewHome .order-sub{
+  display:flex!important;
+  align-items:center!important;
+  gap:10px!important;
+  min-width:0!important;
+  margin:0!important;
+}
+#viewHome .order-set-pill-v79,
+#viewHome .order-total-text-v79{
+  height:27px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:6px!important;
+  font-size:13.5px!important;
+  font-weight:900!important;
+  color:#cdd5e1!important;
+  white-space:nowrap!important;
+}
+#viewHome .order-set-pill-v79::before{
+  font-size:17px!important;
+  color:#ffbd36!important;
+  transform:skewX(-12deg)!important;
+}
+#viewHome .order-total-text-v79{
+  padding-left:11px!important;
+  border-left:1px solid rgba(255,255,255,.10)!important;
+}
+#viewHome .order-total-text-v79::before{
+  font-size:16px!important;
+  color:#ffbd36!important;
+}
+#viewHome .order-set-pill-v79 b,
+#viewHome .order-total-text-v79 b{
+  color:#ffcf61!important;
+  font-size:16px!important;
+  font-weight:1000!important;
+}
+#viewHome .order-row-controls-v21{
+  display:flex!important;
+  align-items:center!important;
+  gap:8px!important;
+}
+#viewHome .order-row .num{
+  width:60px!important;
+  height:36px!important;
+  border-radius:12px!important;
+  font-size:17px!important;
+  font-weight:1000!important;
+  text-align:center!important;
+}
+#viewHome .order-row .btn{
+  height:36px!important;
+  min-width:46px!important;
+  border-radius:12px!important;
+  font-size:12px!important;
+  font-weight:1000!important;
+}
+
+@media(max-width:1180px){
+  #viewHome .section-title-v79,
+  #viewHome .orders-title-v79{font-size:17px!important;}
+  #viewHome .check-row{min-height:68px!important;padding:10px 11px!important;}
+  #viewHome .check-name{font-size:15px!important;}
+  #viewHome .check-sub{font-size:11px!important;}
+  #viewHome .check-bundle{height:30px!important;min-width:58px!important;font-size:15px!important;}
+  #viewHome .order-row{min-height:64px!important;padding:11px 12px!important;}
+  #viewHome .order-name{font-size:17px!important;}
+  #viewHome .order-set-pill-v79,
+  #viewHome .order-total-text-v79{font-size:13px!important;}
+  #viewHome .order-set-pill-v79 b,
+  #viewHome .order-total-text-v79 b{font-size:15px!important;}
+}
+@media(max-width:760px){
+  #viewHome .compact-checklist{grid-template-columns:1fr!important;}
+  #viewHome .order-row{grid-template-columns:1fr!important;}
+  #viewHome .order-row-controls-v21{justify-content:flex-start!important;}
+  #viewHome .order-main-v21{flex-wrap:wrap!important;}
+  #viewHome .order-sub{flex-wrap:wrap!important;}
+  #viewHome .order-total-text-v79{border-left:0!important;padding-left:0!important;}
+}
+
 </style>
 <script id="axeCookV79BlockRedesignScript">
 (function(){
