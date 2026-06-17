@@ -1,21 +1,27 @@
-const AXE_COOK_CACHE = 'axe-cook-v47-pwa-20260617';
+const AXE_COOK_CACHE = 'axe-cook-v51-banner-layout-20260617';
 const AXE_COOK_ASSETS = [
   './',
   './index.html',
   './manifest.json',
-  './icons/icon-192.png',
-  './icons/icon-512.png'
+  './service-worker.js',
+  './icon-192.png',
+  './icon-512.png',
+  './axe_banner.png'
 ];
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(AXE_COOK_CACHE).then(cache => cache.addAll(AXE_COOK_ASSETS)).then(() => self.skipWaiting())
+    caches.open(AXE_COOK_CACHE)
+      .then(cache => cache.addAll(AXE_COOK_ASSETS))
+      .then(() => self.skipWaiting())
   );
 });
 
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(keys => Promise.all(keys.filter(key => key !== AXE_COOK_CACHE).map(key => caches.delete(key)))).then(() => self.clients.claim())
+    caches.keys()
+      .then(keys => Promise.all(keys.filter(key => key !== AXE_COOK_CACHE).map(key => caches.delete(key))))
+      .then(() => self.clients.claim())
   );
 });
 
