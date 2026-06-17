@@ -9993,6 +9993,160 @@ window.addEventListener('load',function(){
   }
 })();
 </script>
+
+
+<!-- AXE COOK v130-e: 작업목록 카운트 숨김 + 요리 검색어 즉시 정리 버튼 -->
+<style id="axe-v130e-search-clear-order-count-style">
+  #viewHome #orderCount{display:none!important;visibility:hidden!important;width:0!important;min-width:0!important;margin:0!important;padding:0!important;border:0!important;overflow:hidden!important;}
+  #viewHome .search-box-v21{position:relative!important;}
+  #axeSearchClearV130e{
+    position:absolute!important;
+    right:10px!important;
+    top:50%!important;
+    transform:translateY(-50%)!important;
+    width:28px!important;
+    height:28px!important;
+    border-radius:999px!important;
+    border:1px solid rgba(255,255,255,.10)!important;
+    background:rgba(255,255,255,.055)!important;
+    color:#aeb7c5!important;
+    font-size:18px!important;
+    font-weight:1000!important;
+    line-height:1!important;
+    display:none!important;
+    align-items:center!important;
+    justify-content:center!important;
+    padding:0!important;
+    z-index:5!important;
+  }
+  #axeSearchClearV130e.show{display:inline-flex!important;}
+  #axeSearchClearV130e:hover{color:#ffcf61!important;border-color:rgba(255,181,46,.32)!important;background:rgba(255,181,46,.08)!important;}
+  #viewHome .search-input-v21{padding-right:46px!important;}
+</style>
+<script id="axe-v130e-search-clear-order-count-script">
+(function(){
+  'use strict';
+  var VERSION='AXE_COOK_v130e_SEARCH_CLEAR_ORDER_COUNT';
+  function input(){return document.getElementById('foodSearch');}
+  function results(){return document.getElementById('searchResults');}
+  function btn(){return document.getElementById('axeSearchClearV130e');}
+  function hideOrderCount(){
+    try{
+      document.querySelectorAll('#viewHome #orderCount').forEach(function(el){
+        el.textContent='';
+        el.style.setProperty('display','none','important');
+      });
+    }catch(e){}
+  }
+  function ensureClearButton(){
+    var box=document.querySelector('#viewHome .search-box-v21');
+    if(!box)return null;
+    var b=btn();
+    if(!b){
+      b=document.createElement('button');
+      b.id='axeSearchClearV130e';
+      b.type='button';
+      b.setAttribute('aria-label','검색어 지우기');
+      b.textContent='×';
+      box.appendChild(b);
+      b.addEventListener('click',function(ev){
+        ev.preventDefault();
+        ev.stopPropagation();
+        clearSearch(true);
+      },true);
+    }
+    updateClearButton();
+    return b;
+  }
+  function updateClearButton(){
+    var b=btn();
+    var i=input();
+    if(!b||!i)return;
+    if(String(i.value||'').trim())b.classList.add('show');
+    else b.classList.remove('show');
+  }
+  function closeDropdown(){
+    var r=results();
+    if(!r)return;
+    r.innerHTML='';
+    r.classList.add('is-idle','is-closed');
+    r.style.setProperty('display','none','important');
+    setTimeout(function(){
+      var rr=results();
+      if(rr && !(input()&&String(input().value||'').trim())){
+        rr.innerHTML='';
+        rr.classList.add('is-idle','is-closed');
+        rr.style.setProperty('display','none','important');
+      }
+    },0);
+  }
+  function clearSearch(focusBack){
+    var i=input();
+    if(i){
+      i.value='';
+      i.dispatchEvent(new Event('input',{bubbles:true}));
+      if(focusBack) i.focus();
+    }
+    closeDropdown();
+    updateClearButton();
+  }
+  function reopenDropdownIfTyping(){
+    var r=results();
+    var i=input();
+    if(!r||!i)return;
+    if(String(i.value||'').trim()){
+      r.classList.remove('is-closed');
+      r.style.removeProperty('display');
+    }else{
+      closeDropdown();
+    }
+    updateClearButton();
+  }
+  document.addEventListener('input',function(e){
+    if(e.target&&e.target.id==='foodSearch')setTimeout(reopenDropdownIfTyping,0);
+  },true);
+  document.addEventListener('click',function(e){
+    var target=e.target&&e.target.closest?e.target.closest('#searchResults [data-add],#searchResults [data-fav]'):null;
+    if(target){
+      setTimeout(function(){clearSearch(false);},30);
+    }
+  },true);
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&e.target&&e.target.id==='foodSearch'){
+      e.preventDefault();
+      clearSearch(false);
+    }
+  },true);
+  var oldRenderSearch=window.renderSearch;
+  if(typeof oldRenderSearch==='function'&&!oldRenderSearch.__axeV130eWrapped){
+    var wrappedSearch=function(){
+      var out=oldRenderSearch.apply(this,arguments);
+      ensureClearButton();
+      reopenDropdownIfTyping();
+      return out;
+    };
+    wrappedSearch.__axeV130eWrapped=true;
+    window.renderSearch=wrappedSearch;
+    try{renderSearch=wrappedSearch;}catch(e){}
+  }
+  var oldRender=window.render;
+  if(typeof oldRender==='function'&&!oldRender.__axeV130eWrapped){
+    var wrappedRender=function(){
+      var out=oldRender.apply(this,arguments);
+      setTimeout(function(){hideOrderCount();ensureClearButton();updateClearButton();},0);
+      return out;
+    };
+    wrappedRender.__axeV130eWrapped=true;
+    window.render=wrappedRender;
+    try{render=wrappedRender;}catch(e){}
+  }
+  function boot(){hideOrderCount();ensureClearButton();updateClearButton();closeDropdown();}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+  setTimeout(boot,120);setTimeout(boot,500);setTimeout(boot,1200);
+  try{new MutationObserver(function(){clearTimeout(window.__axeV130eT);window.__axeV130eT=setTimeout(function(){hideOrderCount();ensureClearButton();updateClearButton();},50);}).observe(document.body,{childList:true,subtree:true});}catch(e){}
+  window.axeCookV130eDebug=function(){return{version:VERSION,orderCountHidden:!document.querySelector('#viewHome #orderCount:not([style*="display: none"])'),clearButton:!!btn(),query:input()?input().value:''};};
+})();
+</script>
 </body>
 </html>
 
