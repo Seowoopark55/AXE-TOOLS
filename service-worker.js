@@ -1,4 +1,4 @@
-const AXE_COOK_CACHE = 'axe-cook-v52-dashboard-fix-20260617';
+const AXE_COOK_CACHE = 'axe-cook-v54-dashboard-aligned-20260617';
 const AXE_COOK_ASSETS = [
   './',
   './index.html',
