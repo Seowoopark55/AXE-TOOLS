@@ -9796,186 +9796,188 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
 })();
 </script>
 
-<style id="axeCookV101WorkPagesStableStyle">
-/* AXE COOK v101: work page controller hard reset */
-#viewHome .orders-pages-v97,#viewHome #ordersPagesV99{display:none!important;}
-#viewHome #ordersPagesV101{display:inline-flex!important;align-items:center!important;gap:4px!important;margin-left:6px!important;margin-right:8px!important;flex:0 0 auto!important;}
-#viewHome #ordersPagesV101 .page-btn-v101{width:25px!important;height:25px!important;padding:0!important;border-radius:8px!important;border:1px solid rgba(255,255,255,.10)!important;background:rgba(255,255,255,.035)!important;color:#aeb8c7!important;font-size:11.5px!important;font-weight:1000!important;display:inline-grid!important;place-items:center!important;line-height:1!important;cursor:pointer!important;}
-#viewHome #ordersPagesV101 .page-btn-v101.active{border-color:rgba(255,181,46,.54)!important;background:rgba(255,181,46,.13)!important;color:#ffcf61!important;box-shadow:0 8px 18px rgba(255,181,46,.08)!important;}
-#viewHome #ordersPagesV101 .page-btn-v101.add{border-color:rgba(255,181,46,.28)!important;color:#ffcf61!important;}
-#viewHome #ordersPagesV101 .page-btn-v101.del{border-color:rgba(255,111,125,.24)!important;color:#ffadb6!important;}
+<style id="axeCookV102WorkPagesStableStyle">
+/* AXE COOK v102: definitive work page controller */
+#ordersPagesV97,#ordersPagesV99,.orders-pages-v97{display:none!important;}
+#ordersPagesV102{display:inline-flex!important;align-items:center!important;gap:4px!important;margin-left:6px!important;margin-right:8px!important;flex:0 0 auto!important;}
+#ordersPagesV102 .page-btn-v102{width:25px;height:25px;border-radius:8px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.035);color:#aeb8c7;font-size:11.5px;font-weight:1000;display:inline-grid;place-items:center;padding:0;line-height:1;}
+#ordersPagesV102 .page-btn-v102.active{border-color:rgba(255,181,46,.52);background:rgba(255,181,46,.14);color:#ffcf61;box-shadow:0 0 0 1px rgba(255,181,46,.06) inset;}
+#ordersPagesV102 .page-btn-v102.add{border-color:rgba(255,181,46,.28);color:#ffcf61;}
+#ordersPagesV102 .page-btn-v102.del{border-color:rgba(255,111,125,.24);color:#ffadb6;}
 #viewHome .orders-panel .panel-title{display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:8px!important;flex-wrap:nowrap!important;}
-#viewHome .orders-panel .panel-title .axe-title-v81{flex:0 0 auto!important;}
-#viewHome .orders-panel .panel-title>#clearBtnVisible{margin-left:auto!important;flex:0 0 auto!important;}
-.axe-modal-v101{position:fixed!important;inset:0!important;z-index:200000!important;display:none!important;place-items:center!important;padding:22px!important;background:rgba(0,0,0,.56)!important;backdrop-filter:blur(8px)!important;}
-.axe-modal-v101.show{display:grid!important;}
-.axe-modal-card-v101{width:min(390px,calc(100vw - 36px))!important;border:1px solid rgba(255,181,46,.20)!important;border-radius:18px!important;background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.022)),#101217!important;box-shadow:0 26px 90px rgba(0,0,0,.62),inset 0 0 0 1px rgba(255,255,255,.035)!important;padding:18px 18px 16px!important;}
-.axe-modal-title-v101{font-size:17px!important;font-weight:1000!important;color:#f5f7fb!important;letter-spacing:-.2px!important;margin-bottom:7px!important;line-height:1.35!important;}
-.axe-modal-msg-v101{font-size:13px!important;font-weight:850!important;color:#aeb8c7!important;line-height:1.5!important;margin-bottom:16px!important;white-space:pre-line!important;}
-.axe-modal-actions-v101{display:flex!important;justify-content:flex-end!important;gap:8px!important;}
-.axe-modal-btn-v101{height:35px!important;padding:0 14px!important;border-radius:12px!important;border:1px solid rgba(255,255,255,.1)!important;background:#171b22!important;color:#d8dee8!important;font-size:12px!important;font-weight:1000!important;}
-.axe-modal-btn-v101.primary{border-color:rgba(255,181,46,.58)!important;background:linear-gradient(135deg,#ffcf61,#ffb52e)!important;color:#17100a!important;}
-.axe-modal-btn-v101.ghost{background:rgba(255,255,255,.035)!important;color:#c8d0dc!important;}
-.axe-modal-v98{display:none!important;}
-@media(max-width:760px){#viewHome .orders-panel .panel-title{gap:6px!important;flex-wrap:wrap!important}#viewHome .orders-panel .panel-title>#clearBtnVisible{margin-left:0!important}}
+#viewHome .orders-panel .panel-title>#clearBtnVisibleV102{margin-left:auto!important;flex:0 0 auto!important;}
+#clearBtnVisible,#clearBtn{display:none!important;}
+#clearBtnVisibleV102{height:36px!important;border-radius:13px!important;padding:0 13px!important;display:inline-flex!important;align-items:center!important;gap:7px!important;}
+#clearBtnVisibleV102 svg{width:15px;height:15px;color:#ffcf61;}
+.order-row-v102{display:grid!important;grid-template-columns:minmax(0,1fr) auto auto!important;gap:12px!important;align-items:center!important;width:100%!important;min-height:60px!important;padding:10px 12px!important;border:1px solid rgba(255,255,255,.08)!important;border-radius:14px!important;background:rgba(0,0,0,.18)!important;}
+.order-main-v102{display:flex!important;align-items:center!important;gap:18px!important;min-width:0!important;}
+.order-name-v102{font-size:15px!important;font-weight:1000!important;color:#f4f6fa!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;min-width:86px!important;max-width:150px!important;}
+.order-meta-v102{display:flex!important;align-items:center!important;gap:13px!important;min-width:0!important;}
+.order-meta-item-v102{display:inline-flex!important;align-items:center!important;gap:6px!important;color:#d7dee8!important;font-size:13px!important;font-weight:950!important;white-space:nowrap!important;}
+.order-meta-item-v102 svg{width:15px;height:15px;color:#ffbd36;flex:0 0 auto;}
+.order-meta-item-v102 b{color:#ffcf61;font-size:14px;}
+.order-divider-v102{width:1px;height:24px;background:rgba(255,255,255,.10);}
+.order-controls-v102{display:flex!important;align-items:center!important;gap:8px!important;}
+.order-controls-v102 .num{width:68px!important;height:37px!important;text-align:center!important;}
+.order-controls-v102 .btn{height:37px!important;padding:0 12px!important;}
+.order-single-note-v102{display:none!important;}
+.axe-modal-v102{position:fixed;inset:0;z-index:999999;display:none;place-items:center;background:rgba(0,0,0,.56);backdrop-filter:blur(7px);}
+.axe-modal-v102.show{display:grid;}
+.axe-modal-card-v102{width:min(410px,calc(100vw - 34px));border:1px solid rgba(255,181,46,.22);border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025)),#12151b;box-shadow:0 28px 90px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.025);padding:18px;}
+.axe-modal-title-v102{font-size:17px;font-weight:1000;color:#f5f7fb;margin-bottom:7px;letter-spacing:-.2px;}
+.axe-modal-msg-v102{font-size:13px;font-weight:900;color:#aeb8c7;line-height:1.5;margin-bottom:16px;}
+.axe-modal-actions-v102{display:flex;justify-content:flex-end;gap:8px;}
+.axe-modal-actions-v102 .btn{height:36px!important;border-radius:12px!important;padding:0 14px!important;font-size:12px!important;}
+@media(max-width:760px){#viewHome .orders-panel .panel-title{flex-wrap:wrap!important}.order-row-v102{grid-template-columns:1fr!important}.order-main-v102{flex-wrap:wrap!important}.order-controls-v102{justify-content:flex-start!important}.order-name-v102{max-width:100%!important}}
 </style>
-<script id="axeCookV101WorkPagesStableScript">
+<script id="axeCookV102WorkPagesStableScript">
 (function(){
   'use strict';
-  var STORE_PAGES='axe_cook_v97_work_pages';
-  var STORE_ACTIVE='axe_cook_v97_active_page';
-  var STORE_ORDERS_KEY='axe_cook_v1_orders';
-  var STORE_CHECKS_KEY='axe_cook_v1_checks';
-  var STORE_MEMO_KEY='axe_cook_v53_memo';
+  var STORE_PAGES='axe_cook_v102_work_pages';
+  var STORE_ACTIVE='axe_cook_v102_active_page';
+  var LEGACY_PAGES='axe_cook_v97_work_pages';
+  var LEGACY_ACTIVE='axe_cook_v97_active_page';
+  var STORE_ORDERS_LOCAL='axe_cook_v1_orders';
+  var STORE_CHECKS_LOCAL='axe_cook_v1_checks';
   var pages=[];
-  var activeId=null;
-  var saving=false;
-  function esc(v){try{return h(v==null?'':v);}catch(e){return String(v==null?'':v).replace(/[&<>\"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c];});}}
-  function uid(){return 'p_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8);}
-  function parse(raw,fallback){try{var v=JSON.parse(raw);return v==null?fallback:v;}catch(e){return fallback;}}
-  function cloneOrder(o){if(!o||!o.name)return null;return {name:String(o.name),sets:Math.max(1,Math.floor(Number(o.sets)||1))};}
+  var activeId='';
+  var installed=false;
+  function esc(v){try{return (typeof h==='function'?h(v==null?'':v):String(v==null?'':v).replace(/[&<>'"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c];}));}catch(e){return String(v||'');}}
+  function uid(){return 'p_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,7);}
   function emptyPage(){return {id:uid(),order:null,checks:{},memo:''};}
-  function normalize(arr){
-    if(!Array.isArray(arr))arr=[];
-    arr=arr.map(function(p){return {id:String((p&&p.id)||uid()),order:cloneOrder(p&& (p.order || (Array.isArray(p.orders)&&p.orders[0]))),checks:(p&&p.checks&&typeof p.checks==='object')?p.checks:{},memo:String((p&&p.memo)||'')};});
-    if(!arr.length)arr=[emptyPage()];
-    return arr;
-  }
-  function load(){
-    pages=normalize(parse(localStorage.getItem(STORE_PAGES),[]));
-    if(pages.length===1&&!pages[0].order){
-      var legacy=parse(localStorage.getItem(STORE_ORDERS_KEY),[]);
-      if(Array.isArray(legacy)&&legacy.length){pages=legacy.map(function(o){var p=emptyPage();p.order=cloneOrder(o);return p;});}
+  function parseJSON(key,fallback){try{var v=JSON.parse(localStorage.getItem(key)||'');return v||fallback;}catch(e){return fallback;}}
+  function normalizePage(p){return {id:String(p&&p.id||uid()),order:p&&p.order&&p.order.name?{name:String(p.order.name),sets:Math.max(1,Math.floor(Number(p.order.sets)||1))}:null,checks:p&&p.checks&&typeof p.checks==='object'?p.checks:{},memo:String(p&&p.memo||'')};}
+  function loadPages(){
+    var raw=parseJSON(STORE_PAGES,null);
+    if(!Array.isArray(raw)||!raw.length)raw=parseJSON(LEGACY_PAGES,null);
+    if(Array.isArray(raw)&&raw.length)pages=raw.map(normalizePage);else pages=[];
+    if(!pages.length){
+      var legacyOrders=parseJSON(STORE_ORDERS_LOCAL,[]);
+      var legacyChecks=parseJSON(STORE_CHECKS_LOCAL,{});
+      if(Array.isArray(legacyOrders)&&legacyOrders.length){
+        pages=[normalizePage({order:legacyOrders[0],checks:legacyChecks,memo:(document.getElementById('workMemoV53')||{}).value||''})];
+      }else pages=[emptyPage()];
     }
-    activeId=localStorage.getItem(STORE_ACTIVE);
-    if(!activeId||!pages.some(function(p){return p.id===activeId;}))activeId=pages[0].id;
+    var saved=localStorage.getItem(STORE_ACTIVE)||localStorage.getItem(LEGACY_ACTIVE)||'';
+    activeId=pages.some(function(p){return p.id===saved;})?saved:pages[0].id;
+    savePagesOnly();
   }
-  function activePage(){if(!pages.length)load();var p=pages.find(function(x){return x.id===activeId;});if(!p){p=pages[0];activeId=p.id;}return p;}
-  function syncCurrent(){
-    var p=activePage();
-    try{if(typeof orders!=='undefined'&&Array.isArray(orders))p.order=orders.length?cloneOrder(orders[0]):null;}catch(e){}
+  function currentPage(){if(!pages.length)loadPages();var p=pages.find(function(x){return x.id===activeId;});if(!p){p=pages[0]||emptyPage();pages=[p];activeId=p.id;}return p;}
+  function savePagesOnly(){try{localStorage.setItem(STORE_PAGES,JSON.stringify(pages));localStorage.setItem(STORE_ACTIVE,activeId);}catch(e){}}
+  function syncGlobalsToPage(){
+    var p=currentPage();
+    try{var m=document.getElementById('workMemoV53');if(m)p.memo=m.value||'';}catch(e){}
     try{if(typeof checks!=='undefined'&&checks&&typeof checks==='object')p.checks=checks;}catch(e){}
-    var memo=document.getElementById('workMemoV53'); if(memo)p.memo=memo.value||'';
   }
-  function applyCurrent(){
-    var p=activePage();
-    try{orders=p.order?[cloneOrder(p.order)]:[];}catch(e){window.orders=p.order?[cloneOrder(p.order)]:[];}
+  function applyPageToGlobals(){
+    var p=currentPage();
+    try{orders=p.order?[{name:p.order.name,sets:p.order.sets}]:[];}catch(e){window.orders=p.order?[{name:p.order.name,sets:p.order.sets}]:[];}
     try{checks=p.checks||{};}catch(e){window.checks=p.checks||{};}
-    localStorage.setItem(STORE_ORDERS_KEY,JSON.stringify(p.order?[p.order]:[]));
-    localStorage.setItem(STORE_CHECKS_KEY,JSON.stringify(p.checks||{}));
-    var memo=document.getElementById('workMemoV53'); if(memo&&memo.value!==String(p.memo||''))memo.value=String(p.memo||'');
-    try{localStorage.setItem(STORE_MEMO_KEY,String(p.memo||''));}catch(e){}
+    try{localStorage.setItem(STORE_ORDERS_LOCAL,JSON.stringify(p.order?[p.order]:[]));localStorage.setItem(STORE_CHECKS_LOCAL,JSON.stringify(p.checks||{}));}catch(e){}
+    try{var m=document.getElementById('workMemoV53');if(m&&m.value!==String(p.memo||''))m.value=String(p.memo||'');}catch(e){}
   }
-  function save(){
-    if(saving)return; saving=true;
-    try{syncCurrent();localStorage.setItem(STORE_PAGES,JSON.stringify(pages));localStorage.setItem(STORE_ACTIVE,activeId);applyCurrent();}finally{saving=false;}
-  }
-  function renderAll(){
-    applyCurrent();
-    try{if(typeof renderSearch==='function')renderSearch();}catch(e){}
-    try{if(typeof renderFavorites==='function')renderFavorites();}catch(e){}
-    try{if(typeof renderOrders==='function')renderOrders();}catch(e){}
-    try{if(typeof renderResultsOnly==='function')renderResultsOnly();}catch(e){}
-    try{if(typeof renderDataView==='function')renderDataView();}catch(e){}
-    setTimeout(renderPageBar,0);
-  }
-  function modal(){
-    var m=document.getElementById('axeModalV101');
-    if(m)return m;
-    m=document.createElement('div');m.id='axeModalV101';m.className='axe-modal-v101';
-    m.innerHTML='<div class="axe-modal-card-v101" role="dialog" aria-modal="true"><div class="axe-modal-title-v101" id="axeModalTitleV101"></div><div class="axe-modal-msg-v101" id="axeModalMsgV101"></div><div class="axe-modal-actions-v101" id="axeModalActionsV101"></div></div>';
-    document.body.appendChild(m);return m;
-  }
-  function closeModal(){modal().classList.remove('show');}
-  function notice(title,msg){
-    var m=modal();document.getElementById('axeModalTitleV101').textContent=title||'알림';document.getElementById('axeModalMsgV101').textContent=msg||'';
-    document.getElementById('axeModalActionsV101').innerHTML='<button type="button" class="axe-modal-btn-v101 primary" data-v101-ok>확인</button>';
-    m.classList.add('show');m.querySelector('[data-v101-ok]').onclick=closeModal;
-  }
-  function confirmBox(opt){
-    opt=opt||{};
-    return new Promise(function(resolve){
-      var m=modal();document.getElementById('axeModalTitleV101').textContent=opt.title||'확인';document.getElementById('axeModalMsgV101').textContent=opt.message||'';
-      document.getElementById('axeModalActionsV101').innerHTML='<button type="button" class="axe-modal-btn-v101 primary" data-v101-yes>'+(opt.yesText||'예')+'</button><button type="button" class="axe-modal-btn-v101 ghost" data-v101-no>'+(opt.noText||'아니오')+'</button>';
-      m.classList.add('show');
-      m.querySelector('[data-v101-yes]').onclick=function(){closeModal();resolve(true);};
-      m.querySelector('[data-v101-no]').onclick=function(){closeModal();resolve(false);};
-    });
-  }
-  window.axeCookNoticeV98=function(title,message){notice(title,message);};
-  window.axeCookConfirmV98=function(opt){
-    var title=opt&&opt.title?opt.title:'확인'; var message=opt&&opt.message?opt.message:'';
-    return confirmBox({title:title,message:message,yesText:'예',noText:'아니오'}).then(function(ok){
-      if(ok && /초기화/.test(title+message)) resetCurrentPage(false);
-      return false;
-    });
-  };
-  function renderPageBar(){
+  function saveAll(){syncGlobalsToPage();savePagesOnly();applyPageToGlobals();}
+  function renderAll(){applyPageToGlobals();try{if(typeof renderResultsOnly==='function')renderResultsOnly();}catch(e){}try{renderOrdersV102();}catch(e){}try{if(typeof renderWorkRecipes==='function')renderWorkRecipes();}catch(e){}try{if(typeof renderProcessInlineV54==='function')renderProcessInlineV54();}catch(e){}try{if(typeof renderDataView==='function')renderDataView();}catch(e){}try{if(typeof renderFavorites==='function')renderFavorites();}catch(e){}normalizeAddButtons();}
+  function iconPackage(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg>';}
+  function iconLayers(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l9 5-9 5-9-5 9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 17l9 5 9-5"/></svg>';}
+  function iconRefresh(){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>';}
+  function renderPagesBar(){
     var title=document.querySelector('#viewHome .orders-panel .panel-title'); if(!title)return;
-    title.querySelectorAll('.orders-pages-v97,#ordersPagesV99').forEach(function(x){x.remove();});
-    var titleBlock=title.querySelector('.axe-title-v81,.orders-title-v79,.orders-title-v78,span'); if(!titleBlock)return;
-    var bar=document.getElementById('ordersPagesV101'); if(!bar){bar=document.createElement('div');bar.id='ordersPagesV101';}
-    bar.innerHTML=pages.map(function(p,i){return '<button type="button" class="page-btn-v101 '+(p.id===activeId?'active':'')+'" data-v101-page="'+esc(p.id)+'" title="작업 페이지 '+(i+1)+'">'+(i+1)+'</button>';}).join('')+'<button type="button" class="page-btn-v101 add" data-v101-add title="작업 페이지 추가">+</button>'+(pages.length>1?'<button type="button" class="page-btn-v101 del" data-v101-del title="현재 페이지 삭제">×</button>':'');
-    title.insertBefore(bar,titleBlock.nextSibling);
+    title.querySelectorAll('#ordersPagesV102,#ordersPagesV99,.orders-pages-v97').forEach(function(x){x.remove();});
+    var titleBlock=title.querySelector('.axe-title-v81,.orders-title-v79,.orders-title-v78,span')||title.firstElementChild;
+    var bar=document.createElement('div');bar.id='ordersPagesV102';
+    bar.innerHTML=pages.map(function(p,i){return '<button type="button" class="page-btn-v102 '+(p.id===activeId?'active':'')+'" data-v102-page="'+esc(p.id)+'">'+(i+1)+'</button>';}).join('')+
+      '<button type="button" class="page-btn-v102 add" data-v102-add>+</button>'+(pages.length>1?'<button type="button" class="page-btn-v102 del" data-v102-del>×</button>':'');
+    if(titleBlock&&titleBlock.parentNode===title)title.insertBefore(bar,titleBlock.nextSibling);else title.insertBefore(bar,title.firstChild);
+    var oldReset=document.getElementById('clearBtnVisible'); if(oldReset)oldReset.style.display='none';
+    var reset=document.getElementById('clearBtnVisibleV102');
+    if(!reset){reset=document.createElement('button');reset.type='button';reset.id='clearBtnVisibleV102';reset.className='btn ghost';reset.innerHTML=iconRefresh()+'<span>초기화</span>';title.appendChild(reset);} 
   }
-  function switchPage(id){if(!pages.some(function(p){return p.id===id;}))return;save();activeId=id;applyCurrent();save();renderAll();}
-  function addPage(order){save();var p=emptyPage();if(order)p.order=cloneOrder(order);pages.push(p);activeId=p.id;applyCurrent();save();renderAll();return p;}
-  function deletePage(){
-    if(pages.length<=1){resetCurrentPage(false);return;}
-    var idx=pages.findIndex(function(p){return p.id===activeId;}); if(idx<0)idx=0;
-    pages.splice(idx,1); activeId=(pages[Math.max(0,Math.min(idx,pages.length-1))]||pages[0]).id; applyCurrent();save();renderAll();
+  function renderOrdersV102(){
+    applyPageToGlobals();
+    var count=document.getElementById('orderCount');if(count)count.textContent=(currentPage().order?1:0)+'개';
+    var box=document.getElementById('orderList');if(!box)return;
+    renderPagesBar();
+    var p=currentPage();
+    if(!p.order){box.innerHTML='<div class="empty">만들 음식을 추가하세요.</div>';return;}
+    var f=typeof getFood==='function'?getFood(p.order.name):null;
+    var setQty=typeof getSetQty==='function'?getSetQty(f):1;
+    var total=p.order.sets*setQty;
+    box.innerHTML='<div class="order-row-v102"><div class="order-main-v102"><div class="order-name-v102 axe-order-name-tip" data-fullname="'+esc(p.order.name)+'">'+esc(p.order.name)+'</div><div class="order-meta-v102"><span class="order-meta-item-v102">'+iconPackage()+'<span>세트 구성 <b>'+esc(setQty)+'</b>개</span></span><span class="order-divider-v102"></span><span class="order-meta-item-v102">'+iconLayers()+'<span>총 <b>'+esc(total)+'</b>개 제작</span></span></div></div><div class="order-controls-v102"><input class="num" type="number" min="1" value="'+esc(p.order.sets)+'" data-v102-set><button class="btn bad" type="button" data-v102-del-order>삭제</button></div></div>';
   }
-  function resetCurrentPage(ask){
-    function doReset(){var p=activePage();p.order=null;p.checks={};p.memo='';applyCurrent();save();renderAll();try{toast('현재 작업 페이지를 비웠습니다');}catch(e){}}
-    if(ask===false){doReset();return;}
-    confirmBox({title:'현재 작업 페이지를 초기화할까요?',message:'등록된 음식, 체크 상태, 작업 메모가 이 페이지에서만 비워집니다.',yesText:'예',noText:'아니오'}).then(function(ok){if(ok)doReset();});
-  }
-  function addOrderStable(name,sets){
-    name=String(name||''); if(!name)return;
+  function addOrderV102(name,sets){
+    if(!name)return;
+    if(typeof getFood==='function'&&!getFood(name)){if(typeof toast==='function')toast('요리를 찾을 수 없습니다.');return;}
     sets=Math.max(1,Math.floor(Number(sets)||1));
-    if(typeof getFood==='function'&&!getFood(name)){try{toast('요리를 찾을 수 없습니다.');}catch(e){}return;}
-    var p=activePage();
+    var p=currentPage();
     if(p.order&&p.order.name&&p.order.name!==name){
-      confirmBox({title:'현재 페이지에 이미 음식이 있습니다.',message:'+ 버튼으로 새 작업 페이지를 만들거나, 지금 새 페이지에 등록할 수 있습니다.\n새 페이지에 등록할까요?',yesText:'예',noText:'아니오'}).then(function(ok){if(ok){addPage({name:name,sets:sets});try{toast(name+' 작업 페이지를 만들었습니다');}catch(e){}}});
+      showConfirm('현재 페이지에 이미 음식이 있습니다.','새 작업 페이지를 만들고 이 음식을 등록할까요?','예','아니오').then(function(ok){if(ok){var np=emptyPage();np.order={name:name,sets:sets};np.checks={};pages.push(np);activeId=np.id;applyPageToGlobals();savePagesOnly();renderAll();}});
       return;
     }
-    p.order={name:name,sets:p.order&&p.order.name===name?(Math.max(1,Math.floor(Number(p.order.sets)||1))+sets):sets};
-    p.checks={}; applyCurrent();save();renderAll();try{toast(name+' '+sets+'세트 작업 시작');}catch(e){}
+    p.order={name:name,sets:(p.order&&p.order.name===name?Math.max(1,Math.floor(Number(p.order.sets)||1))+sets:sets)};
+    p.checks={};
+    applyPageToGlobals();savePagesOnly();renderAll();
   }
-  function removeOrderStable(name){var p=activePage();if(!name||p.order&&p.order.name===name){p.order=null;p.checks={};applyCurrent();save();renderAll();}}
-  function updateSetsStable(name,val){var p=activePage();if(p.order&&p.order.name===name){p.order.sets=Math.max(1,Math.floor(Number(val)||1));applyCurrent();save();renderAll();}}
-  function renderOrdersStable(){
-    var c=document.getElementById('orderCount'); if(c)c.textContent=(activePage().order?1:0)+'개';
-    renderPageBar();
-    var box=document.getElementById('orderList'); if(!box)return;
-    var p=activePage(); if(!p.order){box.innerHTML='<div class="empty">만들 음식을 추가하세요.</div>';return;}
-    var o=p.order, f=(typeof getFood==='function'?getFood(o.name):null), setQty=(typeof getSetQty==='function'?getSetQty(f):1), total=o.sets*setQty;
-    box.innerHTML='<div class="order-row axe-order-row-v95"><div class="order-main-v21 axe-order-main-v83"><div class="order-name axe-order-name-v95" data-fullname="'+esc(o.name)+'">'+esc(o.name)+'</div><div class="order-meta-v83"><span class="order-chip-v84"><span class="axe-ico-v81">▧</span>세트 구성 <b>'+setQty+'개</b></span><span class="order-chip-v84"><span class="axe-ico-v81">▤</span>총 <b>'+total+'개</b> 제작</span></div></div><div class="order-row-controls-v21"><input class="num" type="number" min="1" value="'+esc(o.sets)+'" data-set="'+esc(o.name)+'"><button class="btn bad" data-del="'+esc(o.name)+'">삭제</button></div></div>';
-    box.querySelector('[data-set]')?.addEventListener('change',function(e){updateSetsStable(e.currentTarget.dataset.set,e.currentTarget.value);});
-    box.querySelector('[data-del]')?.addEventListener('click',function(e){removeOrderStable(e.currentTarget.dataset.del);});
-    try{if(window.axeOrderTooltipV95Install)window.axeOrderTooltipV95Install();}catch(e){}
+  function removeOrderV102(){var p=currentPage();p.order=null;p.checks={};applyPageToGlobals();savePagesOnly();renderAll();}
+  function updateSetsV102(val){var p=currentPage();if(p.order)p.order.sets=Math.max(1,Math.floor(Number(val)||1));applyPageToGlobals();savePagesOnly();renderAll();}
+  function switchPage(id){if(!pages.some(function(p){return p.id===id;}))return;syncGlobalsToPage();activeId=id;applyPageToGlobals();savePagesOnly();renderAll();}
+  function addPage(){syncGlobalsToPage();var p=emptyPage();pages.push(p);activeId=p.id;applyPageToGlobals();savePagesOnly();renderAll();}
+  function deletePage(){if(pages.length<=1){showConfirm('현재 페이지를 비울까요?','등록된 음식, 체크 상태, 작업 메모가 비워집니다.','예','아니오').then(function(ok){if(ok)resetPage();});return;}var idx=pages.findIndex(function(p){return p.id===activeId;});if(idx<0)idx=0;pages.splice(idx,1);activeId=(pages[Math.max(0,Math.min(idx,pages.length-1))]||pages[0]).id;applyPageToGlobals();savePagesOnly();renderAll();}
+  function resetPage(){var p=currentPage();p.order=null;p.checks={};p.memo='';applyPageToGlobals();savePagesOnly();renderAll();}
+  function showConfirm(title,msg,okText,cancelText){
+    return new Promise(function(resolve){
+      var root=document.getElementById('axeModalV102');
+      if(!root){root=document.createElement('div');root.id='axeModalV102';root.className='axe-modal-v102';document.body.appendChild(root);} 
+      root.innerHTML='<div class="axe-modal-card-v102"><div class="axe-modal-title-v102">'+esc(title)+'</div><div class="axe-modal-msg-v102">'+esc(msg)+'</div><div class="axe-modal-actions-v102"><button type="button" class="btn primary" data-ok>'+esc(okText||'예')+'</button><button type="button" class="btn ghost" data-cancel>'+esc(cancelText||'아니오')+'</button></div></div>';
+      root.classList.add('show');
+      function close(v){root.classList.remove('show');resolve(v);}
+      root.querySelector('[data-ok]').onclick=function(){close(true);};
+      root.querySelector('[data-cancel]').onclick=function(){close(false);};
+      root.onclick=function(e){if(e.target===root)close(false);};
+    });
   }
-  function saveStateStable(){save();}
-  window.addOrder=addOrderStable; try{addOrder=addOrderStable;}catch(e){}
-  window.removeOrder=removeOrderStable; try{removeOrder=removeOrderStable;}catch(e){}
-  window.updateSets=updateSetsStable; try{updateSets=updateSetsStable;}catch(e){}
-  window.resetWorkspace=function(){resetCurrentPage(true);}; try{resetWorkspace=window.resetWorkspace;}catch(e){}
-  window.renderOrders=renderOrdersStable; try{renderOrders=renderOrdersStable;}catch(e){}
-  window.saveState=saveStateStable; try{saveState=saveStateStable;}catch(e){}
-  document.addEventListener('click',function(ev){
-    var t=ev.target&&ev.target.closest?ev.target.closest('[data-v101-page],[data-v101-add],[data-v101-del]'):null;
-    if(t){ev.preventDefault();ev.stopPropagation();ev.stopImmediatePropagation(); if(t.dataset.v101Page)switchPage(t.dataset.v101Page); else if(t.hasAttribute('data-v101-add'))addPage(); else if(t.hasAttribute('data-v101-del'))deletePage(); return;}
-    var reset=ev.target&&ev.target.closest?ev.target.closest('#clearBtnVisible,#clearBtn'):null;
-    if(reset){ev.preventDefault();ev.stopPropagation();ev.stopImmediatePropagation();resetCurrentPage(true);return;}
-    var add=ev.target&&ev.target.closest?ev.target.closest('[data-add],[data-recipe-add],[data-add-from-data-v86],[data-add-v87],[data-add-v91],[data-add-v93],[data-add-v94]'):null;
-    if(add&&!add.matches('[data-fav],[data-fav-v93],[data-fav-v94]')){
-      var name=add.dataset.add||add.dataset.recipeAdd||add.dataset.addFromDataV86||add.dataset.addV87||add.dataset.addV91||add.dataset.addV93||add.dataset.addV94;
-      if(name){ev.preventDefault();ev.stopPropagation();ev.stopImmediatePropagation();var sets=(add.classList&&add.classList.contains('fav'))?1:(document.getElementById('setCount')?.value||1);addOrderStable(name,sets);return;}
-    }
-  },true);
-  function init(){load();applyCurrent();renderAll();var memo=document.getElementById('workMemoV53');if(memo&&!memo.dataset.v101){memo.dataset.v101='1';memo.addEventListener('input',function(){activePage().memo=memo.value||'';save();});}}
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
-  setTimeout(init,250);setTimeout(function(){renderPageBar();},900);
-  window.axeCookV101Debug=function(){return {version:'v101-stable-work-pages',pages:pages,activeId:activeId,orders:(typeof orders!=='undefined'?orders:null)};};
+  function normalizeAddButtons(){
+    document.querySelectorAll('[data-add]').forEach(function(b){var v=b.getAttribute('data-add'); if(!v)return; b.setAttribute('data-v102-add-food',v); b.removeAttribute('data-add');});
+  }
+  function installEvents(){
+    document.addEventListener('click',function(ev){
+      var t=ev.target&&ev.target.closest?ev.target.closest('[data-v102-page],[data-v102-add],[data-v102-del],[data-v102-del-order],[data-v102-add-food],[data-add-v94],[data-add-v93],[data-add-v91],[data-add-v87],[data-add-from-data-v86],#clearBtnVisibleV102,#clearBtnVisible,#clearBtn'):null;
+      if(!t)return;
+      ev.preventDefault();ev.stopPropagation();ev.stopImmediatePropagation();
+      if(t.matches('[data-v102-page]'))return switchPage(t.getAttribute('data-v102-page'));
+      if(t.matches('[data-v102-add]'))return addPage();
+      if(t.matches('[data-v102-del]'))return deletePage();
+      if(t.matches('[data-v102-del-order]'))return removeOrderV102();
+      if(t.matches('[data-v102-set]'))return;
+      if(t.matches('#clearBtnVisibleV102,#clearBtnVisible,#clearBtn'))return showConfirm('현재 작업 페이지를 초기화할까요?','등록된 음식, 체크 상태, 작업 메모가 이 페이지에서만 비워집니다.','예','아니오').then(function(ok){if(ok)resetPage();});
+      var name=t.getAttribute('data-v102-add-food')||t.getAttribute('data-add-v94')||t.getAttribute('data-add-v93')||t.getAttribute('data-add-v91')||t.getAttribute('data-add-v87')||t.getAttribute('data-add-from-data-v86');
+      if(name){var setInput=document.getElementById('setCount');addOrderV102(name,setInput?setInput.value:1);}
+    },true);
+    document.addEventListener('change',function(ev){
+      var t=ev.target;
+      if(t&&t.matches&&t.matches('[data-v102-set]')){ev.preventDefault();updateSetsV102(t.value);return;}
+      if(t&&t.matches&&t.matches('[data-check]')){var p=currentPage();p.checks=p.checks||{};p.checks[t.dataset.check]=t.checked;try{checks=p.checks;}catch(e){}savePagesOnly();}
+    },true);
+    document.addEventListener('input',function(ev){var m=ev.target&&ev.target.id==='workMemoV53'?ev.target:null;if(m){currentPage().memo=m.value||'';savePagesOnly();}},true);
+  }
+  function install(){
+    if(installed)return;installed=true;
+    loadPages();applyPageToGlobals();
+    window.addOrder=addOrderV102;try{addOrder=addOrderV102;}catch(e){}
+    window.removeOrder=removeOrderV102;try{removeOrder=removeOrderV102;}catch(e){}
+    window.updateSets=function(name,val){updateSetsV102(val);};try{updateSets=window.updateSets;}catch(e){}
+    window.resetWorkspace=function(){showConfirm('현재 작업 페이지를 초기화할까요?','등록된 음식, 체크 상태, 작업 메모가 이 페이지에서만 비워집니다.','예','아니오').then(function(ok){if(ok)resetPage();});};try{resetWorkspace=window.resetWorkspace;}catch(e){}
+    window.saveState=function(){saveAll();};try{saveState=window.saveState;}catch(e){}
+    window.renderOrders=renderOrdersV102;try{renderOrders=renderOrdersV102;}catch(e){}
+    window.axeCookNoticeV98=function(title,msg){return showConfirm(title||'안내',msg||'', '예','아니오');};
+    window.axeCookConfirmV98=function(opt){return showConfirm((opt&&opt.title)||'확인',(opt&&opt.message)||'',(opt&&opt.okText)||'예',(opt&&opt.cancelText)||'아니오');};
+    installEvents();
+    renderAll();
+    var mo=new MutationObserver(function(){clearTimeout(window.__axeV102T);window.__axeV102T=setTimeout(function(){normalizeAddButtons();renderPagesBar();},30);});
+    try{mo.observe(document.body,{childList:true,subtree:true});}catch(e){}
+    setTimeout(renderAll,200);setTimeout(renderAll,900);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install);else install();
+  window.axeCookV102Debug=function(){return {version:'v102-pages-controller',pages:pages,activeId:activeId,orders:(typeof orders!=='undefined'?orders:null),checks:(typeof checks!=='undefined'?checks:null)};};
 })();
 </script>
