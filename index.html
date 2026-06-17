@@ -9585,6 +9585,188 @@ window.addEventListener('load',function(){
 #viewSettings .v116-field [data-g="time"]{border-color:rgba(255,181,46,.22)!important;background:rgba(255,181,46,.035)!important;}
 @media(max-width:720px){#viewSettings .v116-recipe-lines.v126-process-lines .v116-recipe-line{grid-template-columns:1fr 80px 80px 34px!important;}}
 </style>
+
+
+<!-- AXE COOK v130-a: Workspace engine foundation, UI unchanged -->
+<script id="axe-v130a-workspace-engine">
+(function(){
+  'use strict';
+  var ENGINE_VERSION='v130-a-workspace-engine';
+  var STORE_WORKSPACES='axe_cook_v130_workspaces';
+  var STORE_ACTIVE='axe_cook_v130_active_workspace';
+  var STORE_ORDERS_SAFE=(typeof STORE_ORDERS!=='undefined')?STORE_ORDERS:'axe_cook_v1_orders';
+  var STORE_FAVS_SAFE=(typeof STORE_FAVS!=='undefined')?STORE_FAVS:'axe_cook_v1_favs';
+  var STORE_CHECKS_SAFE=(typeof STORE_CHECKS!=='undefined')?STORE_CHECKS:'axe_cook_v1_checks';
+
+  var workspaces=[{id:1,name:'1',items:[]}];
+  var activeWorkspace=0;
+  var booted=false;
+
+  function safeArray(v){return Array.isArray(v)?v:[];}
+  function safeNum(v,d){var n=Number(v);return Number.isFinite(n)?n:d;}
+  function normalizeItems(list){
+    return safeArray(list).filter(function(o){return o&&o.name;}).map(function(o){
+      return {name:String(o.name),sets:Math.max(1,Math.floor(safeNum(o.sets,1)))};
+    });
+  }
+  function normalizeWorkspace(w,i){
+    return {
+      id:safeNum(w&&w.id,i+1)||i+1,
+      name:String((w&&w.name)||((i+1)+'')),
+      items:normalizeItems(w&&w.items)
+    };
+  }
+  function readJSON(key,fallback){
+    try{var raw=localStorage.getItem(key);return raw?JSON.parse(raw):fallback;}catch(e){return fallback;}
+  }
+  function writeJSON(key,value){
+    try{localStorage.setItem(key,JSON.stringify(value));}catch(e){}
+  }
+  function legacyOrders(){
+    try{if(Array.isArray(orders))return normalizeItems(orders);}catch(e){}
+    try{if(Array.isArray(window.orders))return normalizeItems(window.orders);}catch(e){}
+    return normalizeItems(readJSON(STORE_ORDERS_SAFE,[]));
+  }
+  function loadWorkspaces(){
+    var saved=readJSON(STORE_WORKSPACES,null);
+    if(Array.isArray(saved)&&saved.length){
+      workspaces=saved.map(normalizeWorkspace).filter(function(w){return w;});
+    }else{
+      workspaces=[{id:1,name:'1',items:legacyOrders()}];
+    }
+    if(!workspaces.length)workspaces=[{id:1,name:'1',items:[]}];
+    activeWorkspace=Math.max(0,Math.min(workspaces.length-1,Math.floor(safeNum(readJSON(STORE_ACTIVE,0),0))));
+  }
+  function saveWorkspaces(){
+    writeJSON(STORE_WORKSPACES,workspaces);
+    writeJSON(STORE_ACTIVE,activeWorkspace);
+  }
+  function currentWorkspace(){
+    if(!workspaces.length)workspaces=[{id:1,name:'1',items:[]}];
+    if(activeWorkspace<0||activeWorkspace>=workspaces.length)activeWorkspace=0;
+    return workspaces[activeWorkspace];
+  }
+  function currentItems(){return currentWorkspace().items;}
+  function setGlobalOrders(items){
+    var normalized=normalizeItems(items);
+    try{orders=normalized;}catch(e){}
+    try{window.orders=normalized;}catch(e){}
+    return normalized;
+  }
+  function syncActiveToOrders(){return setGlobalOrders(currentItems());}
+  function syncOrdersToActive(){
+    var normalized=legacyOrders();
+    currentWorkspace().items=normalized;
+    return normalized;
+  }
+  function persistLegacyState(){
+    try{localStorage.setItem(STORE_ORDERS_SAFE,JSON.stringify(currentItems()));}catch(e){}
+    try{if(typeof favorites!=='undefined')localStorage.setItem(STORE_FAVS_SAFE,JSON.stringify(favorites||[]));}catch(e){}
+    try{if(typeof checks!=='undefined')localStorage.setItem(STORE_CHECKS_SAFE,JSON.stringify(checks||{}));}catch(e){}
+  }
+  function afterMutation(){
+    syncOrdersToActive();
+    saveWorkspaces();
+    persistLegacyState();
+    syncActiveToOrders();
+  }
+  function initEngine(){
+    if(booted)return;
+    loadWorkspaces();
+    syncActiveToOrders();
+    saveWorkspaces();
+    persistLegacyState();
+    booted=true;
+  }
+
+  var originalLoadState=(typeof loadState==='function')?loadState:null;
+  window.loadState=function(){
+    if(originalLoadState)originalLoadState.apply(this,arguments);
+    loadWorkspaces();
+    syncActiveToOrders();
+    saveWorkspaces();
+  };
+  try{loadState=window.loadState;}catch(e){}
+
+  var originalSaveState=(typeof saveState==='function')?saveState:null;
+  window.saveState=function(){
+    afterMutation();
+    if(originalSaveState){
+      try{return originalSaveState.apply(this,arguments);}catch(e){}
+    }
+  };
+  try{saveState=window.saveState;}catch(e){}
+
+  function wrapMutationFunction(name){
+    var oldFn=null;
+    try{oldFn=window[name] || eval(name);}catch(e){oldFn=window[name];}
+    if(typeof oldFn!=='function')return;
+    var wrapped=function(){
+      initEngine();
+      syncActiveToOrders();
+      var out=oldFn.apply(this,arguments);
+      afterMutation();
+      return out;
+    };
+    window[name]=wrapped;
+    try{eval(name+'=window[name]');}catch(e){}
+  }
+  ['addOrder','removeOrder','updateSets','resetWorkspace','clearWorkspace','clearWorkspaceNoPages','clearWorkspaceV111','clearWorkspaceV112','resetWorkspaceV111','resetWorkspaceV112','resetWorkspaceV116'].forEach(wrapMutationFunction);
+
+  var oldRender=(typeof render==='function')?render:null;
+  if(typeof oldRender==='function'){
+    window.render=function(){
+      initEngine();
+      syncActiveToOrders();
+      var out=oldRender.apply(this,arguments);
+      saveWorkspaces();
+      return out;
+    };
+    try{render=window.render;}catch(e){}
+  }
+  var oldRenderResults=(typeof renderResultsOnly==='function')?renderResultsOnly:null;
+  if(typeof oldRenderResults==='function'){
+    window.renderResultsOnly=function(){syncActiveToOrders();return oldRenderResults.apply(this,arguments);};
+    try{renderResultsOnly=window.renderResultsOnly;}catch(e){}
+  }
+  var oldRenderOrders=(typeof renderOrders==='function')?renderOrders:null;
+  if(typeof oldRenderOrders==='function'){
+    window.renderOrders=function(){syncActiveToOrders();return oldRenderOrders.apply(this,arguments);};
+    try{renderOrders=window.renderOrders;}catch(e){}
+  }
+  var oldRenderRecipes=(typeof renderWorkRecipes==='function')?renderWorkRecipes:null;
+  if(typeof oldRenderRecipes==='function'){
+    window.renderWorkRecipes=function(){syncActiveToOrders();return oldRenderRecipes.apply(this,arguments);};
+    try{renderWorkRecipes=window.renderWorkRecipes;}catch(e){}
+  }
+
+  window.axeWorkspaceEngine={
+    version:ENGINE_VERSION,
+    get workspaces(){return workspaces;},
+    get activeWorkspace(){return activeWorkspace;},
+    currentWorkspace:currentWorkspace,
+    currentItems:currentItems,
+    syncActiveToOrders:syncActiveToOrders,
+    syncOrdersToActive:syncOrdersToActive,
+    save:function(){syncOrdersToActive();saveWorkspaces();persistLegacyState();},
+    resetToLegacy:function(){workspaces=[{id:1,name:'1',items:legacyOrders()}];activeWorkspace=0;saveWorkspaces();syncActiveToOrders();}
+  };
+  window.axeCookV130aDebug=function(){
+    initEngine();
+    return {
+      version:ENGINE_VERSION,
+      workspaceCount:workspaces.length,
+      activeWorkspace:activeWorkspace,
+      currentItems:currentItems().length,
+      legacyOrders:(function(){try{return Array.isArray(orders)?orders.length:null;}catch(e){return null;}})(),
+      uiChanged:false
+    };
+  };
+
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initEngine,{once:true});else initEngine();
+})();
+</script>
+
 </body>
 </html>
 
