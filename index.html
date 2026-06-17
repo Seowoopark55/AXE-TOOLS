@@ -1386,45 +1386,95 @@ body{
 
 
 
-/* AXE COOK v73: welcome splash boot screen */
+/* AXE COOK v74: minimal product intro splash */
 .boot-loader-v69{
-  position:fixed;inset:0;z-index:99999;display:grid;place-items:center;
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:grid;
+  place-items:center;
   background:
-    radial-gradient(circle at 50% 10%,rgba(255,181,46,.13),transparent 34%),
-    linear-gradient(180deg,rgba(7,8,11,.985),rgba(8,9,12,.965));
-  backdrop-filter:blur(12px);
-  transition:opacity .32s ease,visibility .32s ease,transform .32s ease;
+    radial-gradient(circle at 50% 22%,rgba(255,181,46,.105),transparent 31%),
+    radial-gradient(circle at 50% 78%,rgba(255,181,46,.045),transparent 30%),
+    linear-gradient(180deg,#07080b,#0b0d10 54%,#07080b);
+  transition:opacity .42s ease,visibility .42s ease,transform .42s ease;
 }
-.boot-loader-v69.is-leaving{opacity:0;visibility:hidden;pointer-events:none;transform:scale(1.01)}
+.boot-loader-v69.is-leaving{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transform:scale(1.015);
+}
 .boot-card-v69{
-  width:min(560px,calc(100vw - 46px));
-  border:1px solid rgba(255,181,46,.20);
-  border-radius:24px;
-  background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025)),rgba(8,10,14,.86);
-  box-shadow:0 28px 95px rgba(0,0,0,.58),inset 0 0 0 1px rgba(255,255,255,.035);
-  padding:16px 16px 18px;
+  width:min(380px,calc(100vw - 52px));
+  min-height:190px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(255,181,46,.18);
+  border-radius:28px;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.058),rgba(255,255,255,.018)),
+    rgba(9,11,15,.62);
+  box-shadow:0 30px 100px rgba(0,0,0,.56), inset 0 0 0 1px rgba(255,255,255,.025);
+  backdrop-filter:blur(18px);
   overflow:hidden;
+  position:relative;
+  animation:axeIntroCardV74 .72s ease both;
 }
-.boot-hero-v73{
-  position:relative;height:170px;border-radius:18px;overflow:hidden;
-  background:#0d1015;border:1px solid rgba(255,255,255,.08);
-  box-shadow:inset 0 -80px 90px rgba(0,0,0,.45);
-}
-.boot-hero-v73::after{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.18) 44%,rgba(0,0,0,.72));
+.boot-card-v69::before{
+  content:'';
+  position:absolute;
+  inset:-40% -20% auto -20%;
+  height:120%;
+  background:radial-gradient(circle at 50% 50%,rgba(255,181,46,.12),transparent 48%);
+  opacity:.72;
   pointer-events:none;
 }
-.boot-hero-v73 img{width:100%;height:100%;object-fit:cover;object-position:center 42%;display:block;filter:saturate(1.04) contrast(1.03)}
-.boot-brandline-v73{position:absolute;left:18px;right:18px;bottom:15px;z-index:2;display:flex;align-items:flex-end;justify-content:space-between;gap:14px}
-.boot-title-v69{font-size:27px;font-weight:1000;color:#fff;letter-spacing:.4px;line-height:1;text-shadow:0 10px 28px rgba(0,0,0,.55)}
-.boot-badge-v73{height:28px;display:inline-flex;align-items:center;border-radius:999px;border:1px solid rgba(255,181,46,.30);background:rgba(255,181,46,.10);color:#ffd27a;padding:0 10px;font-size:11.5px;font-weight:1000;white-space:nowrap;backdrop-filter:blur(8px)}
-.boot-sub-v69{margin:14px 2px 0;text-align:center;font-size:13px;font-weight:950;color:#d9dfe9;line-height:1.45;letter-spacing:-.1px}
-.boot-foot-v69{margin-top:6px;text-align:center;font-size:11.5px;font-weight:900;color:#8791a0;min-height:17px}
-.boot-pulse-v73{width:7px;height:7px;border-radius:50%;background:#ffb52e;display:inline-block;margin-right:7px;box-shadow:0 0 0 0 rgba(255,181,46,.45);animation:axePulseV73 1.45s ease-in-out infinite;vertical-align:1px}
-.boot-mark-v69,.boot-bar-v69{display:none!important}
-@keyframes axePulseV73{0%{box-shadow:0 0 0 0 rgba(255,181,46,.45)}70%{box-shadow:0 0 0 8px rgba(255,181,46,0)}100%{box-shadow:0 0 0 0 rgba(255,181,46,0)}}
-@media(max-width:560px){.boot-card-v69{width:calc(100vw - 30px);border-radius:20px;padding:12px 12px 15px}.boot-hero-v73{height:138px;border-radius:16px}.boot-brandline-v73{left:14px;right:14px;bottom:12px}.boot-title-v69{font-size:23px}.boot-badge-v73{display:none}.boot-sub-v69{font-size:12.2px}}
+.boot-card-v69::after{
+  content:'';
+  position:absolute;
+  left:50%;
+  bottom:38px;
+  width:74px;
+  height:1px;
+  transform:translateX(-50%);
+  background:linear-gradient(90deg,transparent,rgba(255,181,46,.72),transparent);
+  opacity:.72;
+}
+.boot-logo-v74{
+  position:relative;
+  z-index:2;
+  display:flex;
+  align-items:baseline;
+  justify-content:center;
+  gap:10px;
+  letter-spacing:.8px;
+  user-select:none;
+  animation:axeIntroLogoV74 .82s ease both;
+}
+.boot-logo-v74 span{
+  color:#ffbd3d;
+  font-size:44px;
+  line-height:1;
+  font-weight:1000;
+  text-shadow:0 0 34px rgba(255,181,46,.24);
+}
+.boot-logo-v74 b{
+  color:#f4f6fa;
+  font-size:35px;
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:.2px;
+}
+.boot-hero-v73,.boot-brandline-v73,.boot-title-v69,.boot-badge-v73,.boot-sub-v69,.boot-foot-v69,.boot-pulse-v73,.boot-mark-v69,.boot-bar-v69{display:none!important;}
+@keyframes axeIntroCardV74{from{opacity:0;transform:translateY(8px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes axeIntroLogoV74{from{opacity:0;filter:blur(4px);transform:translateY(4px)}to{opacity:1;filter:blur(0);transform:translateY(0)}}
+@media(max-width:560px){
+  .boot-card-v69{width:calc(100vw - 34px);min-height:165px;border-radius:23px;}
+  .boot-logo-v74 span{font-size:38px;}
+  .boot-logo-v74 b{font-size:30px;}
+}
+
 
 </style>
 
@@ -1438,17 +1488,9 @@ body{
 </head>
 <body>
 
-<div id="bootLoaderV69" class="boot-loader-v69" role="status" aria-live="polite">
+<div id="bootLoaderV69" class="boot-loader-v69" role="status" aria-label="AXE COOK 시작 화면">
   <div class="boot-card-v69">
-    <div class="boot-hero-v73">
-      <img src="./axe_banner.png" alt="AXE COOK">
-      <div class="boot-brandline-v73">
-        <div class="boot-title-v69">AXE COOK</div>
-        <div class="boot-badge-v73">WORKSPACE</div>
-      </div>
-    </div>
-    <div class="boot-sub-v69"><span class="boot-pulse-v73"></span>요리 작업공간 준비 중</div>
-    <div id="bootLoaderMsgV69" class="boot-foot-v69">레시피 데이터 동기화 중</div>
+    <div class="boot-logo-v74"><span>AXE</span><b>COOK</b></div>
   </div>
 </div>
 
@@ -6513,31 +6555,35 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
 
 
 
-<script id="axeCookV69BootLoadingScript">
+<script id="axeCookV74IntroSplashScript">
 (function(){
   var started=Date.now();
   var hidden=false;
-  var messages=['레시피 데이터 동기화 중','재료 계산 기준 확인 중','작업공간 구성 중'];
-  var idx=0;
   function qs(id){return document.getElementById(id);}
-  function setMsg(){var el=qs('bootLoaderMsgV69'); if(el){el.textContent=messages[idx%messages.length]; idx++;}}
   function hideLoader(){
     if(hidden)return; hidden=true;
     var loader=qs('bootLoaderV69'); if(!loader)return;
     var elapsed=Date.now()-started;
-    var delay=Math.max(0,720-elapsed);
+    var delay=Math.max(0,760-elapsed);
     setTimeout(function(){
       loader.classList.add('is-leaving');
-      setTimeout(function(){if(loader&&loader.parentNode)loader.parentNode.removeChild(loader);},360);
+      setTimeout(function(){if(loader&&loader.parentNode)loader.parentNode.removeChild(loader);},460);
     },delay);
   }
-  var msgTimer=setInterval(setMsg,900); setMsg();
   var readyTimer=setInterval(function(){
-    if(window.AXE_COOK_BOOT_READY || (typeof AXE_COOK_BOOT_READY!=='undefined' && AXE_COOK_BOOT_READY)){clearInterval(readyTimer);clearInterval(msgTimer);hideLoader();}
+    if(window.AXE_COOK_BOOT_READY || (typeof AXE_COOK_BOOT_READY!=='undefined' && AXE_COOK_BOOT_READY)){
+      clearInterval(readyTimer);hideLoader();
+    }
   },80);
-  window.addEventListener('load',function(){setTimeout(function(){if(window.AXE_COOK_BOOT_READY || (typeof AXE_COOK_BOOT_READY!=='undefined' && AXE_COOK_BOOT_READY)){clearInterval(readyTimer);clearInterval(msgTimer);hideLoader();}},80);});
-  setTimeout(function(){clearInterval(readyTimer);clearInterval(msgTimer);hideLoader();},9500);
-  window.axeCookV69LoadingDebug=function(){return {version:'v73-welcome-splash',visible:!hidden,ready:!!window.AXE_COOK_BOOT_READY,elapsed:Date.now()-started};};
+  window.addEventListener('load',function(){
+    setTimeout(function(){
+      if(window.AXE_COOK_BOOT_READY || (typeof AXE_COOK_BOOT_READY!=='undefined' && AXE_COOK_BOOT_READY)){
+        clearInterval(readyTimer);hideLoader();
+      }
+    },80);
+  });
+  setTimeout(function(){clearInterval(readyTimer);hideLoader();},9500);
+  window.axeCookV74IntroDebug=function(){return {version:'v74-minimal-product-intro',visible:!hidden,ready:!!window.AXE_COOK_BOOT_READY,elapsed:Date.now()-started};};
 })();
 </script>
 
