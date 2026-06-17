@@ -7091,5 +7091,440 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
 })();
 </script>
 
+
+
+<style id="axeCookV79BlockRedesignStyle">
+/* AXE COOK v79: 구매 체크리스트 + 작업목록 블록 재설계
+   - 이전 v18~v78 누적 override를 최종 블록에서 정리
+   - 제목 아이콘은 실제 제목 텍스트 옆에만 배치
+   - 체크리스트/작업목록 렌더링 구조와 CSS를 함께 통일 */
+#viewHome .purchase-panel>.panel-title::before,
+#viewHome .purchase-panel .panel-title::before,
+#viewHome .orders-panel>.panel-title>span::before,
+#viewHome .orders-panel .panel-title>span::before{content:none!important;display:none!important;}
+
+#viewHome .purchase-panel,
+#viewHome .orders-panel{overflow:hidden!important;}
+
+#viewHome .purchase-panel .panel-title{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:10px!important;
+  margin:0 0 18px!important;
+  padding:0!important;
+  line-height:1!important;
+  text-align:center!important;
+}
+#viewHome .section-title-v79{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:10px!important;
+  color:#f8fbff!important;
+  font-size:24px!important;
+  font-weight:1000!important;
+  letter-spacing:-.45px!important;
+  line-height:1!important;
+}
+#viewHome .section-icon-v79{
+  width:19px!important;
+  height:19px!important;
+  display:inline-block!important;
+  position:relative!important;
+  flex:0 0 auto!important;
+}
+#viewHome .section-icon-v79::before{
+  content:''!important;
+  position:absolute!important;
+  left:1px!important;
+  top:5px!important;
+  width:15px!important;
+  height:8px!important;
+  border:2px solid #ffbd36!important;
+  border-radius:2px!important;
+  transform:skewX(-15deg)!important;
+  box-shadow:0 0 14px rgba(255,181,46,.17)!important;
+}
+
+#viewHome .compact-checklist{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:14px 14px!important;
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:visible!important;
+  align-items:stretch!important;
+}
+#viewHome .check-row{
+  display:grid!important;
+  grid-template-columns:28px minmax(0,1fr) auto!important;
+  gap:15px!important;
+  align-items:center!important;
+  min-height:94px!important;
+  padding:18px 20px!important;
+  border-radius:19px!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.052),rgba(255,255,255,.014)),rgba(4,6,9,.42)!important;
+  border:1px solid rgba(255,255,255,.105)!important;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.18),0 14px 34px rgba(0,0,0,.16)!important;
+}
+#viewHome .check-row:hover{border-color:rgba(255,181,46,.22)!important;}
+#viewHome .check-row input[type="checkbox"]{
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  width:22px!important;
+  height:22px!important;
+  margin:0!important;
+  justify-self:center!important;
+  align-self:center!important;
+  border-radius:4px!important;
+  border:3px solid #ffbd36!important;
+  background:rgba(255,181,46,.035)!important;
+  box-shadow:0 0 0 1px rgba(0,0,0,.22),0 0 14px rgba(255,181,46,.08)!important;
+  position:relative!important;
+  flex:0 0 auto!important;
+}
+#viewHome .check-row input[type="checkbox"]:checked{
+  background:linear-gradient(135deg,#ffcf61,#ffb52e)!important;
+  border-color:#ffcf61!important;
+}
+#viewHome .check-row input[type="checkbox"]:checked::after{
+  content:'✓'!important;
+  position:absolute!important;
+  inset:-4px 0 0 0!important;
+  display:grid!important;
+  place-items:center!important;
+  color:#111!important;
+  font-size:17px!important;
+  font-weight:1000!important;
+}
+#viewHome .check-info-v79{
+  min-width:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+}
+#viewHome .check-name{
+  font-size:20px!important;
+  line-height:1.08!important;
+  font-weight:1000!important;
+  color:#f8fbff!important;
+  letter-spacing:-.35px!important;
+  margin:0!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+#viewHome .check-sub{
+  margin-top:8px!important;
+  font-size:13px!important;
+  line-height:1.25!important;
+  font-weight:900!important;
+  color:#c5cdda!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+#viewHome .check-sub b{color:#f5f7fb!important;font-weight:1000!important;}
+#viewHome .check-right{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  width:auto!important;
+  min-width:92px!important;
+  max-width:none!important;
+  justify-self:end!important;
+}
+#viewHome .check-bundle{
+  height:45px!important;
+  min-width:88px!important;
+  padding:0 17px!important;
+  border-radius:21px!important;
+  font-size:23px!important;
+  line-height:1!important;
+  font-weight:1000!important;
+  letter-spacing:-.85px!important;
+  color:#11100c!important;
+  background:linear-gradient(135deg,#ffd875 0%,#ffb82e 58%,#f5a900 100%)!important;
+  border:1px solid rgba(255,207,97,.86)!important;
+  box-shadow:0 14px 28px rgba(255,181,46,.18), inset 0 1px 0 rgba(255,255,255,.34), inset 0 -1px 0 rgba(0,0,0,.14)!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  white-space:nowrap!important;
+}
+#viewHome .check-cost{display:none!important;}
+#viewHome .check-row.done{opacity:.52!important;filter:saturate(.75)!important;}
+#viewHome .farm-row .check-bundle{background:linear-gradient(135deg,#b5ffd7,#63e6a3)!important;border-color:rgba(99,230,163,.65)!important;}
+#viewHome .farm-row .check-sub{color:#b7dfc8!important;}
+
+#viewHome .orders-panel .panel-title{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:12px!important;
+  margin:0 0 16px!important;
+  padding:0!important;
+}
+#viewHome .orders-title-v79{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:10px!important;
+  color:#f8fbff!important;
+  font-size:23px!important;
+  font-weight:1000!important;
+  letter-spacing:-.4px!important;
+  line-height:1!important;
+  min-width:0!important;
+}
+#viewHome .orders-icon-v79{
+  width:22px!important;
+  height:22px!important;
+  border:2px solid #ffbd36!important;
+  border-radius:4px!important;
+  display:inline-block!important;
+  position:relative!important;
+  flex:0 0 auto!important;
+  box-shadow:0 0 14px rgba(255,181,46,.14)!important;
+}
+#viewHome .orders-icon-v79::after{
+  content:''!important;
+  position:absolute!important;
+  left:4px!important;
+  right:4px!important;
+  top:5px!important;
+  height:2px!important;
+  background:#ffbd36!important;
+  box-shadow:0 5px 0 #ffbd36!important;
+}
+#viewHome #orderCount{
+  height:26px!important;
+  min-width:38px!important;
+  padding:0 9px!important;
+  border-radius:10px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:rgba(255,255,255,.07)!important;
+  border:1px solid rgba(255,255,255,.08)!important;
+  color:#cfd6e2!important;
+  font-size:14px!important;
+  font-weight:1000!important;
+}
+#viewHome #clearBtnVisible{
+  height:38px!important;
+  border-radius:14px!important;
+  padding:0 14px!important;
+  background:rgba(255,255,255,.035)!important;
+  border:1px solid rgba(255,255,255,.11)!important;
+  color:#dce2ec!important;
+  font-size:13px!important;
+  font-weight:1000!important;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.16)!important;
+}
+#viewHome #clearBtnVisible::before{content:'↻';font-size:16px;margin-right:7px;color:#cfd6e2;vertical-align:-1px;}
+
+#viewHome .compact-order-list{display:grid!important;gap:12px!important;}
+#viewHome .order-row{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  gap:16px!important;
+  align-items:center!important;
+  min-height:86px!important;
+  padding:17px 20px!important;
+  border-radius:18px!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.048),rgba(255,255,255,.014)),rgba(4,6,9,.42)!important;
+  border:1px solid rgba(255,255,255,.105)!important;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)!important;
+}
+#viewHome .order-main-v21{
+  display:flex!important;
+  align-items:center!important;
+  gap:18px!important;
+  min-width:0!important;
+  flex-wrap:nowrap!important;
+}
+#viewHome .order-name{
+  font-size:24px!important;
+  line-height:1!important;
+  font-weight:1000!important;
+  color:#f8fbff!important;
+  letter-spacing:-.55px!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  min-width:70px!important;
+  max-width:180px!important;
+  margin:0!important;
+}
+#viewHome .order-sub{display:flex!important;align-items:center!important;gap:16px!important;margin:0!important;min-width:0!important;}
+#viewHome .order-set-pill-v79,
+#viewHome .order-total-text-v79{
+  height:36px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:9px!important;
+  font-size:17px!important;
+  font-weight:950!important;
+  color:#cfd6e2!important;
+  white-space:nowrap!important;
+}
+#viewHome .order-set-pill-v79::before{
+  content:'▱'!important;
+  font-size:27px!important;
+  color:#ffbd36!important;
+  line-height:1!important;
+  transform:skewX(-12deg)!important;
+  display:inline-block!important;
+}
+#viewHome .order-total-text-v79{
+  padding-left:18px!important;
+  border-left:1px solid rgba(255,255,255,.12)!important;
+}
+#viewHome .order-total-text-v79::before{
+  content:'▰'!important;
+  font-size:24px!important;
+  color:#ffbd36!important;
+  line-height:1!important;
+  display:inline-block!important;
+}
+#viewHome .order-set-pill-v79 b,
+#viewHome .order-total-text-v79 b{
+  color:#ffcf61!important;
+  font-size:21px!important;
+  font-weight:1000!important;
+}
+#viewHome .order-row-controls-v21{display:flex!important;align-items:center!important;gap:14px!important;}
+#viewHome .order-row .num{
+  width:82px!important;
+  height:52px!important;
+  border-radius:16px!important;
+  text-align:center!important;
+  font-size:24px!important;
+  font-weight:1000!important;
+  background:#10141c!important;
+  border:1px solid rgba(255,255,255,.13)!important;
+  color:#f8fbff!important;
+}
+#viewHome .order-row .btn{
+  height:52px!important;
+  min-width:66px!important;
+  border-radius:16px!important;
+  font-size:16px!important;
+  font-weight:1000!important;
+  background:#151a23!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+  color:#d7deea!important;
+}
+
+@media(max-width:1180px){
+  #viewHome .compact-checklist{gap:10px!important;}
+  #viewHome .check-row{grid-template-columns:24px minmax(0,1fr) 82px!important;gap:12px!important;min-height:82px!important;padding:14px!important;border-radius:16px!important;}
+  #viewHome .check-name{font-size:17px!important;}
+  #viewHome .check-sub{font-size:11.5px!important;margin-top:6px!important;}
+  #viewHome .check-bundle{height:38px!important;min-width:76px!important;font-size:18px!important;padding:0 12px!important;}
+  #viewHome .check-right{min-width:82px!important;}
+  #viewHome .purchase-panel .panel-title{margin-bottom:12px!important;}
+  #viewHome .section-title-v79{font-size:20px!important;}
+  #viewHome .orders-title-v79{font-size:20px!important;}
+  #viewHome .order-row{min-height:74px!important;padding:13px 15px!important;border-radius:15px!important;gap:12px!important;}
+  #viewHome .order-name{font-size:18px!important;max-width:130px!important;}
+  #viewHome .order-main-v21{gap:12px!important;}
+  #viewHome .order-set-pill-v79,#viewHome .order-total-text-v79{font-size:13.5px!important;height:30px!important;gap:6px!important;}
+  #viewHome .order-set-pill-v79 b,#viewHome .order-total-text-v79 b{font-size:16px!important;}
+  #viewHome .order-total-text-v79{padding-left:12px!important;}
+  #viewHome .order-row-controls-v21{gap:8px!important;}
+  #viewHome .order-row .num{width:64px!important;height:38px!important;font-size:18px!important;border-radius:12px!important;}
+  #viewHome .order-row .btn{height:38px!important;min-width:48px!important;font-size:12px!important;border-radius:12px!important;}
+}
+@media(max-width:760px){
+  #viewHome .compact-checklist{grid-template-columns:1fr!important;}
+  #viewHome .order-row{grid-template-columns:1fr!important;}
+  #viewHome .order-row-controls-v21{justify-content:flex-start!important;}
+  #viewHome .order-main-v21{flex-wrap:wrap!important;}
+  #viewHome .order-sub{flex-wrap:wrap!important;}
+  #viewHome .order-total-text-v79{border-left:0!important;padding-left:0!important;}
+}
+</style>
+<script id="axeCookV79BlockRedesignScript">
+(function(){
+  function escV79(v){return h(v==null?'':v);}
+  function decorateTitlesV79(){
+    var p=document.querySelector('#viewHome .purchase-panel .panel-title');
+    if(p){
+      p.dataset.v79='1';
+      p.innerHTML='<span class="section-title-v79"><span class="section-icon-v79" aria-hidden="true"></span><span>구매 체크리스트</span></span>';
+    }
+    var o=document.querySelector('#viewHome .orders-panel .panel-title');
+    if(o){
+      var n=(typeof orders!=='undefined'&&orders)?orders.length:0;
+      o.dataset.v79='1';
+      o.innerHTML='<span class="orders-title-v79"><span class="orders-icon-v79" aria-hidden="true"></span><span>작업 목록</span><small id="orderCount">'+n+'개</small></span><button class="btn bad reset-visible-v29" id="clearBtnVisible" type="button">작업공간 초기화</button>';
+      var reset=document.getElementById('clearBtnVisible');
+      if(reset && !reset.dataset.v79){
+        reset.dataset.v79='1';
+        reset.addEventListener('click',function(){
+          if(typeof clearWorkspaceV30==='function') clearWorkspaceV30();
+          else if(typeof clearAll==='function') clearAll();
+          else {orders=[];checks={};saveState();if(typeof renderAll==='function')renderAll();}
+        });
+      }
+    }
+  }
+  function orderMetaV79(o){
+    var f=getFood(o.name), setQty=getSetQty(f), total=num(o.sets,0)*setQty;
+    return '<span class="order-set-pill-v79">1세트 <b>'+escV79(setQty)+'</b>개 구성</span><span class="order-total-text-v79">총 제작 <b>'+escV79(total)+'</b>개</span>';
+  }
+  function renderOrdersV79(){
+    decorateTitlesV79();
+    var count=document.getElementById('orderCount'); if(count) count.textContent=orders.length+'개';
+    var box=document.getElementById('orderList'); if(!box) return;
+    if(!orders.length){box.innerHTML='<div class="empty">만들 음식을 추가하세요.</div>';return;}
+    box.innerHTML=orders.map(function(o){
+      return '<div class="order-row"><div class="order-main-v21"><div class="order-name">'+escV79(o.name)+'</div><div class="order-sub">'+orderMetaV79(o)+'</div></div><div class="order-row-controls-v21"><input class="num" type="number" min="1" value="'+escV79(o.sets)+'" data-set="'+escV79(o.name)+'"><button class="btn bad" data-del="'+escV79(o.name)+'">삭제</button></div></div>';
+    }).join('');
+    box.querySelectorAll('[data-set]').forEach(function(i){i.addEventListener('change',function(){updateSets(i.dataset.set,i.value);});});
+    box.querySelectorAll('[data-del]').forEach(function(b){b.addEventListener('click',function(){removeOrder(b.dataset.del);});});
+  }
+  function renderPurchaseRowsV79(r){
+    decorateTitlesV79();
+    var purchase=document.getElementById('purchaseList'); if(!purchase) return;
+    var rows=[].concat(r.purchases.map(function(p){return Object.assign({},p,{type:'buy'});}),r.farmRows.map(function(x){return {name:x.name,qty:x.qty,bundleQty:0,bundlePrice:0,bundles:'채집',cost:0,where:'농장',type:'farm'};}));
+    if(!rows.length){purchase.innerHTML='<div class="axe-empty-message-v61">필요한 구매 재료가 없습니다.</div>';return;}
+    purchase.innerHTML=rows.map(function(p){
+      var key=checkKey(p.type+'_'+p.name), done=checks[key], isFarm=p.type==='farm';
+      var buyQty=isFarm?0:(num(p.bundles,0)*num(p.bundleQty,0));
+      var remain=isFarm?0:Math.max(0,buyQty-num(p.qty,0));
+      var sub=isFarm?'채집 · 필요 <b>'+escV79(p.qty)+'</b>개':escV79(p.where)+' · 필요 <b>'+escV79(p.qty)+'</b>개 · 구매 <b>'+escV79(buyQty)+'</b>개 · <b>'+escV79(remain)+'</b>개 남음';
+      var bundle=isFarm?'채집':escV79(p.bundles)+'묶음';
+      return '<label class="check-row '+(done?'done':'')+' '+(isFarm?'farm-row':'')+'"><input type="checkbox" '+(done?'checked':'')+' data-check="'+escV79(key)+'"><div class="check-info-v79"><div class="check-name">'+escV79(p.name)+(isFarm?'<span class="mini-badge farm-badge">농장</span>':'')+'</div><div class="check-sub">'+sub+'</div></div><div class="check-right"><span class="check-bundle '+(isFarm?'farm-pack':'')+'">'+bundle+'</span></div></label>';
+    }).join('');
+    purchase.querySelectorAll('[data-check]').forEach(function(i){i.addEventListener('change',function(){checks[i.dataset.check]=i.checked;saveState();i.closest('.check-row').classList.toggle('done',i.checked);});});
+  }
+  function renderResultsOnlyV79(){
+    var r=calc();
+    var summary=document.getElementById('summaryGrid');
+    if(summary){summary.innerHTML='<div class="summary primary"><div class="summary-label">총 세트</div><div class="summary-value gold">'+r.totalSets+'</div></div><div class="summary"><div class="summary-label">인벤 예상</div><div class="summary-value">'+escV79(invText(r.totalSets))+'</div></div><div class="summary"><div class="summary-label">구매 원가</div><div class="summary-value ok">'+r.totalCost.toLocaleString()+'</div></div><div class="summary"><div class="summary-label">예상 수익</div><div class="summary-value '+(r.profit>=0?'gold':'bad')+'">'+r.profit.toLocaleString()+'</div></div>';}
+    var warning=document.getElementById('warningBox');
+    if(warning){warning.innerHTML=r.unknownRows.length?'<div class="warning">가격 또는 획득처가 없는 재료: '+r.unknownRows.map(function(x){return escV79(x.name)+' '+x.qty+'개';}).join(', ')+'</div>':'';}
+    try{if(typeof renderRecipePanelV64==='function')renderRecipePanelV64(r);else if(window.renderWorkRecipes)window.renderWorkRecipes();}catch(e){}
+    renderPurchaseRowsV79(r);
+    var farmCount=document.getElementById('farmCount'); if(farmCount) farmCount.textContent=r.farmRows.length;
+    var processCount=document.getElementById('processCount'); if(processCount) processCount.textContent=r.proc.length;
+    var fishCount=document.getElementById('fishCount'); if(fishCount) fishCount.textContent=r.fishNeed.length;
+  }
+  function installV79(){
+    decorateTitlesV79();
+    window.renderOrders=renderOrdersV79; try{renderOrders=renderOrdersV79;}catch(e){}
+    window.renderResultsOnly=renderResultsOnlyV79; try{renderResultsOnly=renderResultsOnlyV79;}catch(e){}
+    setTimeout(function(){try{decorateTitlesV79();renderOrdersV79();renderResultsOnlyV79();}catch(e){console.warn('[AXE COOK v79]',e);}},0);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',installV79); else installV79();
+  window.axeCookV79Debug=function(){return {version:'v79-block-redesign',reason:'purchase/order blocks rendered with final unified structure, old pseudo-icons neutralized'};};
+})();
+</script>
+
 </body>
 </html>
