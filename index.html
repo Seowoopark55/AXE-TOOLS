@@ -7924,5 +7924,75 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
 })();
 </script>
 
+
+
+<style id="axeCookV85ResetFixStyle">
+/* AXE COOK v85: reset button click + single icon hard fix */
+#viewHome #clearBtnVisible::before,
+#viewHome #clearBtnVisible::after{content:none!important;display:none!important;}
+#viewHome #clearBtnVisible{pointer-events:auto!important;position:relative!important;z-index:5!important;display:inline-flex!important;align-items:center!important;gap:7px!important;}
+#viewHome #clearBtnVisible .axe-reset-icon-v85{width:15px!important;height:15px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;color:#ffbf3f!important;flex:0 0 auto!important;}
+#viewHome #clearBtnVisible .axe-reset-icon-v85 svg{width:15px!important;height:15px!important;display:block!important;stroke:currentColor!important;stroke-width:2.25!important;fill:none!important;stroke-linecap:round!important;stroke-linejoin:round!important;}
+#viewHome #clearBtnVisible .axe-ico-v81{display:none!important;}
+</style>
+<script id="axeCookV85ResetFixScript">
+(function(){
+  function resetIconV85(){
+    return '<span class="axe-reset-icon-v85" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v6h-6"/></svg></span>';
+  }
+  function normalizeResetButtonV85(){
+    var b=document.getElementById('clearBtnVisible');
+    if(!b) return;
+    b.type='button';
+    b.classList.add('reset-visible-v29');
+    b.innerHTML=resetIconV85()+'<span>초기화</span>';
+  }
+  function doResetV85(){
+    try{
+      if(typeof orders!=='undefined') orders=[];
+      if(typeof checks!=='undefined') checks={};
+      try{localStorage.setItem(STORE_ORDERS,JSON.stringify([]));}catch(e){}
+      try{localStorage.setItem(STORE_CHECKS,JSON.stringify({}));}catch(e){}
+      try{localStorage.setItem(STORE_EMPTY,'true');}catch(e){}
+      if(typeof saveState==='function') saveState();
+      if(typeof render==='function') render();
+      else{
+        if(typeof renderOrders==='function') renderOrders();
+        if(typeof renderResultsOnly==='function') renderResultsOnly();
+      }
+      if(typeof toast==='function') toast('작업공간을 초기화했습니다');
+    }catch(err){
+      console.error('[AXE COOK v85 reset]',err);
+      try{alert('초기화 처리 중 오류가 발생했습니다. 콘솔을 확인해주세요.');}catch(e){}
+    }
+  }
+  function askAndResetV85(){
+    var ok=true;
+    try{ok=confirm('작업공간을 초기화 하겠습니까?');}catch(e){ok=true;}
+    if(ok) doResetV85();
+  }
+  document.addEventListener('click',function(ev){
+    var btn=ev.target && ev.target.closest ? ev.target.closest('#clearBtnVisible') : null;
+    if(!btn) return;
+    ev.preventDefault();
+    ev.stopPropagation();
+    ev.stopImmediatePropagation();
+    askAndResetV85();
+  },true);
+  var oldRenderOrders=window.renderOrders;
+  window.renderOrders=function(){
+    var r;
+    try{ if(typeof oldRenderOrders==='function') r=oldRenderOrders.apply(this,arguments); }catch(e){console.warn('[AXE COOK v85 old renderOrders]',e);}
+    normalizeResetButtonV85();
+    return r;
+  };
+  try{renderOrders=window.renderOrders;}catch(e){}
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',normalizeResetButtonV85); else normalizeResetButtonV85();
+  setTimeout(normalizeResetButtonV85,0);
+  setTimeout(normalizeResetButtonV85,300);
+  window.axeCookV85Debug=function(){return {version:'v85-reset-hard-fix', resetButton:!!document.getElementById('clearBtnVisible')};};
+})();
+</script>
+
 </body>
 </html>
