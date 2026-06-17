@@ -8761,7 +8761,7 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
   function clearWorkspaceNoPages(){try{orders=[];}catch(e){window.orders=[];}try{checks={};}catch(e){window.checks={};}try{localStorage.setItem('axe_cook_v1_orders','[]');localStorage.setItem('axe_cook_v1_checks','{}');localStorage.setItem('axe_cook_v53_memo','');}catch(e){}try{var m=document.getElementById('workMemoV53');if(m)m.value='';}catch(e){}hardSaveRender();try{if(typeof toast==='function')toast('작업공간을 초기화했습니다');}catch(e){}
   }
   function resetWorkspaceV105(){modal('작업공간을 초기화할까요?','현재 등록된 음식, 체크 상태, 작업 메모가 비워집니다.','예','아니오').then(function(ok){if(ok)clearWorkspaceNoPages();});}
-  function addOrderV105(name,sets){if(!name)return;var food=null;try{food=getFood(name);}catch(e){} if(!food){try{toast('요리를 찾을 수 없습니다.');}catch(e){}return;}sets=Math.max(1,Math.floor(Number(sets)||1));var current=[];try{current=Array.isArray(orders)?orders:[];}catch(e){current=Array.isArray(window.orders)?window.orders:[];}var old=current.find(function(o){return o&&o.name===name;});if(old){old.sets=Math.max(1,Math.floor(Number(old.sets)||1))+sets;}else if(current.length>0){modal('현재 작업목록에 음식이 있습니다.','한 번에 한 종류의 음식만 작업할 수 있습니다. 초기화 후 새 음식을 등록해 주세요.','확인','닫기');return;}else{current=[{name:name,sets:sets}];}
+  function addOrderV105(name,sets){if(!name)return;var food=null;try{food=getFood(name);}catch(e){} if(!food){try{toast('요리를 찾을 수 없습니다.');}catch(e){}return;}sets=Math.max(1,Math.floor(Number(sets)||1));var current=[];try{current=Array.isArray(orders)?orders:[];}catch(e){current=Array.isArray(window.orders)?window.orders:[];}var old=current.find(function(o){return o&&o.name===name;});if(old){old.sets=Math.max(1,Math.floor(Number(old.sets)||1))+sets;}else if(current.length>0){modal('현재 작업목록에 음식이 있습니다.','한 번에 한 종류의 음식만 작업할 수 있습니다. 기존 음식은 작업목록의 삭제 버튼으로 지운 뒤 새 음식을 등록해 주세요.','확인','닫기');return;}else{current=[{name:name,sets:sets}];}
     try{orders=current;}catch(e){window.orders=current;}try{checks={};localStorage.setItem('axe_cook_v1_checks','{}');localStorage.removeItem('axe_cook_workspace_empty');}catch(e){}hardSaveRender();try{if(typeof clearSearchV21==='function')clearSearchV21();}catch(e){}try{toast(name+' '+sets+'세트 작업 시작');}catch(e){}
   }
   function normalize(){
@@ -9473,9 +9473,18 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
     form.innerHTML=(c.fields||[]).map(([api,label,type])=>{const val=selected?.[api]??'';const full=(type==='textarea'||api==='effect'||api==='memo');if(type.startsWith('select:')){const opts=type.slice(7).split('|');return `<div class="v116-field"><label>${esc(label)}</label><select data-f="${api}">${opts.map(o=>`<option value="${esc(o)}" ${String(val)===o?'selected':''}>${esc(o)}</option>`).join('')}</select></div>`;}if(type==='textarea')return `<div class="v116-field full"><label>${esc(label)}</label><textarea data-f="${api}">${esc(val)}</textarea></div>`;return `<div class="v116-field ${full?'full':''}"><label>${esc(label)}</label><input data-f="${api}" type="${type==='number'?'number':'text'}" value="${esc(val)}"></div>`;}).join('')+(current==='foods'?recipeEditorHtml(): '');
     bindRecipeEditor();}
   function recipeEditorHtml(){const food=selected?.food_name||'';if(!recipeLines.length&&food)recipeLines=recipeRows(food).map(r=>({id:txt(r.id),name:txt(r['재료명']),qty:txt(r['필요수량'])}));return `<div class="v116-recipe-box"><div class="v116-recipe-head"><span>레시피 구성</span><button class="v116-btn" id="v116RecipeAdd" type="button">재료 추가</button></div><div class="v116-recipe-lines" id="v116RecipeLines">${(recipeLines.length?recipeLines:[{name:'',qty:''}]).map((r,i)=>`<div class="v116-recipe-line" data-r="${i}"><input data-rf="name" placeholder="재료명" value="${esc(r.name)}"><input data-rf="qty" placeholder="수량" value="${esc(r.qty)}"><button class="v116-btn danger" type="button" data-rdel="${i}">×</button></div>`).join('')}</div></div>`;}
+  function syncSingleFormState(){
+    if(!selected)selected={};
+    document.querySelectorAll('#v116Form [data-f]').forEach(el=>{selected[el.getAttribute('data-f')]=el.value;});
+  }
   function bindRecipeEditor(){const box=document.getElementById('v116RecipeLines');if(!box)return;function sync(){recipeLines=[...box.querySelectorAll('[data-r]')].map(line=>({name:line.querySelector('[data-rf="name"]').value,qty:line.querySelector('[data-rf="qty"]').value}));}
-    box.addEventListener('input',sync);box.addEventListener('click',e=>{const b=e.target.closest('[data-rdel]');if(!b)return;sync();recipeLines.splice(Number(b.dataset.rdel),1);renderForm();});document.getElementById('v116RecipeAdd')?.addEventListener('click',()=>{sync();recipeLines.push({name:'',qty:''});renderForm();});}
-  function renderGroupForm(){const c=cfg[current],form=document.getElementById('v116Form');const key=selected?.key||'';const rows=selected?.lines||[{name:'',qty:'',time:''}];form.innerHTML=`<div class="v116-field full"><label>${c.label}명</label><input data-g="key" value="${esc(key)}"></div><div class="v116-recipe-box"><div class="v116-recipe-head"><span>구성</span><button class="v116-btn" id="v116LineAdd" type="button">재료 추가</button></div><div class="v116-recipe-lines" id="v116Lines">${rows.map((r,i)=>`<div class="v116-recipe-line" data-line="${i}"><input data-lf="name" placeholder="재료명" value="${esc(r.name)}"><input data-lf="qty" placeholder="수량" value="${esc(r.qty)}"><button class="v116-btn danger" type="button" data-ldel="${i}">×</button></div>`).join('')}</div></div>`;}
+    box.addEventListener('input',sync);box.addEventListener('click',e=>{const b=e.target.closest('[data-rdel]');if(!b)return;e.preventDefault();e.stopPropagation();syncSingleFormState();sync();recipeLines.splice(Number(b.dataset.rdel),1);renderForm();});document.getElementById('v116RecipeAdd')?.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();syncSingleFormState();sync();recipeLines.push({name:'',qty:''});renderForm();});}
+  function renderGroupForm(){const c=cfg[current],form=document.getElementById('v116Form');const key=selected?.key||'';const rows=selected?.lines||[{name:'',qty:'',time:''}];form.innerHTML=`<div class="v116-field full"><label>${c.label}명</label><input data-g="key" value="${esc(key)}"></div><div class="v116-recipe-box"><div class="v116-recipe-head"><span>구성</span><button class="v116-btn" id="v116LineAdd" type="button">재료 추가</button></div><div class="v116-recipe-lines" id="v116Lines">${rows.map((r,i)=>`<div class="v116-recipe-line" data-line="${i}"><input data-lf="name" placeholder="재료명" value="${esc(r.name)}"><input data-lf="qty" placeholder="수량" value="${esc(r.qty)}"><button class="v116-btn danger" type="button" data-ldel="${i}">×</button></div>`).join('')}</div></div>`;bindGroupEditor();}
+  function syncGroupEditorState(){
+    const lines=[...document.querySelectorAll('#v116Lines [data-line]')].map(line=>({name:line.querySelector('[data-lf="name"]').value,qty:line.querySelector('[data-lf="qty"]').value}));
+    selected={key:document.querySelector('#v116Form [data-g="key"]')?.value||'',lines:lines.length?lines:[{name:'',qty:''}]};
+  }
+  function bindGroupEditor(){const box=document.getElementById('v116Lines');if(!box)return;box.addEventListener('input',syncGroupEditorState);box.addEventListener('click',e=>{const b=e.target.closest('[data-ldel]');if(!b)return;e.preventDefault();e.stopPropagation();syncGroupEditorState();selected.lines.splice(Number(b.dataset.ldel),1);renderForm();});document.getElementById('v116LineAdd')?.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();syncGroupEditorState();selected.lines.push({name:'',qty:''});renderForm();});}
   function renderList(){const box=document.getElementById('v116List');if(!box)return;const list=records();if(!list.length){box.innerHTML='<div class="v116-empty">검색 결과가 없습니다.</div>';return;}const c=cfg[current];box.innerHTML=list.map((it,i)=>c.groupMaterials?materialRow(it,i):c.group?groupRow(it,i):singleRow(it,i)).join('');}
   function singleRow(r,i){const c=cfg[current],name=txt(c.title(r));const key=current+'::'+txt(r[c.id]||name);return `<div class="v116-row ${detailKey===key?'active':''}" data-i="${i}" data-key="${esc(key)}"><div class="v116-row-main"><div class="v116-row-name">${esc(name)}</div><div class="v116-row-meta">${metaSingle(r)}</div></div><div class="v116-row-actions"><button class="v116-btn" data-act="view" type="button">보기</button><button class="v116-btn" data-act="edit" type="button">수정</button></div>${detailKey===key?detailSingle(r):''}</div>`;}
   function metaSingle(r){if(current==='foods')return `<span class="v116-chip">${esc(r['등급']||'-')}</span><span class="v116-chip gold">1세트 ${esc(r['1세트수량']||'-')}</span>`;if(current==='farm')return `<span class="v116-chip">${esc(r['획득처']||'-')}</span>`;return '';}
@@ -10370,7 +10379,7 @@ window.addEventListener('load',function(){
       modalV111({
         mode:'notice',
         title:'현재 작업목록에 음식이 있습니다.',
-        message:'한 번에 한 종류의 음식만 작업할 수 있습니다. 초기화 후 새 음식을 등록해 주세요.',
+        message:'한 번에 한 종류의 음식만 작업할 수 있습니다. 기존 음식은 작업목록의 삭제 버튼으로 지운 뒤 새 음식을 등록해 주세요.',
         yesText:'확인'
       });
       return;
@@ -10574,7 +10583,7 @@ window.addEventListener('load',function(){
       showAxeModalV112({
         mode:'notice',
         title:'현재 작업목록에 음식이 있습니다.',
-        message:'한 번에 한 종류의 음식만 작업할 수 있습니다. 작업공간을 초기화한 뒤 새 음식을 등록해 주세요.',
+        message:'한 번에 한 종류의 음식만 작업할 수 있습니다. 기존 음식은 작업목록의 삭제 버튼으로 지운 뒤 새 음식을 등록해 주세요.',
         yesText:'확인'
       });
       return;
