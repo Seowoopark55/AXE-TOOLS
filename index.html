@@ -3114,5 +3114,80 @@ window.axeCookV6Debug = window.axeCookV11Debug;
 })();
 </script>
 
+
+<style id="axeCookV43SettingsStableStyle">
+.settings-list-body-v36{display:grid!important;gap:8px!important;align-content:start!important;}
+.settings-row-v43{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;gap:10px!important;align-items:center!important;padding:10px 11px!important;border:1px solid rgba(255,255,255,.08)!important;border-radius:13px!important;background:rgba(255,255,255,.028)!important;}
+.settings-row-v43.is-open{align-items:start!important;border-color:rgba(255,181,46,.2)!important;background:rgba(255,181,46,.035)!important;}
+.settings-row-main-v43{min-width:0!important;display:grid!important;gap:7px!important;}
+.settings-row-title-v43{font-size:14px!important;font-weight:1000!important;color:#f4f6fa!important;line-height:1.2!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+.settings-row-actions-v43{display:flex!important;gap:6px!important;align-items:center!important;justify-content:flex-end!important;}
+.settings-row-actions-v43 .btn{height:32px!important;min-width:46px!important;padding:0 10px!important;}
+.setting-view-detail-v43{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:6px!important;margin-top:2px!important;}
+.setting-view-line-v43{display:grid!important;grid-template-columns:82px minmax(0,1fr)!important;gap:8px!important;align-items:start!important;padding:8px 9px!important;border:1px solid rgba(255,255,255,.07)!important;border-radius:10px!important;background:rgba(0,0,0,.16)!important;min-width:0!important;}
+.setting-view-label-v43{font-size:11px!important;color:#8d95a3!important;font-weight:1000!important;white-space:nowrap!important;}
+.setting-view-value-v43{font-size:12px!important;color:#dce2ec!important;font-weight:850!important;line-height:1.35!important;word-break:keep-all!important;overflow-wrap:anywhere!important;min-width:0!important;}
+.setting-view-value-v43.is-empty{color:#68717f!important;}
+.group-lines-v43{display:grid!important;gap:6px!important;margin-top:2px!important;}
+.group-line-v43{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;gap:8px!important;align-items:center!important;padding:8px 9px!important;border:1px solid rgba(255,255,255,.07)!important;border-radius:10px!important;background:rgba(0,0,0,.16)!important;}
+.group-line-title-v43{font-size:12.5px!important;font-weight:1000!important;color:#f4f6fa!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+.group-line-meta-v43{font-size:11px!important;font-weight:850!important;color:#8d95a3!important;margin-top:3px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+.settings-row-v43 .group-line-v43 .btn{height:30px!important;min-width:44px!important;}
+.settings-row-v36 .settings-row-meta-v36{display:none!important;}
+@media(max-width:760px){.settings-row-v43{grid-template-columns:1fr!important}.settings-row-actions-v43{justify-content:flex-start!important}.setting-view-detail-v43{grid-template-columns:1fr!important}.setting-view-line-v43{grid-template-columns:76px minmax(0,1fr)!important}.group-line-v43{grid-template-columns:1fr!important}.group-line-v43 .btn{justify-self:start!important}}
+</style>
+<script id="axeCookV43SettingsStableScript">
+(function(){
+  const VERSION_V43='AXE_COOK_v43_SETTINGS_VIEW_STABLE_HTML_ONLY';
+  let expandedKey='';
+  let renderTimer=0;
+  let isRendering=false;
+  const titleMap={foods:'요리',materials:'재료',recipes:'레시피',processes:'가공',farm:'농장재료',aliases:'별칭',fish:'생선변환'};
+  const cfg={
+    foods:{rows:()=>DB.foods||[],title:r=>r['요리명'],id:r=>r['id'],fields:[['요리명','요리명'],['등급','등급'],['1세트수량','1세트수량'],['세트판매가','세트판매가'],['효과','효과'],['지속시간','지속시간'],['조리시간','조리시간'],['사용여부','사용여부'],['비고','비고']]},
+    materials:{rows:()=>DB.materials||[],title:r=>r['재료명'],id:r=>r['id'],fields:[['재료명','재료명'],['구매처','구매처'],['묶음수량','묶음수량'],['묶음가격','묶음가격'],['개당가격','개당가격'],['획득구분','획득구분'],['사용여부','사용여부'],['우선구매','우선구매'],['비고','비고']]},
+    farm:{rows:()=>DB.farm||[],title:r=>r['재료명'],id:r=>r['id'],fields:[['재료명','재료명'],['획득처','획득처'],['사용여부','사용여부'],['비고','비고']]},
+    aliases:{rows:()=>DB.aliases||[],title:r=>r['입력명'],id:r=>r['입력명'],fields:[['입력명','입력명'],['표준명','표준명'],['구분','구분'],['사용여부','사용여부'],['비고','비고']]},
+    fish:{rows:()=>DB.fish||[],title:r=>r['생선명'],id:r=>r['id'],fields:[['생선명','생선명'],['투입수량','투입수량'],['결과재료','결과재료'],['결과수량','결과수량'],['가공시간','가공시간'],['사용여부','사용여부'],['비고','비고']]}
+  };
+  const apiMap={
+    foods:{id:'food_id','요리명':'food_name','등급':'grade','1세트수량':'set_qty','세트판매가':'sale_price','효과':'effect','지속시간':'effect_time','조리시간':'cook_time','사용여부':'is_active','정렬':'sort_order','비고':'memo'},
+    materials:{id:'material_id','재료명':'material_name','구매처':'source','묶음수량':'bundle_qty','묶음가격':'bundle_price','개당가격':'unit_price','획득구분':'obtain_type','사용여부':'is_active','우선구매':'is_primary','정렬':'sort_order','비고':'memo'},
+    processes:{id:'process_id','가공재료명':'process_material_name','하위재료명':'input_material_name','필요수량':'required_qty','결과수량':'result_qty','가공시간':'process_time','사용여부':'is_active','정렬':'sort_order','비고':'memo'},
+    farm:{id:'farm_id','재료명':'material_name','획득처':'source','사용여부':'is_active','정렬':'sort_order','비고':'memo'},
+    aliases:{'입력명':'alias_name','표준명':'standard_name','구분':'alias_type','사용여부':'is_active','비고':'memo'},
+    fish:{id:'fish_id','생선명':'fish_name','투입수량':'input_qty','결과재료':'result_material_name','결과수량':'result_qty','가공시간':'process_time','사용여부':'is_active','정렬':'sort_order','비고':'memo'}
+  };
+  function kind(){return document.querySelector('#settingsTabs .tab.active')?.dataset.manage||'foods';}
+  function txt(v){return String(v==null?'':v).trim();}
+  function esc(v){return h(String(v==null?'':v));}
+  function q(){return txt(document.getElementById('settingsSearch')?.value).toLowerCase();}
+  function header(){const k=kind();const t=document.getElementById('settingsEditorTitle');const b=document.getElementById('settingsNewBtn');if(t)t.textContent=titleMap[k]||'설정';if(b)b.textContent='추가';}
+  function fillForm(k,row){const map=apiMap[k]||{};Object.keys(map).forEach(src=>{const api=map[src];const el=document.querySelector('#settingsForm [data-field="'+CSS.escape(api)+'"]');if(el)el.value=txt(row[src]);});const t=document.getElementById('settingsEditorTitle');if(t)t.textContent=(titleMap[k]||'설정')+' · 수정중';const ed=document.querySelector('.setting-editor-v36');if(ed){ed.classList.add('is-editing');ed.classList.remove('is-dirty');}if(window.toast)toast('수정할 항목을 불러왔습니다');}
+  function detail(k,row){const c=cfg[k];return '<div class="setting-view-detail-v43">'+c.fields.map(([label,field])=>{const v=txt(row[field]);return '<div class="setting-view-line-v43"><span class="setting-view-label-v43">'+esc(label)+'</span><span class="setting-view-value-v43 '+(v?'':'is-empty')+'">'+esc(v||'-')+'</span></div>';}).join('')+'</div>';}
+  function normalRows(k){const c=cfg[k];const query=q();return (c.rows()||[]).filter(r=>(txt(c.title(r))+' '+c.fields.map(f=>txt(r[f[1]])).join(' ')).toLowerCase().includes(query)).slice(0,300);}
+  function renderNormal(k){const list=document.getElementById('settingsList');if(!list||!cfg[k])return false;const rows=normalRows(k);if(!rows.length){list.innerHTML='<div class="empty">표시할 항목이 없습니다.</div>';return true;}list.innerHTML=rows.map((r,i)=>{const c=cfg[k];const key=k+'::'+txt(c.id(r)||c.title(r)||i);const open=expandedKey===key;return '<div class="settings-row-v43 '+(open?'is-open':'')+'" data-v43-key="'+esc(key)+'"><div class="settings-row-main-v43"><div class="settings-row-title-v43">'+esc(c.title(r)||'-')+'</div>'+(open?detail(k,r):'')+'</div><div class="settings-row-actions-v43"><button class="btn ghost" data-v43-view="'+i+'" type="button">보기</button><button class="btn ghost" data-v43-edit="'+i+'" type="button">수정</button></div></div>';}).join('');return true;}
+  function processGroups(){const query=q();const map=new Map();(DB.processes||[]).forEach(r=>{const name=txt(r['가공재료명'])||'-';const hay=[name,r['하위재료명'],r['필요수량'],r['결과수량'],r['가공시간'],r['비고']].map(txt).join(' ').toLowerCase();if(query&&!hay.includes(query))return;if(!map.has(name))map.set(name,[]);map.get(name).push(r);});return [...map.entries()].map(([name,rows])=>({name,rows:rows.slice().sort((a,b)=>Number(a['정렬']||0)-Number(b['정렬']||0))})).sort((a,b)=>a.name.localeCompare(b.name,'ko'));}
+  function renderProcesses(){const list=document.getElementById('settingsList');if(!list)return false;const groups=processGroups();if(!groups.length){list.innerHTML='<div class="empty">표시할 항목이 없습니다.</div>';return true;}list.innerHTML=groups.map((g,i)=>{const key='processes::'+g.name;const open=expandedKey===key;const lines=open?'<div class="group-lines-v43">'+g.rows.map((r,j)=>'<div class="group-line-v43"><div><div class="group-line-title-v43">'+esc(r['하위재료명']||'-')+'</div><div class="group-line-meta-v43">필요 '+esc(r['필요수량']||'-')+' · 결과 '+esc(r['결과수량']||'-')+' · '+esc(r['가공시간']||'-')+'</div></div><button class="btn ghost" data-v43-process-edit="'+i+':'+j+'" type="button">수정</button></div>').join('')+'</div>':'';return '<div class="settings-row-v43 '+(open?'is-open':'')+'" data-v43-key="'+esc(key)+'"><div class="settings-row-main-v43"><div class="settings-row-title-v43">'+esc(g.name)+'</div>'+lines+'</div><div class="settings-row-actions-v43"><button class="btn ghost" data-v43-process-view="'+i+'" type="button">보기</button><button class="btn ghost" data-v43-process-edit="'+i+':0" type="button">수정</button></div></div>';}).join('');return true;}
+  function renderNow(){if(isRendering)return;isRendering=true;try{header();const k=kind();if(k==='recipes'){isRendering=false;return;}if(k==='processes')renderProcesses();else renderNormal(k);}catch(e){console.warn('[AXE COOK v43] render failed',e);}finally{isRendering=false;}}
+  function schedule(ms){clearTimeout(renderTimer);renderTimer=setTimeout(renderNow,ms==null?60:ms);}
+  document.addEventListener('click',function(e){
+    const view=e.target.closest('[data-v43-view]');
+    if(view){e.preventDefault();e.stopImmediatePropagation();const k=kind();const rows=normalRows(k);const row=rows[Number(view.dataset.v43View)];const c=cfg[k];if(row&&c){const key=k+'::'+txt(c.id(row)||c.title(row)||view.dataset.v43View);expandedKey=expandedKey===key?'':key;renderNow();}return;}
+    const edit=e.target.closest('[data-v43-edit]');
+    if(edit){e.preventDefault();e.stopImmediatePropagation();const k=kind();const row=normalRows(k)[Number(edit.dataset.v43Edit)];if(row)fillForm(k,row);return;}
+    const pv=e.target.closest('[data-v43-process-view]');
+    if(pv){e.preventDefault();e.stopImmediatePropagation();const g=processGroups()[Number(pv.dataset.v43ProcessView)];if(g){const key='processes::'+g.name;expandedKey=expandedKey===key?'':key;renderNow();}return;}
+    const pe=e.target.closest('[data-v43-process-edit]');
+    if(pe){e.preventDefault();e.stopImmediatePropagation();const [gi,ri]=String(pe.dataset.v43ProcessEdit).split(':').map(Number);const row=processGroups()[gi]?.rows[ri];if(row)fillForm('processes',row);return;}
+    if(e.target.closest('#settingsTabs .tab')){expandedKey='';schedule(180);return;}
+    if(e.target.closest('#settingsReloadBtn,#settingsNewBtn')){expandedKey='';schedule(220);return;}
+  },true);
+  document.addEventListener('input',function(e){if(e.target.closest('#settingsSearch')){expandedKey='';schedule(80);}},true);
+  function boot(){schedule(260);window.axeCookV43Debug=()=>({version:VERSION_V43,kind:kind(),expandedKey,htmlOnly:true,gasChangeRequired:false});}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+})();
+</script>
+
 </body>
 </html>
