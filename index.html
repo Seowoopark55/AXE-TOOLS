@@ -2778,131 +2778,166 @@ window.axeCookV6Debug = window.axeCookV11Debug;
 </script>
 
 
-
-<style id="axeCookV40ViewEditCleanStyle">
-/* AXE COOK v40: 설정 목록 보기/수정 정리 - 설명문 제거, 상세는 보기 버튼으로만 표시 */
+<style id="axeCookV41ViewEditStableStyle">
+/* AXE COOK v41: 설정 목록 안정화 - 보기/수정 분리, 레시피 상세 UI 복구 */
+.settings-row-v36{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  gap:8px!important;
+  align-items:center!important;
+}
+.settings-row-main-v36{min-width:0!important;}
 .settings-row-meta-v36{display:none!important;}
-.settings-row-v36{grid-template-columns:minmax(0,1fr) auto!important;}
+.settings-row-actions-v36{display:flex!important;gap:6px!important;align-items:center!important;justify-content:flex-end!important;}
 .settings-row-actions-v36 .btn{min-width:44px!important;}
-.setting-view-detail-v40{
-  grid-column:1/-1;
-  margin-top:8px;
-  border-top:1px solid rgba(255,255,255,.075);
-  padding-top:8px;
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:6px 10px;
+.setting-view-detail-v41,
+.recipe-group-detail-v39{
+  grid-column:1/-1!important;
+  width:100%!important;
+  margin-top:8px!important;
+  padding-top:8px!important;
+  border-top:1px solid rgba(255,255,255,.075)!important;
 }
-.setting-view-line-v40{
-  min-width:0;
-  display:grid;
-  grid-template-columns:74px minmax(0,1fr);
-  gap:7px;
-  align-items:start;
-  font-size:12px;
-  line-height:1.35;
+.setting-view-detail-v41{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:6px 10px!important;
 }
-.setting-view-label-v40{color:var(--muted);font-weight:1000;white-space:nowrap;}
-.setting-view-value-v40{color:#d8dde6;font-weight:850;word-break:keep-all;overflow-wrap:anywhere;}
-.setting-view-value-v40.is-empty{color:#68717f;}
-.recipe-group-detail-v39{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:6px 10px!important;}
-.recipe-group-line-v39{border:1px solid rgba(255,255,255,.07);border-radius:9px;background:rgba(255,255,255,.025);padding:6px 8px;}
-@media(max-width:760px){.setting-view-detail-v40,.recipe-group-detail-v39{grid-template-columns:1fr!important;}.setting-view-line-v40{grid-template-columns:68px minmax(0,1fr);}}
+.setting-view-line-v41{
+  min-width:0!important;
+  display:grid!important;
+  grid-template-columns:74px minmax(0,1fr)!important;
+  gap:7px!important;
+  align-items:start!important;
+  font-size:12px!important;
+  line-height:1.35!important;
+}
+.setting-view-label-v41{color:var(--muted)!important;font-weight:1000!important;white-space:nowrap!important;}
+.setting-view-value-v41{color:#d8dde6!important;font-weight:850!important;word-break:keep-all!important;overflow-wrap:anywhere!important;}
+.setting-view-value-v41.is-empty{color:#68717f!important;}
+.recipe-group-detail-v39{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:6px!important;
+  align-items:flex-start!important;
+}
+.recipe-group-line-v39{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:8px!important;
+  min-width:88px!important;
+  max-width:100%!important;
+  border:1px solid rgba(255,255,255,.075)!important;
+  border-radius:10px!important;
+  background:rgba(255,255,255,.028)!important;
+  padding:6px 8px!important;
+  font-size:12px!important;
+  line-height:1.15!important;
+  white-space:nowrap!important;
+}
+.recipe-group-line-v39 span{min-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;}
+.recipe-group-line-v39 b{color:var(--gold2)!important;font-size:12px!important;}
+@media(max-width:760px){
+  .setting-view-detail-v41{grid-template-columns:1fr!important;}
+  .setting-view-line-v41{grid-template-columns:68px minmax(0,1fr)!important;}
+}
 </style>
 
-<script id="axeCookV40ViewEditCleanScript">
+<script id="axeCookV41ViewEditStableScript">
 (function(){
-  const VERSION_V40='AXE_COOK_v40_VIEW_EDIT_CLEAN_HTML_ONLY_REBUILT';
+  const VERSION_V41='AXE_COOK_v41_VIEW_EDIT_STABLE_HTML_ONLY';
   let expandedKey='';
   let lastKind='';
   let scheduled=false;
 
-  const CFG={
-    foods:{rows:()=>DB.foods,title:r=>r['요리명'],id:r=>r['id'],fields:[['ID','id'],['요리명','요리명'],['등급','등급'],['1세트수량','1세트수량'],['세트판매가','세트판매가'],['효과','효과'],['지속시간','지속시간'],['조리시간','조리시간'],['사용여부','사용여부'],['정렬','정렬'],['비고','비고']]},
-    materials:{rows:()=>DB.materials,title:r=>r['재료명'],id:r=>r['id'],fields:[['ID','id'],['재료명','재료명'],['구매처','구매처'],['묶음수량','묶음수량'],['묶음가격','묶음가격'],['개당가격','개당가격'],['획득구분','획득구분'],['사용여부','사용여부'],['우선구매','우선구매'],['정렬','정렬'],['비고','비고']]},
-    processes:{rows:()=>DB.processes,title:r=>[r['가공재료명'],r['하위재료명']].filter(Boolean).join(' / '),id:r=>r['id'],fields:[['ID','id'],['가공재료명','가공재료명'],['하위재료명','하위재료명'],['필요수량','필요수량'],['결과수량','결과수량'],['가공시간','가공시간'],['사용여부','사용여부'],['정렬','정렬'],['비고','비고']]},
-    farm:{rows:()=>DB.farm,title:r=>r['재료명'],id:r=>r['id'],fields:[['ID','id'],['재료명','재료명'],['획득처','획득처'],['사용여부','사용여부'],['정렬','정렬'],['비고','비고']]},
-    aliases:{rows:()=>DB.aliases,title:r=>r['입력명'],id:r=>r['입력명'],fields:[['입력명','입력명'],['표준명','표준명'],['구분','구분'],['사용여부','사용여부'],['비고','비고']]},
-    fish:{rows:()=>DB.fish,title:r=>r['생선명'],id:r=>r['id'],fields:[['ID','id'],['생선명','생선명'],['투입수량','투입수량'],['결과재료','결과재료'],['결과수량','결과수량'],['가공시간','가공시간'],['사용여부','사용여부'],['정렬','정렬'],['비고','비고']]}
+  const titleMap={foods:'요리',materials:'재료',recipes:'레시피',processes:'가공',farm:'농장재료',aliases:'별칭',fish:'생선변환'};
+  const cfg={
+    foods:{rows:()=>DB.foods,title:r=>r['요리명'],meta:r=>`등급 ${r['등급']||'-'} · 1세트 ${r['1세트수량']||'-'} · 판매가 ${r['세트판매가']||'-'}`,id:r=>r['id'],fields:[['ID','id'],['요리명','요리명'],['등급','등급'],['1세트수량','1세트수량'],['세트판매가','세트판매가'],['효과','효과'],['지속시간','지속시간'],['조리시간','조리시간'],['사용여부','사용여부'],['정렬','정렬'],['비고','비고']]},
+    materials:{rows:()=>DB.materials,title:r=>r['재료명'],meta:r=>`${r['구매처']||'-'} · 묶음 ${r['묶음수량']||'-'} · 가격 ${r['묶음가격']||'-'}`,id:r=>r['id'],fields:[['ID','id'],['재료명','재료명'],['구매처','구매처'],['묶음수량','묶음수량'],['묶음가격','묶음가격'],['개당가격','개당가격'],['획득구분','획득구분'],['사용여부','사용여부'],['우선구매','우선구매'],['정렬','정렬'],['비고','비고']]},
+    processes:{rows:()=>DB.processes,title:r=>[r['가공재료명'],r['하위재료명']].filter(Boolean).join(' / '),meta:r=>`필요 ${r['필요수량']||'-'} · 결과 ${r['결과수량']||'-'} · ${r['가공시간']||'-'}`,id:r=>r['id'],fields:[['ID','id'],['가공재료명','가공재료명'],['하위재료명','하위재료명'],['필요수량','필요수량'],['결과수량','결과수량'],['가공시간','가공시간'],['사용여부','사용여부'],['정렬','정렬'],['비고','비고']]},
+    farm:{rows:()=>DB.farm,title:r=>r['재료명'],meta:r=>`${r['획득처']||'농장'} · ${r['사용여부']||'TRUE'}`,id:r=>r['id'],fields:[['ID','id'],['재료명','재료명'],['획득처','획득처'],['사용여부','사용여부'],['정렬','정렬'],['비고','비고']]},
+    aliases:{rows:()=>DB.aliases,title:r=>r['입력명'],meta:r=>`${r['구분']||'재료'} · ${r['사용여부']||'TRUE'}`,id:r=>r['입력명'],fields:[['입력명','입력명'],['표준명','표준명'],['구분','구분'],['사용여부','사용여부'],['비고','비고']]},
+    fish:{rows:()=>DB.fish,title:r=>[r['생선명'],r['결과재료']].filter(Boolean).join(' → '),meta:r=>`투입 ${r['투입수량']||'-'} · 결과 ${r['결과수량']||'-'} · ${r['가공시간']||'-'}`,id:r=>r['id'],fields:[['ID','id'],['생선명','생선명'],['투입수량','투입수량'],['결과재료','결과재료'],['결과수량','결과수량'],['가공시간','가공시간'],['사용여부','사용여부'],['정렬','정렬'],['비고','비고']]}
   };
 
-  function activeKind(){return document.querySelector('#settingsTabs .tab.active')?.dataset.manage||'foods';}
-  function norm(v){return String(v==null?'':v).trim();}
-  function esc(s){return h(String(s==null?'':s));}
-  function rowSearchText(row){return Object.keys(row||{}).map(k=>row[k]).join(' ').toLowerCase();}
-  function filteredRows(kind){const cfg=CFG[kind];if(!cfg)return[];const q=norm(document.getElementById('settingsSearch')?.value).toLowerCase();return (cfg.rows()||[]).filter(r=>!q||rowSearchText(r).includes(q)).slice(0,300);}
-  function detailHtml(kind,row){const cfg=CFG[kind];if(!cfg||!row)return'';const lines=cfg.fields.map(([label,key])=>{const val=norm(row[key]);return `<div class="setting-view-line-v40"><span class="setting-view-label-v40">${esc(label)}</span><span class="setting-view-value-v40 ${val?'':'is-empty'}">${esc(val||'-')}</span></div>`;}).join('');return `<div class="setting-view-detail-v40">${lines}</div>`;}
-  function rowKey(kind,row,idx){const cfg=CFG[kind];return kind+'::'+norm(cfg?.id(row)||cfg?.title(row)||idx);}
-
-  function cleanRecipeRows(){
-    const kind=activeKind();
-    if(kind!=='recipes')return;
-    document.querySelectorAll('#settingsList .settings-row-meta-v36').forEach(el=>{el.textContent='';});
+  function kind(){return document.querySelector('#settingsTabs .tab.active')?.dataset.manage||'foods';}
+  function s(v){return String(v==null?'':v).trim();}
+  function esc(v){return h(String(v==null?'':v));}
+  function commonRows(k){
+    const c=cfg[k]; if(!c)return[];
+    const q=s(document.getElementById('settingsSearch')?.value).toLowerCase();
+    return (c.rows()||[]).filter(r=>(s(c.title(r))+' '+s(c.meta(r))).toLowerCase().includes(q)).slice(0,300);
   }
-
-  function enhanceCommonRows(){
-    const kind=activeKind();
-    if(kind==='recipes'){cleanRecipeRows();return;}
-    const cfg=CFG[kind];
-    if(!cfg)return;
-    if(kind!==lastKind){expandedKey='';lastKind=kind;}
-    const rows=filteredRows(kind);
-    const list=document.getElementById('settingsList');
-    if(!list)return;
-    list.querySelectorAll('.settings-row-v36').forEach((rowEl)=>{
-      const editBtn=rowEl.querySelector('[data-edit-idx]');
-      if(!editBtn)return;
-      const idx=Number(editBtn.getAttribute('data-edit-idx'));
-      const row=rows[idx];
-      if(!row)return;
-      const key=rowKey(kind,row,idx);
-      rowEl.dataset.v40Key=key;
-      rowEl.querySelectorAll('.settings-row-meta-v36').forEach(el=>{el.textContent='';});
-      const actions=rowEl.querySelector('.settings-row-actions-v36');
-      if(actions&&!actions.querySelector('[data-view-v40]')){
-        const view=document.createElement('button');
-        view.className='btn ghost';
-        view.type='button';
-        view.textContent='보기';
-        view.setAttribute('data-view-v40','1');
-        actions.insertBefore(view, actions.firstChild);
-      }
-      rowEl.querySelector('[data-view-v40]')?.addEventListener('click',function(ev){
-        ev.preventDefault();ev.stopPropagation();
-        expandedKey=(expandedKey===key)?'':key;
-        scheduleEnhance(true);
-      },{once:true});
-      rowEl.querySelector('.setting-view-detail-v40')?.remove();
-      if(expandedKey===key){
-        const main=rowEl.querySelector('.settings-row-main-v36');
-        if(main)main.insertAdjacentHTML('beforeend', detailHtml(kind,row));
-      }
-    });
+  function keyOf(k,row,idx){const c=cfg[k];return k+'::'+s(c.id(row)||c.title(row)||idx);}
+  function detailHtml(k,row){
+    const c=cfg[k];
+    const html=c.fields.map(([label,field])=>{const val=s(row[field]);return `<div class="setting-view-line-v41"><span class="setting-view-label-v41">${esc(label)}</span><span class="setting-view-value-v41 ${val?'':'is-empty'}">${esc(val||'-')}</span></div>`;}).join('');
+    return `<div class="setting-view-detail-v41">${html}</div>`;
   }
-
   function normalizeHeader(){
-    const kind=activeKind();
-    const titleMap={foods:'요리',materials:'재료',recipes:'레시피',processes:'가공',farm:'농장재료',aliases:'별칭',fish:'생선변환'};
+    const k=kind();
     const title=document.getElementById('settingsEditorTitle');
     const newBtn=document.getElementById('settingsNewBtn');
-    if(title)title.textContent=titleMap[kind]||'설정';
+    if(title)title.textContent=titleMap[k]||'설정';
     if(newBtn)newBtn.textContent='추가';
   }
-
-  function scheduleEnhance(force){
+  function enhanceRecipeRows(){
+    document.querySelectorAll('#settingsList .settings-row-meta-v36').forEach(el=>{el.textContent='';});
+    document.querySelectorAll('#settingsList .settings-row-v36').forEach(row=>{
+      const detail=row.querySelector('.recipe-group-detail-v39');
+      if(detail && detail.parentElement!==row){ row.appendChild(detail); }
+    });
+  }
+  function enhanceCommonRows(){
+    const k=kind();
+    if(k==='recipes'){enhanceRecipeRows();return;}
+    if(k!==lastKind){expandedKey='';lastKind=k;}
+    const rows=commonRows(k);
+    document.querySelectorAll('#settingsList .settings-row-v36').forEach(rowEl=>{
+      rowEl.querySelectorAll('.settings-row-meta-v36').forEach(el=>{el.textContent='';});
+      const edit=rowEl.querySelector('[data-edit-idx]');
+      if(!edit)return;
+      const idx=Number(edit.getAttribute('data-edit-idx'));
+      const row=rows[idx];
+      if(!row)return;
+      const rk=keyOf(k,row,idx);
+      rowEl.dataset.v41Key=rk;
+      let actions=rowEl.querySelector('.settings-row-actions-v36');
+      if(actions && !actions.querySelector('[data-view-v41]')){
+        const btn=document.createElement('button');
+        btn.type='button'; btn.className='btn ghost'; btn.textContent='보기'; btn.setAttribute('data-view-v41','1');
+        actions.insertBefore(btn, actions.firstChild);
+      }
+      rowEl.querySelector('.setting-view-detail-v41')?.remove();
+      if(expandedKey===rk){ rowEl.insertAdjacentHTML('beforeend', detailHtml(k,row)); }
+    });
+  }
+  function schedule(force){
     if(scheduled&&!force)return;
     scheduled=true;
-    setTimeout(()=>{scheduled=false;try{normalizeHeader();enhanceCommonRows();}catch(e){console.warn('[AXE COOK v40] enhance failed',e);}},force?0:40);
+    setTimeout(()=>{scheduled=false;try{normalizeHeader();enhanceCommonRows();}catch(e){console.warn('[AXE COOK v41] enhance failed',e);}}, force?0:35);
   }
-
-  const observer=new MutationObserver(()=>scheduleEnhance(false));
+  document.addEventListener('click',function(e){
+    const view=e.target.closest('[data-view-v41]');
+    if(view){
+      e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
+      const row=view.closest('.settings-row-v36');
+      const rk=row?.dataset.v41Key||'';
+      expandedKey=(expandedKey===rk)?'':rk;
+      schedule(true);
+      return;
+    }
+    if(e.target.closest('#settingsTabs .tab')){expandedKey='';setTimeout(()=>schedule(true),80);return;}
+    if(e.target.closest('#settingsReloadBtn,#settingsNewBtn,[data-edit-idx],[data-redit],[data-rview]')){setTimeout(()=>schedule(true),80);return;}
+  },true);
+  document.addEventListener('input',function(e){if(e.target.closest('#settingsSearch')){expandedKey='';setTimeout(()=>schedule(true),40);}},true);
+  const mo=new MutationObserver(()=>schedule(false));
   function boot(){
     const list=document.getElementById('settingsList');
-    if(list)observer.observe(list,{childList:true,subtree:true});
-    document.addEventListener('click',e=>{if(e.target.closest('#settingsTabs .tab')){expandedKey='';setTimeout(scheduleEnhance,70);}else if(e.target.closest('#settingsReloadBtn,#settingsNewBtn,[data-edit-idx],[data-redit],[data-rview]')){setTimeout(scheduleEnhance,70);}},true);
-    document.addEventListener('input',e=>{if(e.target.closest('#settingsSearch')){expandedKey='';setTimeout(scheduleEnhance,40);}},true);
-    scheduleEnhance(true);
-    window.axeCookV40Debug=()=>({version:VERSION_V40,kind:activeKind(),expandedKey,htmlOnly:true,gasChangeRequired:false});
+    if(list)mo.observe(list,{childList:true,subtree:true});
+    schedule(true);
+    window.axeCookV41Debug=()=>({version:VERSION_V41,kind:kind(),expandedKey,htmlOnly:true,gasChangeRequired:false});
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(boot,120));else setTimeout(boot,120);
 })();
