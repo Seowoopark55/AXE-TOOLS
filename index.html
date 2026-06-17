@@ -9449,13 +9449,13 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
   }
   function getFoodLocal(name){
     if(typeof getFood==='function') return getFood(name)||{};
-    return ((window.DB&&DB.foods)||[]).find(function(r){return t(r['요리명'])===name;})||{};
+    return ((typeof DB!=='undefined'&&DB.foods)||[]).find(function(r){return t(r['요리명'])===name;})||{};
   }
-  function foodRecipes(name){return ((window.DB&&DB.recipes)||[]).filter(function(r){return t(r['요리명'])===name;});}
+  function foodRecipes(name){return ((typeof DB!=='undefined'&&DB.recipes)||[]).filter(function(r){return t(r['요리명'])===name;});}
   function grouped(list,key){var m=new Map();(list||[]).forEach(function(r){var n=t(r[key]);if(!n)return;if(!m.has(n))m.set(n,[]);m.get(n).push(r);});return Array.from(m.entries()).sort(function(a,b){return a[0].localeCompare(b[0],'ko');});}
   function searchOk(name){var input=document.getElementById('dataSearchV87');var q=norm(input?input.value:'');return !q||norm(name).includes(q);}
   function favButton(name){
-    var on=(window.favorites||[]).includes(name);
+    var on=((typeof favorites!=='undefined'&&favorites)||[]).includes(name);
     return '<button class="btn ghost axe-data-action-v94 axe-fav-btn-v94 '+(on?'is-fav':'')+'" type="button" data-fav-v108="'+e(name)+'" title="'+(on?'즐겨찾기 해제':'즐겨찾기 추가')+'"><span class="star-v94">'+(on?'★':'☆')+'</span></button>';
   }
   function head(name,badges,action){
@@ -9505,7 +9505,7 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
     if(input&&!input.dataset.v108Bound){input.dataset.v108Bound='1';input.addEventListener('input',function(){if(clear)clear.hidden=!input.value;window.renderDataView();});}
     if(clear&&!clear.dataset.v108Bound){clear.dataset.v108Bound='1';clear.addEventListener('click',function(){if(input){input.value='';input.focus();}clear.hidden=true;window.renderDataView();});}
     var box=document.getElementById('dataView');if(!box)return;
-    if(!window.DB||!Array.isArray(DB.foods)){box.innerHTML='<div class="axe-empty-v87">시트 데이터를 불러오는 중입니다.</div>';return;}
+    if(typeof DB==='undefined'||!Array.isArray(DB.foods)){box.innerHTML='<div class="axe-empty-v87">시트 데이터를 불러오는 중입니다.</div>';return;}
     if(typeof activeTab==='undefined') window.activeTab='foods';
     if(activeTab==='foods'){
       var foods=(DB.foods||[]).filter(function(r){return isOn(r['사용여부']);}).map(function(r){return [t(r['요리명']),r];}).filter(function(x){return x[0];}).sort(function(a,b){return a[0].localeCompare(b[0],'ko');});
@@ -9526,6 +9526,7 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
   },true);
   document.addEventListener('DOMContentLoaded',function(){setTimeout(function(){syncTabs();try{window.renderDataView();}catch(e){}},0);});
   setTimeout(function(){syncTabs();try{window.renderDataView();}catch(e){}},250);
-  window.axeCookV108Debug=function(){return {version:'v108-final-data-cooktime-override', hasCooktime:true};};
+  window.axeCookV109Debug=function(){return {version:'v109-data-load-fix', foods:(typeof DB!=='undefined'&&DB.foods?DB.foods.length:null), recipes:(typeof DB!=='undefined'&&DB.recipes?DB.recipes.length:null), hasCooktime:true};};
+  window.axeCookV108Debug=window.axeCookV109Debug;
 })();
 </script>
