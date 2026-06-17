@@ -8737,6 +8737,76 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
 })();
 </script>
 
+
+
+<style id="axeCookV106DataMergeStyle">
+/* AXE COOK v106: 데이터 탭 - 레시피를 요리에 흡수 */
+#viewData [data-tab="recipes"]{
+  display:none!important;
+}
+#viewData .axe-detail-head-v94,
+#viewData .axe-detail-head-v87{
+  margin-bottom:10px!important;
+}
+#viewData .axe-line-list-v87{
+  max-width:720px!important;
+}
+#viewData .axe-detail-title-row-v94{
+  align-items:center!important;
+}
+</style>
+<script id="axeCookV106DataMergeScript">
+(function(){
+  'use strict';
+  function syncDataTabsV106(){
+    try{
+      document.querySelectorAll('#viewData [data-tab="recipes"]').forEach(function(btn){btn.remove();});
+      var desc=document.querySelector('#viewData .panel-title + div, #viewData .data-desc-v87');
+      document.querySelectorAll('#viewData *').forEach(function(el){
+        if(el.childNodes && el.childNodes.length===1 && el.childNodes[0].nodeType===3){
+          var t=el.textContent||'';
+          if(t.indexOf('요리 · 재료 · 가공 · 레시피')>-1){
+            el.textContent=t.replace('요리 · 재료 · 가공 · 레시피','요리 · 재료 · 가공');
+          }
+        }
+      });
+      if(typeof activeTab!=='undefined' && activeTab==='recipes'){
+        activeTab='foods';
+        document.querySelectorAll('#viewData .tab').forEach(function(x){x.classList.toggle('active',x.dataset.tab==='foods');});
+      }
+    }catch(e){}
+  }
+  var prevRenderDataView=window.renderDataView || (typeof renderDataView==='function'?renderDataView:null);
+  window.renderDataView=function(){
+    syncDataTabsV106();
+    if(typeof activeTab!=='undefined' && activeTab==='recipes') activeTab='foods';
+    var r;
+    try{ if(typeof prevRenderDataView==='function') r=prevRenderDataView.apply(this,arguments); }catch(err){ console.warn('[AXE COOK v106] renderDataView fallback',err); }
+    syncDataTabsV106();
+    return r;
+  };
+  try{renderDataView=window.renderDataView;}catch(e){}
+  var prevRender=window.render;
+  if(typeof prevRender==='function' && !prevRender.__axeV106Wrapped){
+    var wrapped=function(){var r=prevRender.apply(this,arguments);setTimeout(function(){try{syncDataTabsV106();}catch(e){}},0);return r;};
+    wrapped.__axeV106Wrapped=true;
+    window.render=wrapped;
+    try{render=wrapped;}catch(e){}
+  }
+  document.addEventListener('click',function(e){
+    var b=e.target&&e.target.closest?e.target.closest('#viewData [data-tab]'):null;
+    if(!b)return;
+    setTimeout(function(){
+      if(typeof activeTab!=='undefined' && activeTab==='recipes') activeTab='foods';
+      syncDataTabsV106();
+      try{window.renderDataView();}catch(err){}
+    },0);
+  },true);
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(function(){syncDataTabsV106();try{window.renderDataView();}catch(e){}},0);});
+  setTimeout(function(){syncDataTabsV106();try{window.renderDataView();}catch(e){}},300);
+  window.axeCookV106Debug=function(){return {version:'v106-data-recipe-merged-into-foods',activeTab:(typeof activeTab!=='undefined'?activeTab:null),recipeTabHidden:!document.querySelector('#viewData [data-tab="recipes"]')};};
+})();
+</script>
 </body>
 </html>
 
