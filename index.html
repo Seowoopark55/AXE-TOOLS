@@ -6587,131 +6587,170 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
 })();
 </script>
 
-
-<style id="axeCookV75ProductionDetailTuning">
-/* AXE COOK v75: 제작도구 중심 디테일 정리 */
-#viewHome .purchase-panel>.panel-title{
-  display:flex!important;
-  align-items:center!important;
+<style id="axeCookV76DetailPolishStyle">
+/* AXE COOK v76: 제작 중심 디테일 정리 */
+#viewHome .purchase-panel .panel-title{
   justify-content:center!important;
-  gap:8px!important;
-  text-align:center!important;
-  margin-bottom:10px!important;
+  position:relative!important;
+  padding-left:0!important;
 }
-#viewHome .purchase-panel>.panel-title::before{
+#viewHome .purchase-panel .panel-title::before{
+  content:'▱';
   position:static!important;
   display:inline-flex!important;
   align-items:center!important;
-  justify-content:center!important;
-  margin:0!important;
-  transform:none!important;
-  content:'▱'!important;
+  margin-right:8px!important;
   color:var(--gold2)!important;
-  font-size:16px!important;
+  font-size:15px!important;
   line-height:1!important;
 }
-#viewHome .purchase-panel>.panel-title small{display:none!important;}
 #viewHome .check-row{
-  grid-template-columns:22px minmax(0,1fr) 82px!important;
-  gap:10px!important;
-  align-items:center!important;
+  grid-template-columns:24px minmax(0,1fr) 92px!important;
+  min-height:78px!important;
+  gap:11px!important;
 }
 #viewHome .check-right{
-  width:82px!important;
-  min-width:82px!important;
-  max-width:82px!important;
-  display:flex!important;
-  flex-direction:column!important;
+  width:92px!important;
+  min-width:92px!important;
+  max-width:92px!important;
   align-items:flex-end!important;
   justify-content:center!important;
-  gap:5px!important;
 }
+#viewHome .check-cost{display:none!important;}
 #viewHome .check-bundle{
-  order:1!important;
-  min-width:64px!important;
-  height:28px!important;
-  padding:0 10px!important;
+  height:34px!important;
+  min-width:78px!important;
+  padding:0 13px!important;
   border-radius:999px!important;
-  border:1px solid rgba(255,181,46,.42)!important;
-  background:linear-gradient(135deg,rgba(255,181,46,.20),rgba(255,181,46,.08))!important;
-  color:#ffd27a!important;
-  font-size:14px!important;
+  font-size:17px!important;
   font-weight:1000!important;
-  box-shadow:0 0 0 1px rgba(0,0,0,.12) inset!important;
+  color:#15100a!important;
+  background:linear-gradient(135deg,#ffcf61,#ffb52e)!important;
+  border-color:rgba(255,181,46,.72)!important;
+  box-shadow:0 8px 20px rgba(255,181,46,.14)!important;
 }
-#viewHome .check-cost{
-  order:2!important;
-  color:#63e6a3!important;
-  font-size:11px!important;
-  font-weight:950!important;
-  opacity:.9!important;
+#viewHome .check-bundle.farm-pack{
+  color:#07120c!important;
+  background:linear-gradient(135deg,#9df2c6,#63e6a3)!important;
+  border-color:rgba(99,230,163,.55)!important;
 }
-#viewHome .check-name{font-size:16px!important;}
-#viewHome .check-sub{font-size:11.2px!important;}
-#viewHome .orders-panel .order-row{
-  grid-template-columns:minmax(0,1fr) 70px 52px!important;
+#viewHome .check-sub{
+  padding-right:0!important;
+}
+#viewHome .order-row{
+  grid-template-columns:minmax(0,1fr) auto!important;
+  gap:12px!important;
+}
+#viewHome .order-row-controls-v21{
+  display:flex!important;
+  align-items:center!important;
+  gap:8px!important;
+}
+#viewHome .order-main-v21{
+  display:grid!important;
+  grid-template-columns:auto 1fr!important;
+  grid-template-areas:'name meta'!important;
+  align-items:center!important;
+  column-gap:10px!important;
+  row-gap:2px!important;
+  min-width:0!important;
+}
+#viewHome .order-name{
+  grid-area:name!important;
+  white-space:nowrap!important;
 }
 #viewHome .order-sub{
-  font-size:12px!important;
+  grid-area:meta!important;
+  margin-top:0!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:6px!important;
+  min-width:0!important;
   color:#aeb7c5!important;
+  font-size:12px!important;
+  line-height:1!important;
   white-space:nowrap!important;
   overflow:hidden!important;
   text-overflow:ellipsis!important;
 }
+#viewHome .order-set-pill-v76{
+  display:inline-flex!important;
+  align-items:center!important;
+  height:24px!important;
+  padding:0 9px!important;
+  border-radius:999px!important;
+  border:1px solid rgba(255,255,255,.09)!important;
+  background:rgba(255,255,255,.045)!important;
+  color:#d7dde8!important;
+  font-size:11.5px!important;
+  font-weight:950!important;
+  white-space:nowrap!important;
+}
+#viewHome .order-total-text-v76{
+  color:#8892a1!important;
+  font-size:11.5px!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+}
 @media(max-width:760px){
-  #viewHome .check-row{grid-template-columns:22px minmax(0,1fr) 76px!important;}
-  #viewHome .check-right{width:76px!important;min-width:76px!important;max-width:76px!important;}
-  #viewHome .check-bundle{min-width:58px!important;font-size:13px!important;}
+  #viewHome .order-main-v21{grid-template-columns:1fr!important;grid-template-areas:'name' 'meta'!important;align-items:start!important;gap:4px!important;}
+  #viewHome .check-row{grid-template-columns:22px minmax(0,1fr) 82px!important;}
+  #viewHome .check-right{width:82px!important;min-width:82px!important;max-width:82px!important;}
+  #viewHome .check-bundle{min-width:70px!important;font-size:15px!important;}
 }
 </style>
-<script id="axeCookV75ProductionDetailScript">
+<script id="axeCookV76ProductionDetailScript">
 (function(){
-  function safeV75(v){try{return h(v);}catch(e){return String(v??'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}}
-  function textV75(v){try{return text(v);}catch(e){return v==null?'':String(v);}}
-  function numV75(v,d){try{return num(v,d);}catch(e){var n=Number(v);return Number.isFinite(n)?n:(d||0);}}
-  function renderOrdersV75(){
-    var count=document.getElementById('orderCount'); if(count) count.textContent=orders.length+'개';
+  function safe(v){return h(v==null?'':v);}
+  function orderMetaV76(o){
+    var f=getFood(o.name);
+    var setQty=getSetQty(f);
+    var total=num(o.sets,0)*setQty;
+    return '<span class="order-set-pill-v76">1세트 '+safe(setQty)+'개 구성</span><span class="order-total-text-v76">총 '+safe(total)+'개 제작</span>';
+  }
+  function renderOrdersV76(){
+    var count=document.getElementById('orderCount'); if(count)count.textContent=orders.length+'개';
     var box=document.getElementById('orderList'); if(!box)return;
     if(!orders.length){box.innerHTML='<div class="empty">만들 음식을 추가하세요.</div>';return;}
     box.innerHTML=orders.map(function(o){
-      var f=getFood(o.name); var setQty=getSetQty(f); var total=o.sets*setQty;
-      return '<div class="order-row"><div class="order-main-v21"><div class="order-name">'+safeV75(o.name)+'</div><div class="order-sub">1세트 '+setQty+'개 · 총 제작 '+total+'개</div></div><div class="order-row-controls-v21"><input class="num" type="number" min="1" value="'+o.sets+'" data-set="'+safeV75(o.name)+'"><button class="btn bad" data-del="'+safeV75(o.name)+'">삭제</button></div></div>';
+      return '<div class="order-row"><div class="order-main-v21"><div class="order-name">'+safe(o.name)+'</div><div class="order-sub">'+orderMetaV76(o)+'</div></div><div class="order-row-controls-v21"><input class="num" type="number" min="1" value="'+safe(o.sets)+'" data-set="'+safe(o.name)+'"><button class="btn bad" data-del="'+safe(o.name)+'">삭제</button></div></div>';
     }).join('');
     box.querySelectorAll('[data-set]').forEach(function(i){i.addEventListener('change',function(){updateSets(i.dataset.set,i.value);});});
     box.querySelectorAll('[data-del]').forEach(function(b){b.addEventListener('click',function(){removeOrder(b.dataset.del);});});
   }
-  function renderResultsOnlyV75(){
+  function renderPurchaseRowsV76(r){
+    var purchase=document.getElementById('purchaseList'); if(!purchase)return;
+    var rows=[].concat(r.purchases.map(function(p){return Object.assign({},p,{type:'buy'});}),r.farmRows.map(function(x){return {name:x.name,qty:x.qty,bundleQty:0,bundlePrice:0,bundles:'채집',cost:0,where:'농장',type:'farm'};}));
+    if(!rows.length){purchase.innerHTML='<div class="axe-empty-message-v61">필요한 구매 재료가 없습니다.</div>';return;}
+    purchase.innerHTML=rows.map(function(p){
+      var key=checkKey(p.type+'_'+p.name); var done=checks[key]; var isFarm=p.type==='farm';
+      var buyQty=isFarm?0:(num(p.bundles,0)*num(p.bundleQty,0));
+      var remain=isFarm?0:Math.max(0,buyQty-num(p.qty,0));
+      var sub=isFarm?'채집 · 필요 '+safe(p.qty)+'개':safe(p.where)+' · 필요 '+safe(p.qty)+'개 · 구매 '+safe(buyQty)+'개 · '+safe(remain)+'개 남음';
+      var bundleLabel=isFarm?'채집':safe(p.bundles)+'묶음';
+      return '<label class="check-row '+(done?'done':'')+' '+(isFarm?'farm-row':'')+'"><input type="checkbox" '+(done?'checked':'')+' data-check="'+safe(key)+'"><div><div class="check-name">'+safe(p.name)+(isFarm?'<span class="mini-badge farm-badge">농장</span>':'')+'</div><div class="check-sub">'+sub+'</div></div><div class="check-right"><span class="check-bundle '+(isFarm?'farm-pack':'')+'">'+bundleLabel+'</span></div></label>';
+    }).join('');
+    purchase.querySelectorAll('[data-check]').forEach(function(i){i.addEventListener('change',function(){checks[i.dataset.check]=i.checked;saveState();i.closest('.check-row').classList.toggle('done',i.checked);});});
+  }
+  function renderResultsOnlyV76(){
     var r=calc();
     var summary=document.getElementById('summaryGrid');
-    if(summary){summary.innerHTML='<div class="summary primary"><div class="summary-label">총 세트</div><div class="summary-value gold">'+r.totalSets+'</div></div><div class="summary"><div class="summary-label">인벤 예상</div><div class="summary-value">'+safeV75(invText(r.totalSets))+'</div></div><div class="summary"><div class="summary-label">구매 원가</div><div class="summary-value ok">'+r.totalCost.toLocaleString()+'</div></div><div class="summary"><div class="summary-label">예상 수익</div><div class="summary-value '+(r.profit>=0?'gold':'bad')+'">'+r.profit.toLocaleString()+'</div></div>';}
+    if(summary){summary.innerHTML='<div class="summary primary"><div class="summary-label">총 세트</div><div class="summary-value gold">'+r.totalSets+'</div></div><div class="summary"><div class="summary-label">인벤 예상</div><div class="summary-value">'+safe(invText(r.totalSets))+'</div></div><div class="summary"><div class="summary-label">구매 원가</div><div class="summary-value ok">'+r.totalCost.toLocaleString()+'</div></div><div class="summary"><div class="summary-label">예상 수익</div><div class="summary-value '+(r.profit>=0?'gold':'bad')+'">'+r.profit.toLocaleString()+'</div></div>';}
     var warning=document.getElementById('warningBox');
-    if(warning){warning.innerHTML=r.unknownRows.length?'<div class="warning">가격 또는 획득처가 없는 재료: '+r.unknownRows.map(function(x){return safeV75(x.name)+' '+x.qty+'개';}).join(', ')+'</div>':'';}
-    if(typeof renderRecipePanelV64==='function')renderRecipePanelV64(r);else if(typeof renderWorkRecipes==='function')renderWorkRecipes();
-    var purchase=document.getElementById('purchaseList');
-    var rows=[].concat(r.purchases.map(function(p){return Object.assign({},p,{type:'buy'});}),r.farmRows.map(function(x){return {name:x.name,qty:x.qty,bundleQty:0,bundlePrice:0,bundles:'채집',cost:0,where:'농장',type:'farm'};}));
-    if(purchase){
-      if(!rows.length) purchase.innerHTML='<div class="axe-empty-message-v61">필요한 구매 재료가 없습니다.</div>';
-      else purchase.innerHTML=rows.map(function(p){
-        var key=checkKey(p.type+'_'+p.name); var done=checks[key]; var isFarm=p.type==='farm';
-        var remain=(!isFarm)?Math.max(0,(p.bundles*p.bundleQty)-p.qty):0;
-        var sub=isFarm?'채집 · 필요 '+p.qty+'개':safeV75(p.where)+' · 필요 '+p.qty+'개 · 구매 '+(p.bundles*p.bundleQty)+'개 · '+remain+'개 남음';
-        var bundleText=isFarm?'채집':p.bundles+'묶음';
-        var costText=isFarm?'':'<span class="check-cost">'+numV75(p.cost,0).toLocaleString()+'원</span>';
-        return '<label class="check-row '+(done?'done':'')+' '+(isFarm?'farm-row':'')+'"><input type="checkbox" '+(done?'checked':'')+' data-check="'+safeV75(key)+'"><div><div class="check-name">'+safeV75(p.name)+(isFarm?'<span class="mini-badge farm-badge">농장</span>':'')+'</div><div class="check-sub">'+sub+'</div></div><div class="check-right"><span class="check-bundle '+(isFarm?'farm-pack':'')+'">'+bundleText+'</span>'+costText+'</div></label>';
-      }).join('');
-      purchase.querySelectorAll('[data-check]').forEach(function(i){i.addEventListener('change',function(){checks[i.dataset.check]=i.checked;saveState();i.closest('.check-row').classList.toggle('done',i.checked);});});
-    }
+    if(warning){warning.innerHTML=r.unknownRows.length?'<div class="warning">가격 또는 획득처가 없는 재료: '+r.unknownRows.map(function(x){return safe(x.name)+' '+x.qty+'개';}).join(', ')+'</div>':'';}
+    try{if(typeof renderRecipePanelV64==='function')renderRecipePanelV64(r);else if(window.renderWorkRecipes)window.renderWorkRecipes();}catch(e){}
+    renderPurchaseRowsV76(r);
     var farmCount=document.getElementById('farmCount'); if(farmCount) farmCount.textContent=r.farmRows.length;
     var processCount=document.getElementById('processCount'); if(processCount) processCount.textContent=r.proc.length;
     var fishCount=document.getElementById('fishCount'); if(fishCount) fishCount.textContent=r.fishNeed.length;
   }
-  function installV75(){
-    window.renderOrders=renderOrdersV75; try{renderOrders=renderOrdersV75;}catch(e){}
-    window.renderResultsOnly=renderResultsOnlyV75; try{renderResultsOnly=renderResultsOnlyV75;}catch(e){}
-    setTimeout(function(){try{renderOrdersV75();renderResultsOnlyV75();}catch(e){console.warn('[AXE COOK v75]',e);}},0);
+  function installV76(){
+    window.renderOrders=renderOrdersV76; try{renderOrders=renderOrdersV76;}catch(e){}
+    window.renderResultsOnly=renderResultsOnlyV76; try{renderResultsOnly=renderResultsOnlyV76;}catch(e){}
+    setTimeout(function(){try{renderOrdersV76();renderResultsOnlyV76();}catch(e){console.warn('[AXE COOK v76]',e);}},0);
   }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',installV75);else installV75();
-  window.axeCookV75Debug=function(){return {version:'v75-production-detail-tuning',orderSaleHidden:true,bundlePriority:true};};
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',installV76);else installV76();
+  window.axeCookV76Debug=function(){return {version:'v76-production-detail-polish',purchaseCostHidden:true,orderMeta:'set composition + total production'};};
 })();
 </script>
 
