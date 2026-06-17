@@ -2778,414 +2778,108 @@ window.axeCookV6Debug = window.axeCookV11Debug;
 </script>
 
 
-<style id="axeCookV41ViewEditStableStyle">
-/* AXE COOK v41: 설정 목록 안정화 - 보기/수정 분리, 레시피 상세 UI 복구 */
-.settings-row-v36{
-  display:grid!important;
-  grid-template-columns:minmax(0,1fr) auto!important;
-  gap:8px!important;
-  align-items:center!important;
-}
-.settings-row-main-v36{min-width:0!important;}
-.settings-row-meta-v36{display:none!important;}
-.settings-row-actions-v36{display:flex!important;gap:6px!important;align-items:center!important;justify-content:flex-end!important;}
-.settings-row-actions-v36 .btn{min-width:44px!important;}
-.setting-view-detail-v41,
-.recipe-group-detail-v39{
-  grid-column:1/-1!important;
-  width:100%!important;
-  margin-top:8px!important;
-  padding-top:8px!important;
-  border-top:1px solid rgba(255,255,255,.075)!important;
-}
-.setting-view-detail-v41{
-  display:grid!important;
-  grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:6px 10px!important;
-}
-.setting-view-line-v41{
-  min-width:0!important;
-  display:grid!important;
-  grid-template-columns:74px minmax(0,1fr)!important;
-  gap:7px!important;
-  align-items:start!important;
-  font-size:12px!important;
-  line-height:1.35!important;
-}
-.setting-view-label-v41{color:var(--muted)!important;font-weight:1000!important;white-space:nowrap!important;}
-.setting-view-value-v41{color:#d8dde6!important;font-weight:850!important;word-break:keep-all!important;overflow-wrap:anywhere!important;}
-.setting-view-value-v41.is-empty{color:#68717f!important;}
-.recipe-group-detail-v39{
-  display:flex!important;
-  flex-wrap:wrap!important;
-  gap:6px!important;
-  align-items:flex-start!important;
-}
-.recipe-group-line-v39{
-  display:inline-flex!important;
-  align-items:center!important;
-  justify-content:space-between!important;
-  gap:8px!important;
-  min-width:88px!important;
-  max-width:100%!important;
-  border:1px solid rgba(255,255,255,.075)!important;
-  border-radius:10px!important;
-  background:rgba(255,255,255,.028)!important;
-  padding:6px 8px!important;
-  font-size:12px!important;
-  line-height:1.15!important;
-  white-space:nowrap!important;
-}
-.recipe-group-line-v39 span{min-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;}
-.recipe-group-line-v39 b{color:var(--gold2)!important;font-size:12px!important;}
-@media(max-width:760px){
-  .setting-view-detail-v41{grid-template-columns:1fr!important;}
-  .setting-view-line-v41{grid-template-columns:68px minmax(0,1fr)!important;}
-}
+<style id="axeCookV44StableSettingsStyle">
+/* AXE COOK v44: settings root redesign - isolated, stable */
+#settingsRootV44{display:grid;gap:12px;}
+#settingsRootV44 .settings-tabs-v44{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:2px;}
+#settingsRootV44 .settings-tab-v44{height:31px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.035);color:var(--sub);font-size:12px;font-weight:1000;}
+#settingsRootV44 .settings-tab-v44.active{background:linear-gradient(135deg,#ffcf61,#ffb52e);border-color:rgba(255,181,46,.85);color:#17100a;}
+#settingsRootV44 .settings-work-v44{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:start;}
+#settingsRootV44 .settings-box-v44{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:rgba(0,0,0,.18);padding:13px;min-width:0;}
+#settingsRootV44 .settings-box-head-v44{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;}
+#settingsRootV44 .settings-box-title-v44{font-size:16px;font-weight:1000;color:var(--gold2);display:flex;align-items:center;gap:8px;min-width:0;}
+#settingsRootV44 .settings-mode-v44{height:23px;display:inline-flex;align-items:center;border-radius:999px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.035);color:var(--muted);font-size:11px;font-weight:1000;padding:0 8px;white-space:nowrap;}
+#settingsRootV44 .settings-mode-v44.edit{border-color:rgba(255,181,46,.28);background:rgba(255,181,46,.08);color:var(--gold2);}
+#settingsRootV44 .settings-mode-v44.dirty{border-color:rgba(255,111,125,.34);background:rgba(255,111,125,.08);color:#ffc3c8;}
+#settingsRootV44 .settings-form-v44{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;}
+#settingsRootV44 .field-v44{display:grid;gap:5px;min-width:0;}
+#settingsRootV44 .field-v44.full{grid-column:1/-1;}
+#settingsRootV44 .field-v44 label{font-size:11px;color:var(--muted);font-weight:950;}
+#settingsRootV44 .field-v44 input,#settingsRootV44 .field-v44 select,#settingsRootV44 .field-v44 textarea{width:100%;min-height:37px;border-radius:11px;border:1px solid rgba(255,255,255,.11);background:#0e1116;color:var(--text);outline:none;padding:0 10px;font:inherit;font-size:12.5px;font-weight:850;}
+#settingsRootV44 .field-v44 textarea{min-height:76px;padding:9px 10px;resize:vertical;line-height:1.45;}
+#settingsRootV44 .line-editor-v44{grid-column:1/-1;display:grid;gap:7px;}
+#settingsRootV44 .line-row-v44{display:grid;grid-template-columns:minmax(0,1.1fr) 70px minmax(0,.85fr) minmax(0,.85fr) 34px;gap:7px;align-items:center;padding:7px;border:1px solid rgba(255,255,255,.075);border-radius:12px;background:rgba(255,255,255,.025);}
+#settingsRootV44 .line-row-v44 input{height:34px;border-radius:10px;border:1px solid rgba(255,255,255,.11);background:#0e1116;color:var(--text);outline:none;padding:0 9px;font-size:12px;font-weight:850;min-width:0;}
+#settingsRootV44 .settings-actions-v44{display:flex;gap:7px;justify-content:flex-start;margin-top:12px;flex-wrap:wrap;}
+#settingsRootV44 .settings-search-row-v44{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin-bottom:10px;}
+#settingsRootV44 .settings-list-v44{max-height:620px;overflow:auto;border:1px solid rgba(255,255,255,.07);border-radius:13px;background:rgba(0,0,0,.12);}
+#settingsRootV44 .row-v44{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:10px;border-bottom:1px solid rgba(255,255,255,.065);background:rgba(255,255,255,.025);}
+#settingsRootV44 .row-v44:last-child{border-bottom:0;}
+#settingsRootV44 .row-v44:hover{background:rgba(255,181,46,.055);}
+#settingsRootV44 .row-v44.selected{border-color:rgba(255,181,46,.18);background:rgba(255,181,46,.09);}
+#settingsRootV44 .row-title-v44{font-size:14px;font-weight:1000;color:#f4f6fa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#settingsRootV44 .row-actions-v44{display:flex;gap:6px;align-items:center;}
+#settingsRootV44 .detail-v44{grid-column:1/-1;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.075);display:grid;gap:6px;}
+#settingsRootV44 .detail-grid-v44{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;}
+#settingsRootV44 .detail-line-v44{display:grid;grid-template-columns:82px minmax(0,1fr);gap:8px;padding:7px 8px;border:1px solid rgba(255,255,255,.065);border-radius:10px;background:rgba(255,255,255,.025);font-size:12px;line-height:1.35;min-width:0;}
+#settingsRootV44 .detail-label-v44{color:var(--muted);font-weight:1000;white-space:nowrap;}
+#settingsRootV44 .detail-value-v44{color:#d8dde6;font-weight:850;overflow-wrap:anywhere;word-break:keep-all;min-width:0;}
+#settingsRootV44 .detail-value-v44.empty{color:#68717f;}
+#settingsRootV44 .group-lines-v44{display:flex;flex-wrap:wrap;gap:6px;}
+#settingsRootV44 .group-chip-v44{display:inline-flex;align-items:center;gap:7px;max-width:100%;border:1px solid rgba(255,255,255,.075);border-radius:10px;background:rgba(255,255,255,.028);padding:6px 8px;font-size:12px;font-weight:900;color:#d8dde6;}
+#settingsRootV44 .group-chip-v44 span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+#settingsRootV44 .group-chip-v44 b{color:var(--gold2);font-size:12px;}
+#settingsRootV44 .busy-v44{pointer-events:none;opacity:.62;filter:saturate(.8);}
+#settingsRootV44 .empty-v44{border:1px dashed rgba(255,255,255,.14);border-radius:12px;padding:18px;text-align:center;color:var(--muted);font-size:12px;font-weight:850;line-height:1.5;}
+#settingsRootV44 .hidden-v44{display:none!important;}
+@media(max-width:980px){#settingsRootV44 .settings-work-v44{grid-template-columns:1fr;}#settingsRootV44 .settings-list-v44{max-height:420px;}}
+@media(max-width:640px){#settingsRootV44 .settings-form-v44{grid-template-columns:1fr;}#settingsRootV44 .detail-grid-v44{grid-template-columns:1fr;}#settingsRootV44 .line-row-v44{grid-template-columns:1fr 70px 1fr 1fr 34px;}#settingsRootV44 .settings-search-row-v44{grid-template-columns:1fr;}}
 </style>
-
-<script id="axeCookV41ViewEditStableScript">
+<script id="axeCookV44StableSettingsScript">
 (function(){
-  const VERSION_V41='AXE_COOK_v41_VIEW_EDIT_STABLE_HTML_ONLY';
-  let expandedKey='';
-  let lastKind='';
-  let scheduled=false;
-
-  const titleMap={foods:'요리',materials:'재료',recipes:'레시피',processes:'가공',farm:'농장재료',aliases:'별칭',fish:'생선변환'};
+  const VERSION='AXE_COOK_v44_STABLE_SETTINGS_REDESIGN_HTML_ONLY';
+  const cats=[
+    ['foods','요리'],['materials','재료'],['recipes','레시피'],['processes','가공'],['farm','농장재료'],['aliases','별칭'],['fish','생선변환']
+  ];
   const cfg={
-    foods:{rows:()=>DB.foods,title:r=>r['요리명'],meta:r=>`등급 ${r['등급']||'-'} · 1세트 ${r['1세트수량']||'-'} · 판매가 ${r['세트판매가']||'-'}`,id:r=>r['id'],fields:[['ID','id'],['요리명','요리명'],['등급','등급'],['1세트수량','1세트수량'],['세트판매가','세트판매가'],['효과','효과'],['지속시간','지속시간'],['조리시간','조리시간'],['사용여부','사용여부'],['정렬','정렬'],['비고','비고']]},
-    materials:{rows:()=>DB.materials,title:r=>r['재료명'],meta:r=>`${r['구매처']||'-'} · 묶음 ${r['묶음수량']||'-'} · 가격 ${r['묶음가격']||'-'}`,id:r=>r['id'],fields:[['ID','id'],['재료명','재료명'],['구매처','구매처'],['묶음수량','묶음수량'],['묶음가격','묶음가격'],['개당가격','개당가격'],['획득구분','획득구분'],['사용여부','사용여부'],['우선구매','우선구매'],['정렬','정렬'],['비고','비고']]},
-    processes:{rows:()=>DB.processes,title:r=>[r['가공재료명'],r['하위재료명']].filter(Boolean).join(' / '),meta:r=>`필요 ${r['필요수량']||'-'} · 결과 ${r['결과수량']||'-'} · ${r['가공시간']||'-'}`,id:r=>r['id'],fields:[['ID','id'],['가공재료명','가공재료명'],['하위재료명','하위재료명'],['필요수량','필요수량'],['결과수량','결과수량'],['가공시간','가공시간'],['사용여부','사용여부'],['정렬','정렬'],['비고','비고']]},
-    farm:{rows:()=>DB.farm,title:r=>r['재료명'],meta:r=>`${r['획득처']||'농장'} · ${r['사용여부']||'TRUE'}`,id:r=>r['id'],fields:[['ID','id'],['재료명','재료명'],['획득처','획득처'],['사용여부','사용여부'],['정렬','정렬'],['비고','비고']]},
-    aliases:{rows:()=>DB.aliases,title:r=>r['입력명'],meta:r=>`${r['구분']||'재료'} · ${r['사용여부']||'TRUE'}`,id:r=>r['입력명'],fields:[['입력명','입력명'],['표준명','표준명'],['구분','구분'],['사용여부','사용여부'],['비고','비고']]},
-    fish:{rows:()=>DB.fish,title:r=>[r['생선명'],r['결과재료']].filter(Boolean).join(' → '),meta:r=>`투입 ${r['투입수량']||'-'} · 결과 ${r['결과수량']||'-'} · ${r['가공시간']||'-'}`,id:r=>r['id'],fields:[['ID','id'],['생선명','생선명'],['투입수량','투입수량'],['결과재료','결과재료'],['결과수량','결과수량'],['가공시간','가공시간'],['사용여부','사용여부'],['정렬','정렬'],['비고','비고']]}
+    foods:{label:'요리',group:false,rows:()=>DB.foods||[],id:'id',apiId:'food_id',prefix:'cook_',title:r=>r['요리명'],fields:[['food_name','요리명','요리명','text'],['grade','등급','등급','select:맛있는|무난한|역겨운|미확인'],['set_qty','1세트수량','1세트수량','number'],['sale_price','세트판매가','세트판매가','number'],['effect','효과','효과','textarea'],['effect_time','지속시간','지속시간','text'],['cook_time','조리시간','조리시간','text'],['is_active','사용여부','사용여부','select:TRUE|FALSE'],['memo','비고','비고','textarea']],view:[['요리명','요리명'],['등급','등급'],['1세트수량','1세트수량'],['세트판매가','세트판매가'],['효과','효과'],['지속시간','지속시간'],['조리시간','조리시간'],['사용여부','사용여부'],['비고','비고']]},
+    materials:{label:'재료',group:false,rows:()=>DB.materials||[],id:'id',apiId:'material_id',prefix:'mat_',title:r=>r['재료명'],fields:[['material_name','재료명','재료명','text'],['source','구매처','구매처','text'],['bundle_qty','묶음수량','묶음수량','number'],['bundle_price','묶음가격','묶음가격','number'],['unit_price','개당가격','개당가격','number'],['obtain_type','획득구분','획득구분','text'],['is_active','사용여부','사용여부','select:TRUE|FALSE'],['is_primary','우선구매','우선구매','select:TRUE|FALSE'],['memo','비고','비고','textarea']],view:[['재료명','재료명'],['구매처','구매처'],['묶음수량','묶음수량'],['묶음가격','묶음가격'],['개당가격','개당가격'],['획득구분','획득구분'],['사용여부','사용여부'],['우선구매','우선구매'],['비고','비고']]},
+    farm:{label:'농장재료',group:false,rows:()=>DB.farm||[],id:'id',apiId:'farm_id',prefix:'farm_',title:r=>r['재료명'],fields:[['material_name','재료명','재료명','text'],['source','획득처','획득처','text'],['is_active','사용여부','사용여부','select:TRUE|FALSE'],['memo','비고','비고','textarea']],view:[['재료명','재료명'],['획득처','획득처'],['사용여부','사용여부'],['비고','비고']]},
+    aliases:{label:'별칭',group:false,rows:()=>DB.aliases||[],id:'입력명',apiId:'alias_name',prefix:'',title:r=>r['입력명'],fields:[['alias_name','입력명','입력명','text'],['standard_name','표준명','표준명','text'],['alias_type','구분','구분','text'],['is_active','사용여부','사용여부','select:TRUE|FALSE'],['memo','비고','비고','textarea']],view:[['입력명','입력명'],['표준명','표준명'],['구분','구분'],['사용여부','사용여부'],['비고','비고']]},
+    fish:{label:'생선변환',group:false,rows:()=>DB.fish||[],id:'id',apiId:'fish_id',prefix:'fish_',title:r=>r['생선명'],fields:[['fish_name','생선명','생선명','text'],['input_qty','투입수량','투입수량','number'],['result_material_name','결과재료','결과재료','text'],['result_qty','결과수량','결과수량','number'],['process_time','가공시간','가공시간','text'],['is_active','사용여부','사용여부','select:TRUE|FALSE'],['memo','비고','비고','textarea']],view:[['생선명','생선명'],['투입수량','투입수량'],['결과재료','결과재료'],['결과수량','결과수량'],['가공시간','가공시간'],['사용여부','사용여부'],['비고','비고']]},
+    recipes:{label:'레시피',group:true,kind:'recipes',rows:()=>DB.recipes||[],groupKey:'요리명',id:'id',apiId:'recipe_id',prefix:'recipe_',title:g=>g.key,lineName:'재료명',lineQty:'필요수량',lineExtra:'재료구분',lineTime:null,apiMap:{name:'material_name',qty:'required_qty',extra:'material_type'},groupApi:'food_name'},
+    processes:{label:'가공',group:true,kind:'processes',rows:()=>DB.processes||[],groupKey:'가공재료명',id:'id',apiId:'process_id',prefix:'proc_',title:g=>g.key,lineName:'하위재료명',lineQty:'필요수량',lineExtra:'결과수량',lineTime:'가공시간',apiMap:{name:'input_material_name',qty:'required_qty',extra:'result_qty',time:'process_time'},groupApi:'process_material_name'}
   };
-
-  function kind(){return document.querySelector('#settingsTabs .tab.active')?.dataset.manage||'foods';}
-  function s(v){return String(v==null?'':v).trim();}
-  function esc(v){return h(String(v==null?'':v));}
-  function commonRows(k){
-    const c=cfg[k]; if(!c)return[];
-    const q=s(document.getElementById('settingsSearch')?.value).toLowerCase();
-    return (c.rows()||[]).filter(r=>(s(c.title(r))+' '+s(c.meta(r))).toLowerCase().includes(q)).slice(0,300);
-  }
-  function keyOf(k,row,idx){const c=cfg[k];return k+'::'+s(c.id(row)||c.title(row)||idx);}
-  function detailHtml(k,row){
-    const c=cfg[k];
-    const html=c.fields.map(([label,field])=>{const val=s(row[field]);return `<div class="setting-view-line-v41"><span class="setting-view-label-v41">${esc(label)}</span><span class="setting-view-value-v41 ${val?'':'is-empty'}">${esc(val||'-')}</span></div>`;}).join('');
-    return `<div class="setting-view-detail-v41">${html}</div>`;
-  }
-  function normalizeHeader(){
-    const k=kind();
-    const title=document.getElementById('settingsEditorTitle');
-    const newBtn=document.getElementById('settingsNewBtn');
-    if(title)title.textContent=titleMap[k]||'설정';
-    if(newBtn)newBtn.textContent='추가';
-  }
-  function enhanceRecipeRows(){
-    document.querySelectorAll('#settingsList .settings-row-meta-v36').forEach(el=>{el.textContent='';});
-    document.querySelectorAll('#settingsList .settings-row-v36').forEach(row=>{
-      const detail=row.querySelector('.recipe-group-detail-v39');
-      if(detail && detail.parentElement!==row){ row.appendChild(detail); }
-    });
-  }
-  function enhanceCommonRows(){
-    const k=kind();
-    if(k==='recipes'){enhanceRecipeRows();return;}
-    if(k!==lastKind){expandedKey='';lastKind=k;}
-    const rows=commonRows(k);
-    document.querySelectorAll('#settingsList .settings-row-v36').forEach(rowEl=>{
-      rowEl.querySelectorAll('.settings-row-meta-v36').forEach(el=>{el.textContent='';});
-      const edit=rowEl.querySelector('[data-edit-idx]');
-      if(!edit)return;
-      const idx=Number(edit.getAttribute('data-edit-idx'));
-      const row=rows[idx];
-      if(!row)return;
-      const rk=keyOf(k,row,idx);
-      rowEl.dataset.v41Key=rk;
-      let actions=rowEl.querySelector('.settings-row-actions-v36');
-      if(actions && !actions.querySelector('[data-view-v41]')){
-        const btn=document.createElement('button');
-        btn.type='button'; btn.className='btn ghost'; btn.textContent='보기'; btn.setAttribute('data-view-v41','1');
-        actions.insertBefore(btn, actions.firstChild);
-      }
-      rowEl.querySelector('.setting-view-detail-v41')?.remove();
-      if(expandedKey===rk){ rowEl.insertAdjacentHTML('beforeend', detailHtml(k,row)); }
-    });
-  }
-  function schedule(force){
-    if(scheduled&&!force)return;
-    scheduled=true;
-    setTimeout(()=>{scheduled=false;try{normalizeHeader();enhanceCommonRows();}catch(e){console.warn('[AXE COOK v41] enhance failed',e);}}, force?0:35);
-  }
-  document.addEventListener('click',function(e){
-    const view=e.target.closest('[data-view-v41]');
-    if(view){
-      e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
-      const row=view.closest('.settings-row-v36');
-      const rk=row?.dataset.v41Key||'';
-      expandedKey=(expandedKey===rk)?'':rk;
-      schedule(true);
-      return;
-    }
-    if(e.target.closest('#settingsTabs .tab')){expandedKey='';setTimeout(()=>schedule(true),80);return;}
-    if(e.target.closest('#settingsReloadBtn,#settingsNewBtn,[data-edit-idx],[data-redit],[data-rview]')){setTimeout(()=>schedule(true),80);return;}
-  },true);
-  document.addEventListener('input',function(e){if(e.target.closest('#settingsSearch')){expandedKey='';setTimeout(()=>schedule(true),40);}},true);
-  const mo=new MutationObserver(()=>schedule(false));
-  function boot(){
-    const list=document.getElementById('settingsList');
-    if(list)mo.observe(list,{childList:true,subtree:true});
-    schedule(true);
-    window.axeCookV41Debug=()=>({version:VERSION_V41,kind:kind(),expandedKey,htmlOnly:true,gasChangeRequired:false});
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(boot,120));else setTimeout(boot,120);
-})();
-</script>
-
-<style id="axeCookV42SettingsListRebuildStyle">
-/* AXE COOK v42: 설정 목록 보기 안정화 + 가공 그룹 보기 */
-.settings-row-v42{
-  display:grid!important;
-  grid-template-columns:minmax(0,1fr) auto!important;
-  gap:8px!important;
-  align-items:center!important;
-  padding:9px 10px!important;
-  border-bottom:1px solid rgba(255,255,255,.065)!important;
-  background:rgba(255,255,255,.025)!important;
-}
-.settings-row-v42:last-child{border-bottom:0!important;}
-.settings-row-v42:hover{background:rgba(255,181,46,.055)!important;}
-.settings-row-title-v42{font-size:13px!important;font-weight:1000!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;color:#f4f6fa!important;}
-.settings-row-main-v42{min-width:0!important;}
-.settings-row-actions-v42{display:flex!important;gap:6px!important;align-items:center!important;justify-content:flex-end!important;}
-.settings-row-actions-v42 .btn{min-width:44px!important;}
-.setting-view-detail-v42{
-  grid-column:1/-1!important;
-  display:grid!important;
-  grid-template-columns:1fr!important;
-  gap:5px!important;
-  width:100%!important;
-  margin-top:8px!important;
-  padding-top:8px!important;
-  border-top:1px solid rgba(255,255,255,.075)!important;
-}
-.setting-view-line-v42{
-  display:grid!important;
-  grid-template-columns:86px minmax(0,1fr)!important;
-  gap:8px!important;
-  align-items:start!important;
-  min-width:0!important;
-  padding:5px 7px!important;
-  border:1px solid rgba(255,255,255,.065)!important;
-  border-radius:9px!important;
-  background:rgba(255,255,255,.025)!important;
-  font-size:12px!important;
-  line-height:1.35!important;
-}
-.setting-view-label-v42{color:var(--muted)!important;font-weight:1000!important;white-space:nowrap!important;}
-.setting-view-value-v42{color:#d8dde6!important;font-weight:850!important;word-break:keep-all!important;overflow-wrap:anywhere!important;min-width:0!important;}
-.setting-view-value-v42.is-empty{color:#68717f!important;}
-.process-group-lines-v42{display:grid!important;gap:6px!important;width:100%!important;}
-.process-group-line-v42{
-  display:grid!important;
-  grid-template-columns:minmax(0,1fr) auto!important;
-  gap:8px!important;
-  align-items:center!important;
-  padding:7px 8px!important;
-  border:1px solid rgba(255,255,255,.075)!important;
-  border-radius:10px!important;
-  background:rgba(255,255,255,.028)!important;
-}
-.process-group-mat-v42{font-size:12.5px!important;font-weight:1000!important;color:#f4f6fa!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
-.process-group-meta-v42{margin-top:3px!important;font-size:11px!important;font-weight:850!important;color:var(--muted)!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
-.process-group-line-v42 .btn{height:30px!important;min-width:44px!important;}
-.settings-row-v36 .setting-view-detail-v41{display:none!important;}
-@media(max-width:760px){
-  .setting-view-line-v42{grid-template-columns:74px minmax(0,1fr)!important;}
-  .process-group-line-v42{grid-template-columns:1fr!important;}
-  .process-group-line-v42 .btn{justify-self:start!important;}
-}
-</style>
-
-<script id="axeCookV42SettingsListRebuildScript">
-(function(){
-  const VERSION_V42='AXE_COOK_v42_SETTINGS_VIEW_PROCESS_GROUP_HTML_ONLY';
-  let expandedKey='';
-  let rebuilding=false;
-
-  const titleMap={foods:'요리',materials:'재료',recipes:'레시피',processes:'가공',farm:'농장재료',aliases:'별칭',fish:'생선변환'};
-  const viewCfg={
-    foods:{rows:()=>DB.foods,title:r=>r['요리명'],id:r=>r['id'],fields:[['요리명','요리명'],['등급','등급'],['1세트수량','1세트수량'],['세트판매가','세트판매가'],['효과','효과'],['지속시간','지속시간'],['조리시간','조리시간'],['사용여부','사용여부'],['비고','비고']]},
-    materials:{rows:()=>DB.materials,title:r=>r['재료명'],id:r=>r['id'],fields:[['재료명','재료명'],['구매처','구매처'],['묶음수량','묶음수량'],['묶음가격','묶음가격'],['개당가격','개당가격'],['획득구분','획득구분'],['사용여부','사용여부'],['우선구매','우선구매'],['비고','비고']]},
-    farm:{rows:()=>DB.farm,title:r=>r['재료명'],id:r=>r['id'],fields:[['재료명','재료명'],['획득처','획득처'],['사용여부','사용여부'],['비고','비고']]},
-    aliases:{rows:()=>DB.aliases,title:r=>r['입력명'],id:r=>r['입력명'],fields:[['입력명','입력명'],['표준명','표준명'],['구분','구분'],['사용여부','사용여부'],['비고','비고']]},
-    fish:{rows:()=>DB.fish,title:r=>r['생선명'],id:r=>r['id'],fields:[['생선명','생선명'],['투입수량','투입수량'],['결과재료','결과재료'],['결과수량','결과수량'],['가공시간','가공시간'],['사용여부','사용여부'],['비고','비고']]}
-  };
-  const apiFieldMap={
-    foods:{id:'food_id','요리명':'food_name','등급':'grade','1세트수량':'set_qty','세트판매가':'sale_price','효과':'effect','지속시간':'effect_time','조리시간':'cook_time','사용여부':'is_active','정렬':'sort_order','비고':'memo'},
-    materials:{id:'material_id','재료명':'material_name','구매처':'source','묶음수량':'bundle_qty','묶음가격':'bundle_price','개당가격':'unit_price','획득구분':'obtain_type','사용여부':'is_active','우선구매':'is_primary','정렬':'sort_order','비고':'memo'},
-    processes:{id:'process_id','가공재료명':'process_material_name','하위재료명':'input_material_name','필요수량':'required_qty','결과수량':'result_qty','가공시간':'process_time','사용여부':'is_active','정렬':'sort_order','비고':'memo'},
-    farm:{id:'farm_id','재료명':'material_name','획득처':'source','사용여부':'is_active','정렬':'sort_order','비고':'memo'},
-    aliases:{'입력명':'alias_name','표준명':'standard_name','구분':'alias_type','사용여부':'is_active','비고':'memo'},
-    fish:{id:'fish_id','생선명':'fish_name','투입수량':'input_qty','결과재료':'result_material_name','결과수량':'result_qty','가공시간':'process_time','사용여부':'is_active','정렬':'sort_order','비고':'memo'}
-  };
-  function k(){return document.querySelector('#settingsTabs .tab.active')?.dataset.manage||'foods';}
-  function s(v){return String(v==null?'':v).trim();}
-  function esc(v){return h(String(v==null?'':v));}
-  function searchText(){return s(document.getElementById('settingsSearch')?.value).toLowerCase();}
-  function setHeader(){const kind=k();const title=document.getElementById('settingsEditorTitle');const newBtn=document.getElementById('settingsNewBtn');if(title)title.textContent=titleMap[kind]||'설정';if(newBtn)newBtn.textContent='추가';}
-  function detailHtml(kind,row){
-    const c=viewCfg[kind];
-    return `<div class="setting-view-detail-v42">${c.fields.map(([label,field])=>{const val=s(row[field]);return `<div class="setting-view-line-v42"><span class="setting-view-label-v42">${esc(label)}</span><span class="setting-view-value-v42 ${val?'':'is-empty'}">${esc(val||'-')}</span></div>`;}).join('')}</div>`;
-  }
-  function fillForm(kind,row){
-    const map=apiFieldMap[kind]||{};
-    Object.keys(map).forEach(src=>{
-      const api=map[src];
-      const el=document.querySelector(`#settingsForm [data-field="${CSS.escape(api)}"]`);
-      if(el)el.value=s(row[src]);
-    });
-    const title=document.getElementById('settingsEditorTitle');
-    if(title)title.textContent=(titleMap[kind]||'설정')+' · 수정중';
-    document.querySelector('.setting-editor-v36')?.classList.add('is-editing');
-    document.querySelector('.setting-editor-v36')?.classList.remove('is-dirty');
-    toast('수정할 항목을 불러왔습니다');
-  }
-  function normalRows(kind){
-    const c=viewCfg[kind]; const q=searchText();
-    return (c.rows()||[]).filter(r=>(s(c.title(r))+' '+c.fields.map(f=>s(r[f[1]])).join(' ')).toLowerCase().includes(q)).slice(0,300);
-  }
-  function rebuildNormal(kind){
-    const list=document.getElementById('settingsList'); if(!list||!viewCfg[kind])return false;
-    const rows=normalRows(kind);
-    if(!rows.length){list.innerHTML='<div class="empty">표시할 항목이 없습니다.</div>';return true;}
-    list.innerHTML=rows.map((r,i)=>{
-      const key=kind+'::'+s(viewCfg[kind].id(r)||viewCfg[kind].title(r)||i);
-      return `<div class="settings-row-v42" data-v42-key="${esc(key)}"><div class="settings-row-main-v42"><div class="settings-row-title-v42">${esc(viewCfg[kind].title(r)||'-')}</div></div><div class="settings-row-actions-v42"><button class="btn ghost" data-v42-view="${i}" type="button">보기</button><button class="btn ghost" data-v42-edit="${i}" type="button">수정</button></div>${expandedKey===key?detailHtml(kind,r):''}</div>`;
-    }).join('');
-    list.querySelectorAll('[data-v42-view]').forEach(btn=>btn.addEventListener('click',()=>{const row=rows[Number(btn.dataset.v42View)];const key=kind+'::'+s(viewCfg[kind].id(row)||viewCfg[kind].title(row)||btn.dataset.v42View);expandedKey=expandedKey===key?'':key;rebuildNormal(kind);}));
-    list.querySelectorAll('[data-v42-edit]').forEach(btn=>btn.addEventListener('click',()=>fillForm(kind,rows[Number(btn.dataset.v42Edit)])));
-    return true;
-  }
-  function processGroups(){
-    const q=searchText(); const map=new Map();
-    (DB.processes||[]).forEach(r=>{
-      const name=s(r['가공재료명'])||'-';
-      const hay=[name,r['하위재료명'],r['필요수량'],r['결과수량'],r['가공시간'],r['비고']].map(s).join(' ').toLowerCase();
-      if(q&&!hay.includes(q))return;
-      if(!map.has(name))map.set(name,[]);
-      map.get(name).push(r);
-    });
-    return [...map.entries()].map(([name,rows])=>({name,rows})).sort((a,b)=>a.name.localeCompare(b.name,'ko'));
-  }
-  function rebuildProcesses(){
-    const list=document.getElementById('settingsList'); if(!list)return false;
-    const groups=processGroups();
-    if(!groups.length){list.innerHTML='<div class="empty">표시할 항목이 없습니다.</div>';return true;}
-    list.innerHTML=groups.map((g,i)=>{
-      const key='processes::'+g.name;
-      const detail=expandedKey===key?`<div class="setting-view-detail-v42"><div class="process-group-lines-v42">${g.rows.map((r,j)=>`<div class="process-group-line-v42"><div><div class="process-group-mat-v42">${esc(r['하위재료명']||'-')}</div><div class="process-group-meta-v42">필요 ${esc(r['필요수량']||'-')} · 결과 ${esc(r['결과수량']||'-')} · ${esc(r['가공시간']||'-')}</div></div><button class="btn ghost" data-v42-process-edit="${i}:${j}" type="button">수정</button></div>`).join('')}</div></div>`:'';
-      return `<div class="settings-row-v42" data-v42-key="${esc(key)}"><div class="settings-row-main-v42"><div class="settings-row-title-v42">${esc(g.name)}</div></div><div class="settings-row-actions-v42"><button class="btn ghost" data-v42-process-view="${i}" type="button">보기</button><button class="btn ghost" data-v42-process-edit="${i}:0" type="button">수정</button></div>${detail}</div>`;
-    }).join('');
-    list.querySelectorAll('[data-v42-process-view]').forEach(btn=>btn.addEventListener('click',()=>{const g=groups[Number(btn.dataset.v42ProcessView)];const key='processes::'+g.name;expandedKey=expandedKey===key?'':key;rebuildProcesses();}));
-    list.querySelectorAll('[data-v42-process-edit]').forEach(btn=>btn.addEventListener('click',()=>{const [gi,ri]=String(btn.dataset.v42ProcessEdit).split(':').map(Number);const row=groups[gi]?.rows[ri];if(row)fillForm('processes',row);}));
-    return true;
-  }
-  function run(){
-    if(rebuilding)return;
-    rebuilding=true;
-    try{
-      setHeader();
-      const kind=k();
-      if(kind==='recipes'){rebuilding=false;return;}
-      if(kind==='processes')rebuildProcesses();
-      else rebuildNormal(kind);
-    }catch(e){console.warn('[AXE COOK v42] rebuild failed',e);}finally{rebuilding=false;}
-  }
-  document.addEventListener('click',function(e){
-    if(e.target.closest('#settingsTabs .tab')){expandedKey='';setTimeout(run,100);return;}
-    if(e.target.closest('#settingsReloadBtn,#settingsNewBtn')){expandedKey='';setTimeout(run,150);return;}
-  },true);
-  document.addEventListener('input',function(e){if(e.target.closest('#settingsSearch')){expandedKey='';setTimeout(run,50);}},true);
-  const mo=new MutationObserver(()=>{if(!rebuilding&&k()!=='recipes')setTimeout(run,20);});
-  function boot(){const list=document.getElementById('settingsList');if(list)mo.observe(list,{childList:true,subtree:false});run();window.axeCookV42Debug=()=>({version:VERSION_V42,kind:k(),expandedKey,htmlOnly:true,gasChangeRequired:false});}
+  let current='foods', mode='new', dirty=false, selected=null, expanded='', busy=false;
+  const state={recipes:{key:'',rows:[]},processes:{key:'',rows:[]}};
+  const qs=(s,r=document)=>r.querySelector(s), qsa=(s,r=document)=>Array.from(r.querySelectorAll(s));
+  const esc=v=>h(String(v==null?'':v));
+  const txt=v=>String(v==null?'':v).trim();
+  function api(action,params){const url=String(AXE_COOK_SHEET_API_URL||'').trim();return new Promise((resolve,reject)=>{if(!url||!/^https?:\/\//.test(url)){reject(new Error('Apps Script URL이 없습니다.'));return;}const cb='axeCookV44Cb_'+Date.now()+'_'+Math.random().toString(36).slice(2);const script=document.createElement('script');const query=new URLSearchParams(Object.assign({},params,{action,callback:cb,t:Date.now()}));const sep=url.includes('?')?'&':'?';const timer=setTimeout(()=>{clean();reject(new Error('요청 시간이 초과되었습니다.'));},16000);function clean(){clearTimeout(timer);try{delete window[cb];}catch(e){window[cb]=undefined;}if(script.parentNode)script.parentNode.removeChild(script);}window[cb]=p=>{clean();resolve(p);};script.onerror=()=>{clean();reject(new Error('Apps Script 연결 실패'));};script.src=url+sep+query.toString();document.head.appendChild(script);});}
+  function setBusy(v,msg){busy=!!v;qs('#settingsRootV44')?.classList.toggle('busy-v44',busy);if(msg)toast(msg);}
+  function maxNumFromRows(rows,field){let m=0;(rows||[]).forEach(r=>{const n=Number(String(r[field]||'').match(/(\d+)$/)?.[1]||String(r[field]||'').replace(/,/g,''));if(Number.isFinite(n))m=Math.max(m,n);});return m;}
+  function nextId(c){if(c.prefix==='')return '';return c.prefix+String(maxNumFromRows(c.rows(),c.id)+1).padStart(4,'0');}
+  function maxSort(rows){let m=0;(rows||[]).forEach(r=>{const n=Number(String(r['정렬']||'').replace(/,/g,''));if(Number.isFinite(n))m=Math.max(m,n);});return m+1;}
+  function toApiRecord(k,row){const c=cfg[k], out={}; if(c.apiId)out[c.apiId]=row.__id||''; (c.fields||[]).forEach(([api,ko])=>out[api]=row[api]??row[ko]??''); if(out.is_active==null||out.is_active==='')out.is_active='TRUE'; if(k!=='aliases')out.sort_order=row.sort_order||String(maxSort(c.rows())); return out;}
+  function fromDbRecord(k,r){const c=cfg[k], o={__id:txt(r[c.id])};(c.fields||[]).forEach(([api,ko])=>o[api]=txt(r[ko]));o.sort_order=txt(r['정렬'])||String(maxSort(c.rows()));if(!o.is_active)o.is_active='TRUE';return o;}
+  function groups(k){const c=cfg[k], map=new Map();(c.rows()||[]).forEach(r=>{const key=txt(r[c.groupKey]);if(!key)return;if(!map.has(key))map.set(key,[]);map.get(key).push(r);});return [...map.entries()].sort((a,b)=>a[0].localeCompare(b[0],'ko')).map(([key,rows])=>({key,rows:rows.slice().sort((a,b)=>Number(a['정렬']||0)-Number(b['정렬']||0))}));}
+  function filteredList(){const q=txt(qs('#settingsSearchV44')?.value).toLowerCase();if(cfg[current].group){return groups(current).filter(g=>(g.key+' '+g.rows.map(r=>txt(r[cfg[current].lineName])).join(' ')).toLowerCase().includes(q));}return (cfg[current].rows()||[]).filter(r=>txt(cfg[current].title(r)).toLowerCase().includes(q)).sort((a,b)=>txt(cfg[current].title(a)).localeCompare(txt(cfg[current].title(b)),'ko'));}
+  function mount(){const view=qs('#viewSettings');if(!view)return;view.innerHTML=`<section class="panel page-panel settings-page-panel"><div id="settingsRootV44"><div class="page-head-v23"><div><div class="panel-title no-margin">설정 <small>관리 기능 안정화 영역</small></div><div class="page-desc-v23">요리·재료·레시피·가공·판매 관련 데이터를 보기/수정으로 분리해 관리합니다.</div></div><span class="pill ok">관리자 모드 예정</span></div><div class="settings-tabs-v44">${cats.map(([k,l])=>`<button class="settings-tab-v44 ${k===current?'active':''}" data-cat="${k}" type="button">${l}</button>`).join('')}</div><div class="settings-work-v44"><div class="settings-box-v44"><div class="settings-box-head-v44"><div class="settings-box-title-v44"><span id="editorTitleV44"></span><span id="modeBadgeV44" class="settings-mode-v44"></span></div><button class="btn ghost" id="newBtnV44" type="button">추가</button></div><div id="formV44" class="settings-form-v44"></div><div class="settings-actions-v44"><button class="btn primary" id="saveBtnV44" type="button">시트 저장</button><button class="btn bad" id="disableBtnV44" type="button">미사용 처리</button></div></div><div class="settings-box-v44"><div class="settings-search-row-v44"><input id="settingsSearchV44" class="input" placeholder="현재 관리 항목 검색" autocomplete="off"><button class="btn ghost" id="reloadBtnV44" type="button">시트 새로고침</button></div><div id="listV44" class="settings-list-v44"></div></div></div></div></section>`;bind();renderAll();}
+  function setMode(m,d=false){mode=m;dirty=d;const b=qs('#modeBadgeV44');if(b){b.className='settings-mode-v44 '+(dirty?'dirty':mode==='edit'?'edit':'');b.textContent=dirty?'미저장':mode==='edit'?'수정중':'새 항목';}}
+  function renderForm(){const c=cfg[current], title=qs('#editorTitleV44'), form=qs('#formV44');if(title)title.textContent=c.label;if(!form)return;setMode(mode,dirty);if(c.group){renderGroupForm();return;}if(!selected)selected=blankRecord(current);form.innerHTML=(c.fields||[]).map(([api,ko,label,type])=>fieldHtml(api,label,type,selected[api]||'')).join('');qsa('[data-v44-field]',form).forEach(el=>el.addEventListener('input',()=>{selected[el.dataset.v44Field]=el.value;setMode(mode,true);}));}
+  function fieldHtml(api,label,type,val){const full=(type==='textarea'||api==='effect'||api==='memo')?' full':'';if(String(type).startsWith('select:')){const opts=type.slice(7).split('|');return `<div class="field-v44${full}"><label>${esc(label)}</label><select data-v44-field="${esc(api)}">${opts.map(o=>`<option value="${esc(o)}" ${txt(val)===o?'selected':''}>${esc(o)}</option>`).join('')}</select></div>`;}if(type==='textarea')return `<div class="field-v44 full"><label>${esc(label)}</label><textarea data-v44-field="${esc(api)}">${esc(val)}</textarea></div>`;return `<div class="field-v44${full}"><label>${esc(label)}</label><input data-v44-field="${esc(api)}" type="${type==='number'?'number':'text'}" value="${esc(val)}"></div>`;}
+  function blankRecord(k){const c=cfg[k], o={__id:'',sort_order:String(maxSort(c.rows()))};(c.fields||[]).forEach(([api])=>o[api]='');if(o.is_active!==undefined||c.fields.some(f=>f[0]==='is_active'))o.is_active='TRUE';if(o.is_primary!==undefined||c.fields.some(f=>f[0]==='is_primary'))o.is_primary='TRUE';return o;}
+  function renderGroupForm(){const c=cfg[current], form=qs('#formV44'), st=state[current];if(!st.rows.length)st.rows=[blankLine(current)];form.innerHTML=`<div class="field-v44 full"><label>${current==='recipes'?'요리명':'가공재료명'}</label><input id="groupKeyV44" value="${esc(st.key)}" placeholder="${current==='recipes'?'예: 가지볶음':'예: 튀김옷'}"></div><div class="line-editor-v44"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><label style="font-size:11px;color:var(--muted);font-weight:950">구성 재료</label><button class="btn ghost" id="addLineV44" type="button">재료 추가</button></div><div id="lineRowsV44"></div></div>`;renderLineRows();qs('#groupKeyV44')?.addEventListener('input',e=>{st.key=e.target.value;setMode(mode,true);});qs('#addLineV44')?.addEventListener('click',()=>{st.rows.push(blankLine(current));renderLineRows();setMode(mode,true);});}
+  function blankLine(k){return {__id:'',name:'',qty:'',extra:'',time:'',memo:''};}
+  function dbToLine(k,r){const c=cfg[k];return {__id:txt(r[c.id]),name:txt(r[c.lineName]),qty:txt(r[c.lineQty]),extra:c.lineExtra?txt(r[c.lineExtra]):'',time:c.lineTime?txt(r[c.lineTime]):'',memo:txt(r['비고'])};}
+  function renderLineRows(){const c=cfg[current], st=state[current], box=qs('#lineRowsV44');if(!box)return;box.innerHTML=st.rows.map((r,i)=>`<div class="line-row-v44" data-line="${i}"><input data-line-field="name" value="${esc(r.name)}" placeholder="${current==='recipes'?'재료명':'하위재료명'}"><input data-line-field="qty" type="number" value="${esc(r.qty)}" placeholder="수량"><input data-line-field="extra" value="${esc(r.extra)}" placeholder="${current==='recipes'?'구분':'결과수량'}"><input data-line-field="time" value="${esc(r.time)}" placeholder="가공시간" class="${current==='recipes'?'hidden-v44':''}"><button class="btn bad" data-line-del="${i}" type="button">×</button></div>`).join('');qsa('[data-line-field]',box).forEach(el=>el.addEventListener('input',()=>{const i=Number(el.closest('[data-line]').dataset.line);st.rows[i][el.dataset.lineField]=el.value;setMode(mode,true);}));qsa('[data-line-del]',box).forEach(btn=>btn.addEventListener('click',()=>{if(st.rows.length<=1){toast('최소 1개 재료는 필요합니다');return;}st.rows.splice(Number(btn.dataset.lineDel),1);renderLineRows();setMode(mode,true);}));}
+  function renderList(){const box=qs('#listV44');if(!box)return;const list=filteredList();if(!list.length){box.innerHTML='<div class="empty-v44">표시할 항목이 없습니다.</div>';return;}box.innerHTML=list.map((item,i)=>cfg[current].group?groupRowHtml(item,i):singleRowHtml(item,i)).join('');}
+  function singleRowHtml(r,i){const c=cfg[current], key=current+'::'+txt(c.id==='입력명'?r['입력명']:r[c.id]||c.title(r));const detail=expanded===key?detailSingle(r):'';return `<div class="row-v44 ${selected&&txt(selected.__id)===txt(r[c.id])&&mode==='edit'?'selected':''}" data-key="${esc(key)}" data-idx="${i}"><div class="row-title-v44">${esc(c.title(r)||'-')}</div><div class="row-actions-v44"><button class="btn ghost" data-act="view" type="button">보기</button><button class="btn ghost" data-act="edit" type="button">수정</button></div>${detail}</div>`;}
+  function groupRowHtml(g,i){const key=current+'::'+g.key;const detail=expanded===key?detailGroup(g):'';return `<div class="row-v44 ${state[current].key===g.key&&mode==='edit'?'selected':''}" data-key="${esc(key)}" data-idx="${i}"><div class="row-title-v44">${esc(g.key)}</div><div class="row-actions-v44"><button class="btn ghost" data-act="view" type="button">보기</button><button class="btn ghost" data-act="edit" type="button">수정</button></div>${detail}</div>`;}
+  function detailSingle(r){const c=cfg[current];return `<div class="detail-v44"><div class="detail-grid-v44">${c.view.map(([label,field])=>{const v=txt(r[field]);return `<div class="detail-line-v44"><span class="detail-label-v44">${esc(label)}</span><span class="detail-value-v44 ${v?'':'empty'}">${esc(v||'-')}</span></div>`;}).join('')}</div></div>`;}
+  function detailGroup(g){const c=cfg[current];return `<div class="detail-v44"><div class="group-lines-v44">${g.rows.map(r=>`<span class="group-chip-v44"><span>${esc(r[c.lineName]||'-')}</span><b>${esc(r[c.lineQty]||'-')}</b>${c.lineExtra?`<small>${esc(r[c.lineExtra]||'')}</small>`:''}${c.lineTime?`<small>${esc(r[c.lineTime]||'')}</small>`:''}</span>`).join('')}</div></div>`;}
+  function renderAll(){qsa('#settingsRootV44 .settings-tab-v44').forEach(b=>b.classList.toggle('active',b.dataset.cat===current));expanded='';if(cfg[current].group){state[current].key='';state[current].rows=[blankLine(current)];}else selected=blankRecord(current);mode='new';dirty=false;renderForm();renderList();}
+  function bind(){const root=qs('#settingsRootV44');root.addEventListener('click',async e=>{const tab=e.target.closest('[data-cat]');if(tab){current=tab.dataset.cat;renderAll();return;}if(e.target.closest('#newBtnV44')){if(cfg[current].group){state[current].key='';state[current].rows=[blankLine(current)];}else selected=blankRecord(current);mode='new';dirty=false;renderForm();renderList();return;}if(e.target.closest('#reloadBtnV44')){await reload();return;}if(e.target.closest('#saveBtnV44')){await save();return;}if(e.target.closest('#disableBtnV44')){await disable();return;}const act=e.target.closest('[data-act]');if(act){const row=act.closest('[data-idx]'), idx=Number(row.dataset.idx), list=filteredList();if(act.dataset.act==='view'){expanded=expanded===row.dataset.key?'':row.dataset.key;renderList();return;}if(act.dataset.act==='edit'){expanded=row.dataset.key;if(cfg[current].group){const g=list[idx];state[current].key=g.key;state[current].rows=g.rows.map(r=>dbToLine(current,r));}else{selected=fromDbRecord(current,list[idx]);}mode='edit';dirty=false;renderForm();renderList();return;}}});qs('#settingsSearchV44')?.addEventListener('input',()=>{expanded='';renderList();});}
+  async function reload(){try{setBusy(true,'시트 새로고침 중');await loadSheetRawBeforeBoot();initDB();render();mount();toast('시트 새로고침 완료');}catch(e){toast('새로고침 실패: '+e.message);}finally{setBusy(false);}}
+  async function save(){if(busy)return;try{if(cfg[current].group)await saveGroup();else await saveSingle();}catch(e){console.error(e);toast('저장 실패: '+e.message);} }
+  async function saveSingle(){const c=cfg[current];qsa('#formV44 [data-v44-field]').forEach(el=>selected[el.dataset.v44Field]=el.value);if(current==='aliases'&&!txt(selected.alias_name)){toast('입력명을 입력하세요');return;}if(current!=='aliases'&&!txt(selected[c.fields[0][0]])){toast(c.fields[0][2]+'을 입력하세요');return;}const payload=toApiRecord(current,selected);if(!payload[c.apiId])payload[c.apiId]=selected.__id||nextId(c);if(!confirm((mode==='edit'?'수정':'추가')+' 내용을 시트에 저장할까요?'))return;setBusy(true,'시트 저장 중');const res=await api('saveRecord',{kind:current,payload:JSON.stringify(payload)});if(!res||!res.ok)throw new Error(res&&res.error?res.error:'저장 실패');await reloadAfterSave('시트 저장 완료');}
+  async function saveGroup(){const c=cfg[current], st=state[current], key=txt(qs('#groupKeyV44')?.value);if(!key){toast(current==='recipes'?'요리명을 입력하세요':'가공재료명을 입력하세요');return;}const rows=st.rows.map((r,i)=>Object.assign({},r,{name:txt(r.name),qty:txt(r.qty),extra:txt(r.extra),time:txt(r.time),sort_order:String(i+1)})).filter(r=>r.name&&r.qty);if(!rows.length){toast('저장할 재료가 없습니다');return;}if(!confirm((mode==='edit'?'수정':'추가')+' 내용을 시트에 저장할까요?'))return;setBusy(true,'시트 저장 중');const oldIds=new Set();if(mode==='edit'&&st.key){groups(current).find(g=>g.key===st.key)?.rows.forEach(r=>{const id=txt(r[c.id]);if(id)oldIds.add(id);});}const savedIds=new Set();for(const r of rows){const payload={};payload[c.apiId]=r.__id||'';payload[c.groupApi]=key;payload[c.apiMap.name]=r.name;payload[c.apiMap.qty]=r.qty;payload[c.apiMap.extra]=r.extra; if(c.apiMap.time)payload[c.apiMap.time]=r.time; payload.is_active='TRUE';payload.sort_order=r.sort_order;payload.memo=r.memo||'';const res=await api('saveRecord',{kind:current,payload:JSON.stringify(payload)});if(!res||!res.ok)throw new Error(res&&res.error?res.error:'저장 실패');savedIds.add(res.id||payload[c.apiId]);}
+    for(const id of oldIds){if(id&&!savedIds.has(id)){const res=await api('deleteRecord',{kind:current,id});if(!res||!res.ok)throw new Error(res&&res.error?res.error:'기존 항목 미사용 처리 실패');}}
+    await reloadAfterSave('시트 저장 완료');}
+  async function disable(){const c=cfg[current];if(mode!=='edit'){toast('미사용 처리할 항목을 먼저 수정으로 불러오세요');return;}if(!confirm('현재 항목을 미사용 처리할까요?'))return;setBusy(true,'미사용 처리 중');if(c.group){const ids=groups(current).find(g=>g.key===state[current].key)?.rows.map(r=>txt(r[c.id])).filter(Boolean)||[];for(const id of ids){const res=await api('deleteRecord',{kind:current,id});if(!res||!res.ok)throw new Error(res&&res.error?res.error:'미사용 처리 실패');}}else{const id=selected.__id||selected[c.apiId]||selected.alias_name;if(!id)throw new Error('ID가 없습니다.');const res=await api('deleteRecord',{kind:current,id});if(!res||!res.ok)throw new Error(res&&res.error?res.error:'미사용 처리 실패');}await reloadAfterSave('미사용 처리 완료');}
+  async function reloadAfterSave(msg){await loadSheetRawBeforeBoot();initDB();render();mount();toast(msg);setBusy(false);}
+  function boot(){mount();window.axeCookV44Debug=()=>({version:VERSION,current,mode,dirty,stableRoot:true,gasChangeRequired:false});}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(boot,180));else setTimeout(boot,180);
-})();
-</script>
-
-
-<style id="axeCookV43SettingsStableStyle">
-.settings-list-body-v36{display:grid!important;gap:8px!important;align-content:start!important;}
-.settings-row-v43{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;gap:10px!important;align-items:center!important;padding:10px 11px!important;border:1px solid rgba(255,255,255,.08)!important;border-radius:13px!important;background:rgba(255,255,255,.028)!important;}
-.settings-row-v43.is-open{align-items:start!important;border-color:rgba(255,181,46,.2)!important;background:rgba(255,181,46,.035)!important;}
-.settings-row-main-v43{min-width:0!important;display:grid!important;gap:7px!important;}
-.settings-row-title-v43{font-size:14px!important;font-weight:1000!important;color:#f4f6fa!important;line-height:1.2!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
-.settings-row-actions-v43{display:flex!important;gap:6px!important;align-items:center!important;justify-content:flex-end!important;}
-.settings-row-actions-v43 .btn{height:32px!important;min-width:46px!important;padding:0 10px!important;}
-.setting-view-detail-v43{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:6px!important;margin-top:2px!important;}
-.setting-view-line-v43{display:grid!important;grid-template-columns:82px minmax(0,1fr)!important;gap:8px!important;align-items:start!important;padding:8px 9px!important;border:1px solid rgba(255,255,255,.07)!important;border-radius:10px!important;background:rgba(0,0,0,.16)!important;min-width:0!important;}
-.setting-view-label-v43{font-size:11px!important;color:#8d95a3!important;font-weight:1000!important;white-space:nowrap!important;}
-.setting-view-value-v43{font-size:12px!important;color:#dce2ec!important;font-weight:850!important;line-height:1.35!important;word-break:keep-all!important;overflow-wrap:anywhere!important;min-width:0!important;}
-.setting-view-value-v43.is-empty{color:#68717f!important;}
-.group-lines-v43{display:grid!important;gap:6px!important;margin-top:2px!important;}
-.group-line-v43{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;gap:8px!important;align-items:center!important;padding:8px 9px!important;border:1px solid rgba(255,255,255,.07)!important;border-radius:10px!important;background:rgba(0,0,0,.16)!important;}
-.group-line-title-v43{font-size:12.5px!important;font-weight:1000!important;color:#f4f6fa!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
-.group-line-meta-v43{font-size:11px!important;font-weight:850!important;color:#8d95a3!important;margin-top:3px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
-.settings-row-v43 .group-line-v43 .btn{height:30px!important;min-width:44px!important;}
-.settings-row-v36 .settings-row-meta-v36{display:none!important;}
-@media(max-width:760px){.settings-row-v43{grid-template-columns:1fr!important}.settings-row-actions-v43{justify-content:flex-start!important}.setting-view-detail-v43{grid-template-columns:1fr!important}.setting-view-line-v43{grid-template-columns:76px minmax(0,1fr)!important}.group-line-v43{grid-template-columns:1fr!important}.group-line-v43 .btn{justify-self:start!important}}
-</style>
-<script id="axeCookV43SettingsStableScript">
-(function(){
-  const VERSION_V43='AXE_COOK_v43_SETTINGS_VIEW_STABLE_HTML_ONLY';
-  let expandedKey='';
-  let renderTimer=0;
-  let isRendering=false;
-  const titleMap={foods:'요리',materials:'재료',recipes:'레시피',processes:'가공',farm:'농장재료',aliases:'별칭',fish:'생선변환'};
-  const cfg={
-    foods:{rows:()=>DB.foods||[],title:r=>r['요리명'],id:r=>r['id'],fields:[['요리명','요리명'],['등급','등급'],['1세트수량','1세트수량'],['세트판매가','세트판매가'],['효과','효과'],['지속시간','지속시간'],['조리시간','조리시간'],['사용여부','사용여부'],['비고','비고']]},
-    materials:{rows:()=>DB.materials||[],title:r=>r['재료명'],id:r=>r['id'],fields:[['재료명','재료명'],['구매처','구매처'],['묶음수량','묶음수량'],['묶음가격','묶음가격'],['개당가격','개당가격'],['획득구분','획득구분'],['사용여부','사용여부'],['우선구매','우선구매'],['비고','비고']]},
-    farm:{rows:()=>DB.farm||[],title:r=>r['재료명'],id:r=>r['id'],fields:[['재료명','재료명'],['획득처','획득처'],['사용여부','사용여부'],['비고','비고']]},
-    aliases:{rows:()=>DB.aliases||[],title:r=>r['입력명'],id:r=>r['입력명'],fields:[['입력명','입력명'],['표준명','표준명'],['구분','구분'],['사용여부','사용여부'],['비고','비고']]},
-    fish:{rows:()=>DB.fish||[],title:r=>r['생선명'],id:r=>r['id'],fields:[['생선명','생선명'],['투입수량','투입수량'],['결과재료','결과재료'],['결과수량','결과수량'],['가공시간','가공시간'],['사용여부','사용여부'],['비고','비고']]}
-  };
-  const apiMap={
-    foods:{id:'food_id','요리명':'food_name','등급':'grade','1세트수량':'set_qty','세트판매가':'sale_price','효과':'effect','지속시간':'effect_time','조리시간':'cook_time','사용여부':'is_active','정렬':'sort_order','비고':'memo'},
-    materials:{id:'material_id','재료명':'material_name','구매처':'source','묶음수량':'bundle_qty','묶음가격':'bundle_price','개당가격':'unit_price','획득구분':'obtain_type','사용여부':'is_active','우선구매':'is_primary','정렬':'sort_order','비고':'memo'},
-    processes:{id:'process_id','가공재료명':'process_material_name','하위재료명':'input_material_name','필요수량':'required_qty','결과수량':'result_qty','가공시간':'process_time','사용여부':'is_active','정렬':'sort_order','비고':'memo'},
-    farm:{id:'farm_id','재료명':'material_name','획득처':'source','사용여부':'is_active','정렬':'sort_order','비고':'memo'},
-    aliases:{'입력명':'alias_name','표준명':'standard_name','구분':'alias_type','사용여부':'is_active','비고':'memo'},
-    fish:{id:'fish_id','생선명':'fish_name','투입수량':'input_qty','결과재료':'result_material_name','결과수량':'result_qty','가공시간':'process_time','사용여부':'is_active','정렬':'sort_order','비고':'memo'}
-  };
-  function kind(){return document.querySelector('#settingsTabs .tab.active')?.dataset.manage||'foods';}
-  function txt(v){return String(v==null?'':v).trim();}
-  function esc(v){return h(String(v==null?'':v));}
-  function q(){return txt(document.getElementById('settingsSearch')?.value).toLowerCase();}
-  function header(){const k=kind();const t=document.getElementById('settingsEditorTitle');const b=document.getElementById('settingsNewBtn');if(t)t.textContent=titleMap[k]||'설정';if(b)b.textContent='추가';}
-  function fillForm(k,row){const map=apiMap[k]||{};Object.keys(map).forEach(src=>{const api=map[src];const el=document.querySelector('#settingsForm [data-field="'+CSS.escape(api)+'"]');if(el)el.value=txt(row[src]);});const t=document.getElementById('settingsEditorTitle');if(t)t.textContent=(titleMap[k]||'설정')+' · 수정중';const ed=document.querySelector('.setting-editor-v36');if(ed){ed.classList.add('is-editing');ed.classList.remove('is-dirty');}if(window.toast)toast('수정할 항목을 불러왔습니다');}
-  function detail(k,row){const c=cfg[k];return '<div class="setting-view-detail-v43">'+c.fields.map(([label,field])=>{const v=txt(row[field]);return '<div class="setting-view-line-v43"><span class="setting-view-label-v43">'+esc(label)+'</span><span class="setting-view-value-v43 '+(v?'':'is-empty')+'">'+esc(v||'-')+'</span></div>';}).join('')+'</div>';}
-  function normalRows(k){const c=cfg[k];const query=q();return (c.rows()||[]).filter(r=>(txt(c.title(r))+' '+c.fields.map(f=>txt(r[f[1]])).join(' ')).toLowerCase().includes(query)).slice(0,300);}
-  function renderNormal(k){const list=document.getElementById('settingsList');if(!list||!cfg[k])return false;const rows=normalRows(k);if(!rows.length){list.innerHTML='<div class="empty">표시할 항목이 없습니다.</div>';return true;}list.innerHTML=rows.map((r,i)=>{const c=cfg[k];const key=k+'::'+txt(c.id(r)||c.title(r)||i);const open=expandedKey===key;return '<div class="settings-row-v43 '+(open?'is-open':'')+'" data-v43-key="'+esc(key)+'"><div class="settings-row-main-v43"><div class="settings-row-title-v43">'+esc(c.title(r)||'-')+'</div>'+(open?detail(k,r):'')+'</div><div class="settings-row-actions-v43"><button class="btn ghost" data-v43-view="'+i+'" type="button">보기</button><button class="btn ghost" data-v43-edit="'+i+'" type="button">수정</button></div></div>';}).join('');return true;}
-  function processGroups(){const query=q();const map=new Map();(DB.processes||[]).forEach(r=>{const name=txt(r['가공재료명'])||'-';const hay=[name,r['하위재료명'],r['필요수량'],r['결과수량'],r['가공시간'],r['비고']].map(txt).join(' ').toLowerCase();if(query&&!hay.includes(query))return;if(!map.has(name))map.set(name,[]);map.get(name).push(r);});return [...map.entries()].map(([name,rows])=>({name,rows:rows.slice().sort((a,b)=>Number(a['정렬']||0)-Number(b['정렬']||0))})).sort((a,b)=>a.name.localeCompare(b.name,'ko'));}
-  function renderProcesses(){const list=document.getElementById('settingsList');if(!list)return false;const groups=processGroups();if(!groups.length){list.innerHTML='<div class="empty">표시할 항목이 없습니다.</div>';return true;}list.innerHTML=groups.map((g,i)=>{const key='processes::'+g.name;const open=expandedKey===key;const lines=open?'<div class="group-lines-v43">'+g.rows.map((r,j)=>'<div class="group-line-v43"><div><div class="group-line-title-v43">'+esc(r['하위재료명']||'-')+'</div><div class="group-line-meta-v43">필요 '+esc(r['필요수량']||'-')+' · 결과 '+esc(r['결과수량']||'-')+' · '+esc(r['가공시간']||'-')+'</div></div><button class="btn ghost" data-v43-process-edit="'+i+':'+j+'" type="button">수정</button></div>').join('')+'</div>':'';return '<div class="settings-row-v43 '+(open?'is-open':'')+'" data-v43-key="'+esc(key)+'"><div class="settings-row-main-v43"><div class="settings-row-title-v43">'+esc(g.name)+'</div>'+lines+'</div><div class="settings-row-actions-v43"><button class="btn ghost" data-v43-process-view="'+i+'" type="button">보기</button><button class="btn ghost" data-v43-process-edit="'+i+':0" type="button">수정</button></div></div>';}).join('');return true;}
-  function renderNow(){if(isRendering)return;isRendering=true;try{header();const k=kind();if(k==='recipes'){isRendering=false;return;}if(k==='processes')renderProcesses();else renderNormal(k);}catch(e){console.warn('[AXE COOK v43] render failed',e);}finally{isRendering=false;}}
-  function schedule(ms){clearTimeout(renderTimer);renderTimer=setTimeout(renderNow,ms==null?60:ms);}
-  document.addEventListener('click',function(e){
-    const view=e.target.closest('[data-v43-view]');
-    if(view){e.preventDefault();e.stopImmediatePropagation();const k=kind();const rows=normalRows(k);const row=rows[Number(view.dataset.v43View)];const c=cfg[k];if(row&&c){const key=k+'::'+txt(c.id(row)||c.title(row)||view.dataset.v43View);expandedKey=expandedKey===key?'':key;renderNow();}return;}
-    const edit=e.target.closest('[data-v43-edit]');
-    if(edit){e.preventDefault();e.stopImmediatePropagation();const k=kind();const row=normalRows(k)[Number(edit.dataset.v43Edit)];if(row)fillForm(k,row);return;}
-    const pv=e.target.closest('[data-v43-process-view]');
-    if(pv){e.preventDefault();e.stopImmediatePropagation();const g=processGroups()[Number(pv.dataset.v43ProcessView)];if(g){const key='processes::'+g.name;expandedKey=expandedKey===key?'':key;renderNow();}return;}
-    const pe=e.target.closest('[data-v43-process-edit]');
-    if(pe){e.preventDefault();e.stopImmediatePropagation();const [gi,ri]=String(pe.dataset.v43ProcessEdit).split(':').map(Number);const row=processGroups()[gi]?.rows[ri];if(row)fillForm('processes',row);return;}
-    if(e.target.closest('#settingsTabs .tab')){expandedKey='';schedule(180);return;}
-    if(e.target.closest('#settingsReloadBtn,#settingsNewBtn')){expandedKey='';schedule(220);return;}
-  },true);
-  document.addEventListener('input',function(e){if(e.target.closest('#settingsSearch')){expandedKey='';schedule(80);}},true);
-  function boot(){schedule(260);window.axeCookV43Debug=()=>({version:VERSION_V43,kind:kind(),expandedKey,htmlOnly:true,gasChangeRequired:false});}
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
 </script>
 
