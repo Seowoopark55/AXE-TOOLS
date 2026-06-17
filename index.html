@@ -5404,5 +5404,192 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
 }
 </style>
 
+
+
+<style id="axeCookV61EmptyStateTrueFix">
+/* AXE COOK v61: 실제 빈 상태 DOM 재정렬 */
+#viewHome .recipe-work-panel .recipe-combo-v30,
+#viewHome .recipe-work-panel.has-process-v30 .recipe-combo-v30,
+#viewHome .recipe-work-panel.has-process-v31 .recipe-combo-v30,
+#viewHome .recipe-work-panel.no-process-v30 .recipe-combo-v30,
+#viewHome .recipe-work-panel.no-process-v31 .recipe-combo-v30{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  gap:14px!important;
+  align-items:stretch!important;
+}
+#viewHome .recipe-work-list,
+#viewHome .compact-recipe-list,
+#viewHome .process-inline.recipe-side-process-v30{
+  position:relative!important;
+  display:flex!important;
+  flex-direction:column!important;
+  padding-top:29px!important;
+  gap:6px!important;
+  min-height:0!important;
+  overflow:hidden!important;
+}
+#viewHome .recipe-work-list::before,
+#viewHome .compact-recipe-list::before,
+#viewHome .process-inline.recipe-side-process-v30::before{
+  position:absolute!important;
+  left:0!important;
+  top:0!important;
+  height:22px!important;
+  line-height:22px!important;
+  display:flex!important;
+  align-items:center!important;
+  padding:0!important;
+  margin:0!important;
+  color:#f3f6fb!important;
+  font-size:16px!important;
+  font-weight:1000!important;
+  letter-spacing:-.2px!important;
+}
+#viewHome .recipe-work-list::after,
+#viewHome .compact-recipe-list::after,
+#viewHome .process-inline.recipe-side-process-v30::after{
+  top:27px!important;
+  height:1px!important;
+  background:rgba(255,255,255,.065)!important;
+}
+#viewHome .axe-empty-message-v61,
+#viewHome .recipe-work-list>.empty,
+#viewHome .compact-recipe-list>.empty,
+#viewHome .process-empty-v58,
+#viewHome .axe-process-empty-v58,
+#viewHome .purchase-panel .compact-checklist>.empty{
+  width:100%!important;
+  max-width:none!important;
+  min-height:44px!important;
+  height:44px!important;
+  margin:0!important;
+  padding:0 14px!important;
+  border:1px dashed rgba(255,255,255,.13)!important;
+  border-radius:10px!important;
+  background:rgba(255,255,255,.018)!important;
+  color:#a7b1c2!important;
+  font-size:12px!important;
+  font-weight:850!important;
+  line-height:1.25!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  box-shadow:none!important;
+}
+#viewHome .process-inline.recipe-side-process-v30 .process-side-card-v30,
+#viewHome .process-inline.recipe-side-process-v30 .axe-process-empty-v54{
+  background:transparent!important;
+  border:0!important;
+  padding:0!important;
+  margin:0!important;
+  box-shadow:none!important;
+}
+#viewHome .process-side-title-v30,
+#viewHome .process-recipe-head-v31{
+  display:none!important;
+}
+#viewHome .purchase-panel .compact-checklist>.axe-empty-message-v61,
+#viewHome .purchase-panel .compact-checklist>.empty{
+  grid-column:1/-1!important;
+}
+#viewHome .purchase-panel>.panel-title{
+  display:grid!important;
+  grid-template-columns:1fr auto 1fr!important;
+  align-items:center!important;
+  column-gap:10px!important;
+  margin-bottom:10px!important;
+}
+#viewHome .purchase-panel>.panel-title::before{
+  content:'▱'!important;
+  justify-self:start!important;
+  color:var(--gold2)!important;
+  font-size:16px!important;
+  line-height:1!important;
+}
+#viewHome .purchase-panel>.panel-title>span{justify-self:center!important;text-align:center!important;}
+#viewHome .purchase-panel>.panel-title small{justify-self:end!important;text-align:right!important;}
+#viewHome .process-side-list-v30{gap:5px!important;}
+#viewHome .process-row-v58,
+#viewHome .process-side-row-v30{min-height:47px!important;padding:5px 8px!important;}
+#viewHome .process-row-v58 b,
+#viewHome .process-side-row-v30 b{font-size:11.6px!important;line-height:1.08!important;}
+#viewHome .process-row-v58 small,
+#viewHome .process-side-row-v30 small{font-size:8.9px!important;line-height:1.08!important;}
+@media(max-width:760px){
+  #viewHome .recipe-work-panel .recipe-combo-v30,
+  #viewHome .recipe-work-panel.has-process-v30 .recipe-combo-v30,
+  #viewHome .recipe-work-panel.has-process-v31 .recipe-combo-v30,
+  #viewHome .recipe-work-panel.no-process-v30 .recipe-combo-v30,
+  #viewHome .recipe-work-panel.no-process-v31 .recipe-combo-v30{grid-template-columns:1fr!important;}
+}
+</style>
+<script id="axeCookV61EmptyStateTrueFixScript">
+(function(){
+  function renderWorkRecipesV61(){
+    const box=document.getElementById('recipeWorkList');
+    if(!box)return;
+    if(!orders.length){
+      box.innerHTML='<div class="axe-empty-message-v61">음식을 추가하면 기본 레시피와 조리시간이 표시됩니다.</div>';
+      return;
+    }
+    box.innerHTML=orders.map(function(o){
+      const f=getFood(o.name); if(!f)return '';
+      const rows=getFoodRecipes(o.name);
+      const matText=rows.length?rows.map(function(r){return '<span class="recipe-v13-mat"><span>'+h(r['재료명'])+'</span> <b>'+num(r['필요수량'],0)+'</b></span>';}).join('<span class="recipe-v13-dot">·</span>'):'<span class="recipe-v13-empty">레시피 미등록</span>';
+      const plain=rows.length?rows.map(function(r){return text(r['재료명'])+' '+num(r['필요수량'],0);}).join(' · '):'레시피 미등록';
+      return '<div class="recipe-work-card recipe-v13-card"><div class="recipe-v13-head"><span class="recipe-v13-bracket">[</span><span class="recipe-v13-name">'+h(o.name)+'</span><span class="recipe-v13-sep">/</span><span class="recipe-v13-time">'+h(getCookTime(f))+'</span><span class="recipe-v13-bracket">]</span></div><div class="recipe-v13-mats" title="'+h(plain)+'">'+matText+'</div></div>';
+    }).join('');
+  }
+  function renderProcessCompactV61(r){
+    const procInline=document.getElementById('processInline');
+    const panel=document.querySelector('.recipe-work-panel');
+    if(!procInline||!panel)return;
+    panel.classList.add('has-process-v30','has-process-v31');
+    panel.classList.remove('no-process-v30','no-process-v31');
+    if(!r.proc.length){
+      procInline.innerHTML='<div class="axe-empty-message-v61">등록된 가공 레시피가 없습니다.</div>';
+      return;
+    }
+    procInline.innerHTML='<div class="process-side-card-v30"><div class="process-side-list-v30">'+r.proc.map(function(p){
+      const time=(p.rows&&p.rows[0])?h(text(p.rows[0]['가공시간'])||'미확인'):'미확인';
+      const mats=(p.rows||[]).map(function(x){return h(text(x['하위재료명']))+' '+h(text(x['필요수량'])||'');}).join(' · ') || '하위재료 미등록';
+      return '<div class="process-side-row-v30 process-row-v58"><div><b>'+h(p.name)+' <span style="color:var(--gold2)">'+time+'</span></b><small>'+mats+'</small></div><span class="process-side-batch-v30 process-batch-v58">'+h(p.batch)+'회</span></div>';
+    }).join('')+'</div></div>';
+  }
+  function renderResultsOnlyV61(){
+    const r=calc();
+    const summary=document.getElementById('summaryGrid');
+    if(summary){summary.innerHTML='<div class="summary primary"><div class="summary-label">총 세트</div><div class="summary-value gold">'+r.totalSets+'</div></div><div class="summary"><div class="summary-label">인벤 예상</div><div class="summary-value">'+h(invText(r.totalSets))+'</div></div><div class="summary"><div class="summary-label">구매 원가</div><div class="summary-value ok">'+r.totalCost.toLocaleString()+'</div></div><div class="summary"><div class="summary-label">예상 수익</div><div class="summary-value '+(r.profit>=0?'gold':'bad')+'">'+r.profit.toLocaleString()+'</div></div>';}
+    const warning=document.getElementById('warningBox');
+    if(warning){warning.innerHTML=r.unknownRows.length?'<div class="warning">가격 또는 획득처가 없는 재료: '+r.unknownRows.map(function(x){return h(x.name)+' '+x.qty+'개';}).join(', ')+'</div>':'';}
+    const purchase=document.getElementById('purchaseList');
+    const rows=[].concat(r.purchases.map(function(p){return Object.assign({},p,{type:'buy'});}),r.farmRows.map(function(x){return {name:x.name,qty:x.qty,bundleQty:0,bundlePrice:0,bundles:'채집',cost:0,where:'농장',type:'farm'};}));
+    if(purchase){
+      if(!rows.length) purchase.innerHTML='<div class="axe-empty-message-v61">필요한 구매 재료가 없습니다.</div>';
+      else purchase.innerHTML=rows.map(function(p){
+        const key=checkKey(p.type+'_'+p.name); const done=checks[key]; const isFarm=p.type==='farm';
+        const remain=(!isFarm)?Math.max(0,(p.bundles*p.bundleQty)-p.qty):0;
+        const sub=isFarm?'채집 · 필요 '+p.qty+'개':h(p.where)+' · 필요 '+p.qty+'개 · 구매 '+(p.bundles*p.bundleQty)+'개 · '+remain+'개 남음';
+        return '<label class="check-row '+(done?'done':'')+' '+(isFarm?'farm-row':'')+'"><input type="checkbox" '+(done?'checked':'')+' data-check="'+h(key)+'"><div><div class="check-name">'+h(p.name)+(isFarm?'<span class="mini-badge farm-badge">농장</span>':'')+'</div><div class="check-sub">'+sub+'</div></div><div class="check-right">'+(isFarm?'':'<span class="check-cost">'+num(p.cost,0).toLocaleString()+'원</span>')+'<span class="check-bundle '+(isFarm?'farm-pack':'')+'">'+(isFarm?'채집':p.bundles+'묶음')+'</span></div></label>';
+      }).join('');
+      purchase.querySelectorAll('[data-check]').forEach(function(i){i.addEventListener('change',function(){checks[i.dataset.check]=i.checked;saveState();i.closest('.check-row').classList.toggle('done',i.checked);});});
+    }
+    renderProcessCompactV61(r);
+    const farmCount=document.getElementById('farmCount'); if(farmCount) farmCount.textContent=r.farmRows.length;
+    const processCount=document.getElementById('processCount'); if(processCount) processCount.textContent=r.proc.length;
+    const fishCount=document.getElementById('fishCount'); if(fishCount) fishCount.textContent=r.fishNeed.length;
+    renderWorkRecipesV61();
+  }
+  function install(){
+    window.renderWorkRecipes=renderWorkRecipesV61; try{renderWorkRecipes=renderWorkRecipesV61;}catch(e){}
+    window.renderResultsOnly=renderResultsOnlyV61; try{renderResultsOnly=renderResultsOnlyV61;}catch(e){}
+    setTimeout(function(){try{renderResultsOnlyV61();}catch(e){}},0);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install);else install();
+})();
+</script>
+
 </body>
 </html>
