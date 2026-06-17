@@ -1485,6 +1485,46 @@ body{
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="AXE COOK">
 <link rel="apple-touch-icon" href="./icon-192.png">
+
+<style id="axeCookV90DataCompactStyle">
+/* AXE COOK v90: 데이터 상세 간격 압축 + 목록 개수 표시 제거 */
+#viewData .axe-data-count-v87{display:none!important;}
+#viewData .axe-data-pick-v87{grid-template-columns:minmax(0,1fr)!important;padding-right:13px!important;}
+#viewData .axe-data-detail-v87{padding:16px 16px!important;}
+#viewData .axe-detail-head-v87{margin-bottom:12px!important;}
+#viewData .axe-info-grid-v87{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:8px!important;
+  max-width:760px!important;
+  margin:10px 0 10px!important;
+}
+#viewData .axe-info-v87{padding:9px 10px!important;}
+#viewData .axe-line-list-v87{
+  max-width:760px!important;
+  width:fit-content!important;
+  min-width:min(100%,560px)!important;
+  margin-top:10px!important;
+  gap:6px!important;
+}
+#viewData .axe-line-v87{
+  grid-template-columns:minmax(220px,1fr) max-content!important;
+  min-width:min(760px,100%)!important;
+  max-width:760px!important;
+  padding:9px 11px!important;
+  gap:22px!important;
+}
+#viewData .axe-line-v87 b{justify-self:end!important;min-width:auto!important;padding-left:12px!important;}
+#viewData .axe-process-mini-v87{
+  max-width:760px!important;
+  margin-top:10px!important;
+}
+#viewData .axe-mini-chip-v87{padding:6px 9px!important;}
+@media(max-width:920px){
+  #viewData .axe-line-list-v87{width:100%!important;min-width:0!important;max-width:none!important;}
+  #viewData .axe-line-v87{min-width:0!important;max-width:none!important;grid-template-columns:minmax(0,1fr) max-content!important;}
+  #viewData .axe-info-grid-v87{max-width:none!important;}
+}
+</style>
 </head>
 <body>
 
@@ -8529,7 +8569,7 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
       '<div class="axe-line-list-v87">'+(rec.length?rec.map(function(r){return '<div class="axe-line-v87"><span>'+s(r['재료명'])+'</span><b>'+s(r['필요수량'])+'</b></div>';}).join(''):'<div class="axe-empty-v87">등록된 레시피가 없습니다.</div>')+'</div>';
   }
   function materialDetail(name, rows){
-    return '<div class="axe-detail-head-v87"><div><div class="axe-detail-title-v87">'+s(name)+'</div><div class="axe-detail-badges-v87"><span class="axe-badge-v87 gold">구매 정보 '+rows.length+'개</span></div></div></div><div class="axe-line-list-v87">'+rows.map(function(r){var pack=text(r['묶음수량'])||'1';var price=text(r['묶음가격'])||'-';return '<div class="axe-line-v87"><span>'+s(r['구매처']||'-')+'<div class="axe-line-sub-v87">'+s(pack)+'개 묶음</div></span><b>'+s(price)+'원</b></div>';}).join('')+'</div>';
+    return '<div class="axe-detail-head-v87"><div><div class="axe-detail-title-v87">'+s(name)+'</div><div class="axe-detail-badges-v87"></div></div></div><div class="axe-line-list-v87">'+rows.map(function(r){var pack=text(r['묶음수량'])||'1';var price=text(r['묶음가격'])||'-';return '<div class="axe-line-v87"><span>'+s(r['구매처']||'-')+'<div class="axe-line-sub-v87">'+s(pack)+'개 묶음</div></span><b>'+s(price)+'원</b></div>';}).join('')+'</div>';
   }
   function processDetail(name, rows){
     var time=text((rows.find(function(r){return text(r['가공시간']);})||{})['가공시간'])||'미확인';
@@ -8540,7 +8580,7 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
     items=items.filter(function(it){return byNameFilter(it[0]);});
     if(!items.length){box.innerHTML='<div class="axe-empty-v87">검색 결과가 없습니다.</div>';return;}
     var first=items[0][0];
-    box.innerHTML='<div class="axe-data-browser-v87"><div class="axe-data-list-v87">'+items.map(function(it,i){var cnt=countFn?countFn(it):'';return '<button class="axe-data-pick-v87 '+(i===0?'active':'')+'" type="button" data-name-v87="'+s(it[0])+'"><span>'+s(it[0])+'</span>'+(cnt?'<em class="axe-data-count-v87">'+s(cnt)+'</em>':'')+'</button>';}).join('')+'</div><div id="axeDataDetailV87" class="axe-data-detail-v87"></div></div>';
+    box.innerHTML='<div class="axe-data-browser-v87"><div class="axe-data-list-v87">'+items.map(function(it,i){return '<button class="axe-data-pick-v87 '+(i===0?'active':'')+'" type="button" data-name-v87="'+s(it[0])+'"><span>'+s(it[0])+'</span></button>';}).join('')+'</div><div id="axeDataDetailV87" class="axe-data-detail-v87"></div></div>';
     function show(name){var target=items.find(function(it){return it[0]===name;})||items[0]; var detail=document.getElementById('axeDataDetailV87'); if(detail){detail.innerHTML=detailFn(target[0],target[1]); detail.querySelector('[data-add-v87]')?.addEventListener('click',function(e){addOrder(e.currentTarget.dataset.addV87,1);});}}
     box.querySelectorAll('[data-name-v87]').forEach(function(b){b.addEventListener('click',function(){box.querySelectorAll('.axe-data-pick-v87').forEach(function(x){x.classList.remove('active');});b.classList.add('active');show(b.dataset.nameV87);});});
     show(first);
@@ -8571,14 +8611,329 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
 })();
 </script>
 
+
+<style id="axeCookV93FavoriteTooltipStyle">
+/* AXE COOK v93: favorite star state + clean favorite strip + order tooltip */
+#viewData .axe-detail-head-v87{align-items:flex-start!important;gap:12px!important;}
+#viewData .axe-detail-title-line-v93{display:flex!important;align-items:center!important;gap:10px!important;flex-wrap:wrap!important;min-width:0!important;}
+#viewData .axe-detail-title-v87{margin:0!important;}
+#viewData .axe-data-actions-v93{display:inline-flex!important;align-items:center!important;gap:6px!important;white-space:nowrap!important;}
+#viewData .axe-data-action-v93{height:30px!important;padding:0 10px!important;border-radius:10px!important;font-size:12px!important;font-weight:1000!important;}
+#viewData .axe-fav-btn-v93{min-width:34px!important;padding:0 9px!important;border-color:rgba(255,181,46,.24)!important;color:#9ba5b5!important;background:rgba(255,255,255,.035)!important;}
+#viewData .axe-fav-btn-v93 .star-v93{font-size:15px!important;line-height:1!important;color:#8d95a3!important;}
+#viewData .axe-fav-btn-v93.is-fav{border-color:rgba(255,181,46,.42)!important;background:rgba(255,181,46,.12)!important;color:var(--gold2)!important;}
+#viewData .axe-fav-btn-v93.is-fav .star-v93{color:var(--gold2)!important;text-shadow:0 0 12px rgba(255,181,46,.28)!important;}
+#favStrip .fav{max-width:160px!important;min-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;}
+#orderList .order-name-v84,#orderList .order-name-v83,.order-name{cursor:default!important;}
+@media(max-width:720px){#viewData .axe-detail-title-line-v93{align-items:flex-start!important;flex-direction:column!important;gap:7px!important;}#viewData .axe-data-actions-v93{width:100%!important;}}
+</style>
+<script id="axeCookV93FavoriteTooltipScript">
+(function(){
+  function esc(v){return h(v==null?'':v);}
+  function txt(v){return text(v==null?'':v);}
+  function norm(v){return txt(v).toLowerCase().trim();}
+  function group(list,key){var m=new Map();(list||[]).forEach(function(r){var n=txt(r[key]);if(!n)return;if(!m.has(n))m.set(n,[]);m.get(n).push(r);});return Array.from(m.entries()).sort(function(a,b){return a[0].localeCompare(b[0],'ko');});}
+  function matchName(name){var input=document.getElementById('dataSearchV87');var q=norm(input?input.value:'');return !q||norm(name).includes(q);}
+  function recipesFor(name){return (DB.recipes||[]).filter(function(r){return txt(r['요리명'])===name;});}
+  function matChip(name,qty){return '<div class="axe-line-v87"><span>'+esc(name)+'</span><b>'+esc(qty||'-')+'</b></div>';}
+  function favButton(name){var on=(favorites||[]).includes(name);return '<button class="btn ghost axe-data-action-v93 axe-fav-btn-v93 '+(on?'is-fav':'')+'" type="button" data-fav-v93="'+esc(name)+'" title="'+(on?'즐겨찾기 해제':'즐겨찾기 추가')+'"><span class="star-v93">'+(on?'★':'☆')+'</span></button>';}
+  function actionHead(name, extraBadges){
+    return '<div class="axe-detail-head-v87"><div><div class="axe-detail-title-line-v93"><div class="axe-detail-title-v87">'+esc(name)+'</div><div class="axe-data-actions-v93"><button class="btn primary axe-data-action-v93" type="button" data-add-v93="'+esc(name)+'">작업+</button>'+favButton(name)+'</div></div>'+(extraBadges?'<div class="axe-detail-badges-v87">'+extraBadges+'</div>':'')+'</div></div>';
+  }
+  function foodDetail(name){
+    var food=getFood(name)||{};var rec=recipesFor(name);
+    var badges='<span class="axe-badge-v87">'+esc(food['등급']||'등급 미확인')+'</span><span class="axe-badge-v87 gold">1세트 '+esc(getSetQty(food))+'개</span>';
+    var effect=txt(food['효과']||'미확인');var time=txt(food['지속시간']||'미확인');
+    return actionHead(name,badges)+
+      '<div class="axe-info-grid-v87"><div class="axe-info-v87"><div class="axe-info-label-v87">효과</div><div class="axe-info-value-v87">'+esc(effect)+'</div></div><div class="axe-info-v87"><div class="axe-info-label-v87">지속시간</div><div class="axe-info-value-v87">'+esc(time)+'</div></div></div>'+ 
+      '<div class="axe-line-list-v87">'+(rec.length?rec.map(function(r){return matChip(r['재료명'],r['필요수량']);}).join(''):'<div class="axe-empty-v87">등록된 레시피가 없습니다.</div>')+'</div>';
+  }
+  function materialDetail(name,rows){
+    return '<div class="axe-detail-head-v87"><div><div class="axe-detail-title-v87">'+esc(name)+'</div></div></div><div class="axe-line-list-v87">'+rows.map(function(r){var where=txt(r['구매처']||'-');var pack=txt(r['묶음수량'])||'1';var price=txt(r['묶음가격'])||'-';return '<div class="axe-line-v87"><span>'+esc(where)+' <span class="axe-line-sub-v87">'+esc(pack)+'개 묶음</span></span><b>'+esc(price)+'원</b></div>';}).join('')+'</div>';
+  }
+  function processDetail(name,rows){
+    var time=txt((rows.find(function(r){return txt(r['가공시간']);})||{})['가공시간'])||'미확인';
+    var mats=rows.filter(function(r){return txt(r['하위재료명']);});
+    return '<div class="axe-detail-head-v87"><div><div class="axe-detail-title-v87">'+esc(name)+'</div><div class="axe-detail-badges-v87"><span class="axe-badge-v87 gold">가공시간 '+esc(time)+'</span></div></div></div><div class="axe-process-mini-v87">'+(mats.length?mats.map(function(r){return '<span class="axe-mini-chip-v87">'+esc(r['하위재료명'])+(txt(r['필요수량'])?' <b>'+esc(r['필요수량'])+'</b>':'')+'</span>';}).join(''):'<span class="axe-mini-chip-v87">하위재료 미확인</span>')+'</div>';
+  }
+  function bindDetail(detail, rerender){
+    detail.querySelectorAll('[data-add-v93]').forEach(function(b){b.addEventListener('click',function(){addOrder(b.dataset.addV93,1);});});
+    detail.querySelectorAll('[data-fav-v93]').forEach(function(b){b.addEventListener('click',function(){toggleFavorite(b.dataset.favV93); if(typeof renderFavorites==='function')renderFavorites(); rerender();});});
+  }
+  function browser(box,items,detailFn){
+    items=items.filter(function(it){return matchName(it[0]);});
+    if(!items.length){box.innerHTML='<div class="axe-empty-v87">검색 결과가 없습니다.</div>';return;}
+    var current=items[0][0];
+    box.innerHTML='<div class="axe-data-browser-v87"><div class="axe-data-list-v87">'+items.map(function(it,i){return '<button class="axe-data-pick-v87 '+(i===0?'active':'')+'" type="button" data-name-v93="'+esc(it[0])+'"><span>'+esc(it[0])+'</span></button>';}).join('')+'</div><div id="axeDataDetailV93" class="axe-data-detail-v87"></div></div>';
+    function show(name){current=name;var target=items.find(function(it){return it[0]===name;})||items[0];var detail=document.getElementById('axeDataDetailV93');if(detail){detail.innerHTML=detailFn(target[0],target[1]);bindDetail(detail,function(){show(current);});}}
+    box.querySelectorAll('[data-name-v93]').forEach(function(b){b.addEventListener('click',function(){box.querySelectorAll('.axe-data-pick-v87').forEach(function(x){x.classList.remove('active');});b.classList.add('active');show(b.dataset.nameV93);});});
+    show(current);
+  }
+  window.renderDataView=function(){
+    var input=document.getElementById('dataSearchV87');var clear=document.getElementById('dataSearchClearV87');
+    if(input&&!input.dataset.v93Bound){input.dataset.v93Bound='1';input.addEventListener('input',function(){if(clear)clear.hidden=!input.value;window.renderDataView();});}
+    if(clear&&!clear.dataset.v93Bound){clear.dataset.v93Bound='1';clear.addEventListener('click',function(){if(input){input.value='';input.focus();}clear.hidden=true;window.renderDataView();});}
+    var box=document.getElementById('dataView');if(!box)return;if(!DB||!Array.isArray(DB.foods)){box.innerHTML='<div class="axe-empty-v87">시트 데이터를 불러오는 중입니다.</div>';return;}
+    if(activeTab==='foods'){
+      var foods=(DB.foods||[]).filter(function(r){return isTrue(r['사용여부']);}).map(function(r){return [txt(r['요리명']),r];}).filter(function(x){return x[0];}).sort(function(a,b){return a[0].localeCompare(b[0],'ko');});browser(box,foods,function(name){return foodDetail(name);});
+    }else if(activeTab==='materials') browser(box,group((DB.materials||[]).filter(function(r){return isTrue(r['사용여부']);}),'재료명'),materialDetail);
+    else if(activeTab==='processes') browser(box,group((DB.processes||[]).filter(function(r){return isTrue(r['사용여부']);}),'가공재료명'),processDetail);
+    else browser(box,group((DB.recipes||[]),'요리명'),function(name){return foodDetail(name);});
+  };
+  renderFavorites=function(){
+    var box=document.getElementById('favStrip');if(!box)return;var valid=(favorites||[]).filter(getFood).slice(0,10);
+    if(!valid.length){box.innerHTML='<span class="pill">즐겨찾기 없음</span>';return;}
+    box.innerHTML=valid.map(function(n){return '<button class="fav" data-add="'+esc(n)+'" title="'+esc(n)+'">'+esc(n)+'</button>';}).join('');
+    box.querySelectorAll('[data-add]').forEach(function(b){b.addEventListener('click',function(){addOrder(b.dataset.add,1);});});
+  };
+  var oldRenderOrders=renderOrders;
+  renderOrders=function(){
+    oldRenderOrders();
+    document.querySelectorAll('#orderList .order-name-v84,#orderList .order-name-v83,#orderList .order-name').forEach(function(el){var full=el.textContent.trim();if(full)el.setAttribute('title',full);});
+  };
+  try{renderDataView=window.renderDataView;}catch(e){}
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(function(){try{renderFavorites();renderOrders();window.renderDataView();}catch(e){}},0);});
+  window.axeCookV93Debug=function(){return {version:'v93-favorite-star-clean-strip-order-tooltip'};};
+})();
+</script>
+
+
+<style>
+/* AXE COOK v96: single-food work pages */
+#viewHome .work-pages-v96{
+  display:flex!important;
+  align-items:center!important;
+  gap:6px!important;
+  margin:0 0 10px!important;
+  padding:8px 0 0!important;
+  border-top:1px solid rgba(255,255,255,.065)!important;
+  overflow-x:auto!important;
+  scrollbar-width:thin!important;
+}
+#viewHome .work-page-tab-v96,
+#viewHome .work-page-add-v96,
+#viewHome .work-page-del-v96{
+  height:30px!important;
+  min-width:0!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:5px!important;
+  border-radius:999px!important;
+  border:1px solid rgba(255,255,255,.105)!important;
+  background:rgba(255,255,255,.035)!important;
+  color:#b9c2cf!important;
+  font-size:12px!important;
+  font-weight:1000!important;
+  padding:0 10px!important;
+  white-space:nowrap!important;
+}
+#viewHome .work-page-tab-v96.active{
+  border-color:rgba(255,181,46,.42)!important;
+  background:rgba(255,181,46,.12)!important;
+  color:#ffcf61!important;
+  box-shadow:0 8px 22px rgba(255,181,46,.08)!important;
+}
+#viewHome .work-page-tab-v96 small{
+  max-width:76px!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+  color:inherit!important;
+  opacity:.8!important;
+  font-size:10.5px!important;
+  font-weight:900!important;
+}
+#viewHome .work-page-add-v96{
+  width:30px!important;
+  padding:0!important;
+  color:#15100a!important;
+  background:linear-gradient(135deg,#ffcf61,#ffb52e)!important;
+  border-color:rgba(255,181,46,.66)!important;
+}
+#viewHome .work-page-del-v96{
+  margin-left:auto!important;
+  color:#ffb0b8!important;
+  border-color:rgba(255,111,125,.18)!important;
+  background:rgba(255,111,125,.045)!important;
+}
+#viewHome .work-page-del-v96[disabled]{
+  opacity:.38!important;
+  cursor:not-allowed!important;
+}
+#viewHome .orders-single-note-v96{
+  margin:7px 0 0!important;
+  color:#8994a4!important;
+  font-size:11px!important;
+  font-weight:850!important;
+  line-height:1.35!important;
+}
+#viewHome .order-row-v96{
+  display:grid!important;
+  grid-template-columns:minmax(0,1.15fr) minmax(160px,.9fr) auto!important;
+  gap:12px!important;
+  align-items:center!important;
+  padding:11px 12px!important;
+  border:1px solid rgba(255,255,255,.08)!important;
+  border-radius:14px!important;
+  background:rgba(255,255,255,.022)!important;
+  min-height:62px!important;
+}
+#viewHome .order-main-v96{min-width:0!important;display:flex!important;align-items:center!important;gap:10px!important;}
+#viewHome .order-name-v96{
+  min-width:0!important;
+  max-width:100%!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+  color:#f5f7fb!important;
+  font-size:15px!important;
+  font-weight:1000!important;
+  cursor:help!important;
+}
+#viewHome .order-info-v96{display:flex!important;align-items:center!important;gap:12px!important;min-width:0!important;}
+#viewHome .order-info-item-v96{display:inline-flex!important;align-items:center!important;gap:5px!important;color:#d5dce6!important;font-size:12.5px!important;font-weight:950!important;white-space:nowrap!important;}
+#viewHome .order-info-item-v96 b{color:#ffcf61!important;font-size:15px!important;font-weight:1000!important;}
+#viewHome .order-info-item-v96 svg{width:15px!important;height:15px!important;color:#ffbf3f!important;stroke-width:2.25!important;}
+#viewHome .order-controls-v96{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:8px!important;}
+#viewHome .order-controls-v96 .num{width:64px!important;height:36px!important;text-align:center!important;}
+#viewHome .order-controls-v96 .btn{height:36px!important;}
+@media(max-width:760px){
+  #viewHome .order-row-v96{grid-template-columns:1fr!important;gap:8px!important;}
+  #viewHome .order-info-v96{flex-wrap:wrap!important;}
+  #viewHome .order-controls-v96{justify-content:flex-start!important;}
+  #viewHome .work-page-del-v96{margin-left:0!important;}
+}
+</style>
+<script id="axeCookV96WorkPagesScript">
+(function(){
+  'use strict';
+  var STORE_PAGES='axe_cook_v96_work_pages';
+  var STORE_ACTIVE='axe_cook_v96_active_page';
+  var pages=[];
+  var activeId='';
+  var originalSaveState=typeof saveState==='function'?saveState:null;
+  var originalLoadState=typeof loadState==='function'?loadState:null;
+  function esc(v){return h(v==null?'':v);}
+  function toText(v){return text(v==null?'':v);}
+  function uid(){return 'p_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,7);}
+  function pageTitle(p,idx){var o=(p.orders&&p.orders[0])?p.orders[0]:null;return o?o.name:'작업 '+(idx+1);}
+  function cleanPage(p){
+    return {id:p&&p.id?p.id:uid(), orders:Array.isArray(p&&p.orders)?p.orders.slice(0,1):[], checks:(p&&p.checks&&typeof p.checks==='object')?p.checks:{}, memo:toText(p&&p.memo)};
+  }
+  function readPages(){
+    try{pages=JSON.parse(localStorage.getItem(STORE_PAGES)||'[]').map(cleanPage);}catch(e){pages=[];}
+    if(!pages.length){
+      var legacyOrders=[];var legacyChecks={};
+      try{legacyOrders=JSON.parse(localStorage.getItem(STORE_ORDERS)||'[]');}catch(e){legacyOrders=[];}
+      try{legacyChecks=JSON.parse(localStorage.getItem(STORE_CHECKS)||'{}');}catch(e){legacyChecks={};}
+      pages=[cleanPage({orders:Array.isArray(legacyOrders)?legacyOrders.slice(0,1):[],checks:legacyChecks,memo:''})];
+    }
+    activeId=localStorage.getItem(STORE_ACTIVE)||pages[0].id;
+    if(!pages.some(function(p){return p.id===activeId;}))activeId=pages[0].id;
+  }
+  function activePage(){
+    if(!pages.length)readPages();
+    var p=pages.find(function(x){return x.id===activeId;});
+    if(!p){p=pages[0];activeId=p.id;}
+    return p;
+  }
+  function persistPages(){
+    localStorage.setItem(STORE_PAGES,JSON.stringify(pages));
+    localStorage.setItem(STORE_ACTIVE,activeId);
+  }
+  function syncFromGlobal(){
+    var p=activePage();
+    try{p.orders=Array.isArray(orders)?orders.slice(0,1):[];}catch(e){p.orders=[];}
+    try{p.checks=(checks&&typeof checks==='object')?Object.assign({},checks):{};}catch(e){p.checks={};}
+    var memo=document.getElementById('workMemoV53');
+    if(memo)p.memo=memo.value||'';
+    persistPages();
+  }
+  function syncToGlobal(){
+    var p=activePage();
+    try{orders=Array.isArray(p.orders)?p.orders.slice(0,1):[];}catch(e){}
+    try{checks=(p.checks&&typeof p.checks==='object')?Object.assign({},p.checks):{};}catch(e){}
+    var memo=document.getElementById('workMemoV53');
+    if(memo && memo.value!==toText(p.memo))memo.value=toText(p.memo);
+    try{localStorage.setItem(STORE_ORDERS,JSON.stringify(orders));localStorage.setItem(STORE_CHECKS,JSON.stringify(checks));}catch(e){}
+  }
+  function saveAll(){syncFromGlobal();try{localStorage.setItem(STORE_FAVS,JSON.stringify(favorites||[]));}catch(e){};syncToGlobal();}
+  window.saveState=function(){saveAll();};
+  try{saveState=window.saveState;}catch(e){}
+  window.loadState=function(){
+    if(originalLoadState)originalLoadState();
+    readPages();
+    syncToGlobal();
+    try{favorites=JSON.parse(localStorage.getItem(STORE_FAVS)||'[]');}catch(e){}
+  };
+  try{loadState=window.loadState;}catch(e){}
+  function icon(name){
+    if(name==='plus')return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>';
+    if(name==='trash')return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 15h10l1-15"/></svg>';
+    if(name==='box')return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5Z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg>';
+    if(name==='layers')return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="m3 13 9 5 9-5"/><path d="m3 18 9 5 9-5"/></svg>';
+    return '';
+  }
+  function renderPageTabs(){
+    var panel=document.querySelector('#viewHome .orders-panel');var list=document.getElementById('orderList');
+    if(!panel||!list)return;
+    var bar=document.getElementById('workPagesV96');
+    if(!bar){bar=document.createElement('div');bar.id='workPagesV96';bar.className='work-pages-v96';list.parentNode.insertBefore(bar,list);}
+    bar.innerHTML=pages.map(function(p,i){var active=p.id===activeId;var o=(p.orders&&p.orders[0])?p.orders[0]:null;return '<button type="button" class="work-page-tab-v96 '+(active?'active':'')+'" data-page-v96="'+esc(p.id)+'"><span>'+(i+1)+'</span>'+(o?'<small>'+esc(o.name)+'</small>':'')+'</button>';}).join('')+
+      '<button type="button" class="work-page-add-v96" data-page-add-v96 title="작업 페이지 추가">+</button>'+ 
+      '<button type="button" class="work-page-del-v96" data-page-del-v96 '+(pages.length<=1?'disabled':'')+' title="현재 작업 페이지 삭제">삭제</button>';
+    bar.querySelectorAll('[data-page-v96]').forEach(function(b){b.addEventListener('click',function(){switchPage(b.dataset.pageV96);});});
+    bar.querySelector('[data-page-add-v96]')?.addEventListener('click',addPage);
+    bar.querySelector('[data-page-del-v96]')?.addEventListener('click',deletePage);
+  }
+  function rerenderAll(){syncToGlobal();if(typeof renderResultsOnly==='function')renderResultsOnly();if(typeof renderOrders==='function')renderOrders();else renderPageTabs();}
+  function switchPage(id){if(id===activeId)return;syncFromGlobal();activeId=id;syncToGlobal();persistPages();rerenderAll();toast('작업 페이지를 전환했습니다.');}
+  function addPage(){syncFromGlobal();var p=cleanPage({orders:[],checks:{},memo:''});pages.push(p);activeId=p.id;persistPages();syncToGlobal();rerenderAll();toast('새 작업 페이지를 추가했습니다.');}
+  function deletePage(){if(pages.length<=1)return;var idx=pages.findIndex(function(p){return p.id===activeId;});if(idx<0)idx=0;pages.splice(idx,1);activeId=(pages[Math.max(0,idx-1)]||pages[0]).id;persistPages();syncToGlobal();rerenderAll();toast('작업 페이지를 삭제했습니다.');}
+  window.addOrder=function(name,sets){
+    var food=getFood(name);if(!food)return toast('요리를 찾을 수 없습니다.');
+    sets=Math.max(1,Math.floor(num(sets,1)));
+    var p=activePage();
+    var old=(p.orders&&p.orders[0])?p.orders[0]:null;
+    if(old&&old.name===name){p.orders=[{name:name,sets:Math.max(1,Math.floor(num(old.sets,1)))+sets}];}
+    else{p.orders=[{name:name,sets:sets}];p.checks={};}
+    localStorage.removeItem(STORE_EMPTY);
+    persistPages();syncToGlobal();rerenderAll();toast(name+' 작업을 등록했습니다.');
+  };
+  try{addOrder=window.addOrder;}catch(e){}
+  window.removeOrder=function(name){var p=activePage();p.orders=[];p.checks={};persistPages();syncToGlobal();rerenderAll();};
+  try{removeOrder=window.removeOrder;}catch(e){}
+  window.updateSets=function(name,val){var p=activePage();var o=p.orders&&p.orders[0];if(o){o.sets=Math.max(1,Math.floor(num(val,1)));persistPages();syncToGlobal();if(typeof renderResultsOnly==='function')renderResultsOnly();if(typeof renderOrders==='function')renderOrders();}};
+  try{updateSets=window.updateSets;}catch(e){}
+  window.resetWorkspace=function(){var p=activePage();p.orders=[];p.checks={};p.memo='';persistPages();syncToGlobal();rerenderAll();toast('현재 작업 페이지를 초기화했습니다.');};
+  try{resetWorkspace=window.resetWorkspace;}catch(e){}
+  window.renderOrders=function(){
+    var count=document.getElementById('orderCount');if(count)count.textContent=(orders&&orders.length?1:0)+'개';
+    var box=document.getElementById('orderList');if(!box)return;renderPageTabs();
+    if(!orders||!orders.length){box.innerHTML='<div class="empty">현재 페이지에 만들 음식을 추가하세요.</div><div class="orders-single-note-v96">한 페이지에는 한 종류의 음식만 등록됩니다. 여러 음식을 따로 만들 때는 +로 작업 페이지를 추가하세요.</div>';return;}
+    var o=orders[0];var f=getFood(o.name);var setQty=getSetQty(f);var total=Math.max(1,Math.floor(num(o.sets,1)))*setQty;
+    box.innerHTML='<div class="order-row-v96"><div class="order-main-v96"><div class="order-name-v96" data-fullname-v95="'+esc(o.name)+'">'+esc(o.name)+'</div></div><div class="order-info-v96"><span class="order-info-item-v96">'+icon('box')+'<span>세트 구성 <b>'+esc(setQty)+'</b>개</span></span><span class="order-info-item-v96">'+icon('layers')+'<span>총 <b>'+esc(total)+'</b>개 제작</span></span></div><div class="order-controls-v96"><input class="num" type="number" min="1" value="'+esc(o.sets)+'" data-set="'+esc(o.name)+'"><button class="btn bad" data-del="'+esc(o.name)+'">삭제</button></div></div>';
+    box.querySelector('[data-set]')?.addEventListener('change',function(e){updateSets(o.name,e.currentTarget.value);});
+    box.querySelector('[data-del]')?.addEventListener('click',function(){removeOrder(o.name);});
+  };
+  try{renderOrders=window.renderOrders;}catch(e){}
+  function bindMemo(){var memo=document.getElementById('workMemoV53');if(memo&&!memo.dataset.v96){memo.dataset.v96='1';memo.addEventListener('input',function(){syncFromGlobal();});}}
+  document.addEventListener('click',function(ev){var b=ev.target&&ev.target.closest?ev.target.closest('#clearBtnVisible,#clearBtn'):null;if(!b)return;ev.preventDefault();ev.stopPropagation();window.resetWorkspace();},true);
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(function(){readPages();syncToGlobal();bindMemo();if(typeof renderOrders==='function')renderOrders();if(typeof renderResultsOnly==='function')renderResultsOnly();},0);});
+  setTimeout(function(){try{readPages();syncToGlobal();bindMemo();renderOrders();}catch(e){}},0);
+  window.axeCookV96Debug=function(){return {version:'v96-work-pages-single-food',pages:pages.length,active:activeId,orders:orders};};
+})();
+</script>
+
 </body>
 </html>
 
 <style>
-/* AXE COOK v88: 데이터 검색창 폭 축소 */
+/* AXE COOK v89: 데이터 검색창 폭 추가 축소 - 좌측 목록 폭 안쪽으로 정렬 */
 #viewData .data-search-v87{
-  width:min(100%, 360px)!important;
-  max-width:360px!important;
+  width:min(100%, 320px)!important;
+  max-width:320px!important;
   margin-left:0!important;
   margin-right:auto!important;
 }
@@ -8592,3 +8947,445 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
   }
 }
 </style>
+
+<style>
+/* AXE COOK v91: 데이터 상세 정보 compact chip layout */
+#viewData .axe-data-detail-v87{
+  padding:16px!important;
+  min-height:300px!important;
+}
+#viewData .axe-detail-head-v87{
+  margin-bottom:12px!important;
+}
+#viewData .axe-info-grid-v87{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:7px!important;
+  margin:10px 0 12px!important;
+}
+#viewData .axe-info-v87{
+  width:auto!important;
+  min-width:180px!important;
+  max-width:460px!important;
+  flex:0 1 auto!important;
+  padding:8px 10px!important;
+}
+#viewData .axe-info-label-v87{
+  margin-bottom:4px!important;
+}
+#viewData .axe-info-value-v87{
+  font-size:14px!important;
+  line-height:1.28!important;
+}
+#viewData .axe-line-list-v87{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  align-items:flex-start!important;
+  justify-content:flex-start!important;
+  gap:7px!important;
+  margin-top:10px!important;
+  max-width:720px!important;
+}
+#viewData .axe-line-v87{
+  width:auto!important;
+  min-width:0!important;
+  max-width:100%!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:8px!important;
+  padding:7px 10px!important;
+  border-radius:999px!important;
+  background:rgba(255,255,255,.035)!important;
+  border:1px solid rgba(255,255,255,.08)!important;
+  color:#dce2ec!important;
+  font-size:13.3px!important;
+  font-weight:950!important;
+  line-height:1.1!important;
+}
+#viewData .axe-line-v87 span{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:6px!important;
+  white-space:nowrap!important;
+}
+#viewData .axe-line-v87 b{
+  min-width:20px!important;
+  height:20px!important;
+  display:inline-grid!important;
+  place-items:center!important;
+  padding:0 6px!important;
+  border-radius:999px!important;
+  background:rgba(255,181,46,.10)!important;
+  border:1px solid rgba(255,181,46,.18)!important;
+  color:var(--gold2)!important;
+  font-size:12.5px!important;
+  font-weight:1000!important;
+}
+#viewData .axe-line-sub-v87{
+  margin:0!important;
+  display:inline!important;
+  font-size:11.5px!important;
+  color:#9aa4b5!important;
+  font-weight:900!important;
+}
+#viewData .axe-process-mini-v87{
+  max-width:720px!important;
+  gap:7px!important;
+}
+#viewData .axe-mini-chip-v87{
+  padding:7px 10px!important;
+  font-size:13px!important;
+}
+#viewData .axe-data-pick-v87{
+  grid-template-columns:minmax(0,1fr)!important;
+}
+#viewData .axe-data-count-v87,
+#viewData .axe-data-pick-v87 small{
+  display:none!important;
+}
+@media(max-width:640px){
+  #viewData .axe-line-list-v87,
+  #viewData .axe-process-mini-v87{max-width:100%!important;}
+  #viewData .axe-line-v87{font-size:12.5px!important;padding:7px 9px!important;}
+  #viewData .axe-info-v87{min-width:100%!important;}
+}
+</style>
+<script id="axeCookV91DataCompactScript">
+(function(){
+  function s(v){return h(v==null?'':v);}
+  function t(v){return text(v==null?'':v);}
+  function norm(v){return t(v).toLowerCase().trim();}
+  function groupedV91(list,key){var m=new Map();(list||[]).forEach(function(r){var n=t(r[key]);if(!n)return;if(!m.has(n))m.set(n,[]);m.get(n).push(r);});return Array.from(m.entries()).sort(function(a,b){return a[0].localeCompare(b[0],'ko');});}
+  function recipesForV91(name){return (DB.recipes||[]).filter(function(r){return t(r['요리명'])===name;});}
+  function matchV91(name){var input=document.getElementById('dataSearchV87');var q=norm(input?input.value:'');return !q||norm(name).includes(q);}
+  function compactMatChip(name,qty){return '<div class="axe-line-v87"><span>'+s(name)+'</span><b>'+s(qty||'-')+'</b></div>';}
+  function foodDetailV91(name){
+    var food=getFood(name)||{};var rec=recipesForV91(name);
+    var badges='<span class="axe-badge-v87">'+s(food['등급']||'등급 미확인')+'</span><span class="axe-badge-v87 gold">1세트 '+s(getSetQty(food))+'개</span>';
+    var effect=t(food['효과']||'미확인');var time=t(food['지속시간']||'미확인');
+    return '<div class="axe-detail-head-v87"><div><div class="axe-detail-title-v87">'+s(name)+'</div><div class="axe-detail-badges-v87">'+badges+'</div></div><button class="btn primary" type="button" data-add-v91="'+s(name)+'">추가</button></div>'+
+      '<div class="axe-info-grid-v87"><div class="axe-info-v87"><div class="axe-info-label-v87">효과</div><div class="axe-info-value-v87">'+s(effect)+'</div></div><div class="axe-info-v87"><div class="axe-info-label-v87">지속시간</div><div class="axe-info-value-v87">'+s(time)+'</div></div></div>'+
+      '<div class="axe-line-list-v87">'+(rec.length?rec.map(function(r){return compactMatChip(r['재료명'],r['필요수량']);}).join(''):'<div class="axe-empty-v87">등록된 레시피가 없습니다.</div>')+'</div>';
+  }
+  function materialDetailV91(name,rows){
+    return '<div class="axe-detail-head-v87"><div><div class="axe-detail-title-v87">'+s(name)+'</div></div></div><div class="axe-line-list-v87">'+rows.map(function(r){
+      var where=t(r['구매처']||'-');var pack=t(r['묶음수량'])||'1';var price=t(r['묶음가격'])||'-';
+      return '<div class="axe-line-v87"><span>'+s(where)+' <span class="axe-line-sub-v87">'+s(pack)+'개 묶음</span></span><b>'+s(price)+'원</b></div>';
+    }).join('')+'</div>';
+  }
+  function processDetailV91(name,rows){
+    var time=t((rows.find(function(r){return t(r['가공시간']);})||{})['가공시간'])||'미확인';
+    var mats=rows.filter(function(r){return t(r['하위재료명']);});
+    return '<div class="axe-detail-head-v87"><div><div class="axe-detail-title-v87">'+s(name)+'</div><div class="axe-detail-badges-v87"><span class="axe-badge-v87 gold">가공시간 '+s(time)+'</span></div></div></div><div class="axe-process-mini-v87">'+(mats.length?mats.map(function(r){return '<span class="axe-mini-chip-v87">'+s(r['하위재료명'])+(t(r['필요수량'])?' <b>'+s(r['필요수량'])+'</b>':'')+'</span>';}).join(''):'<span class="axe-mini-chip-v87">하위재료 미확인</span>')+'</div>';
+  }
+  function renderBrowserV91(box,items,detailFn){
+    items=items.filter(function(it){return matchV91(it[0]);});
+    if(!items.length){box.innerHTML='<div class="axe-empty-v87">검색 결과가 없습니다.</div>';return;}
+    var first=items[0][0];
+    box.innerHTML='<div class="axe-data-browser-v87"><div class="axe-data-list-v87">'+items.map(function(it,i){return '<button class="axe-data-pick-v87 '+(i===0?'active':'')+'" type="button" data-name-v91="'+s(it[0])+'"><span>'+s(it[0])+'</span></button>';}).join('')+'</div><div id="axeDataDetailV91" class="axe-data-detail-v87"></div></div>';
+    function show(name){var target=items.find(function(it){return it[0]===name;})||items[0];var detail=document.getElementById('axeDataDetailV91');if(detail){detail.innerHTML=detailFn(target[0],target[1]);detail.querySelector('[data-add-v91]')?.addEventListener('click',function(e){addOrder(e.currentTarget.dataset.addV91,1);});}}
+    box.querySelectorAll('[data-name-v91]').forEach(function(b){b.addEventListener('click',function(){box.querySelectorAll('.axe-data-pick-v87').forEach(function(x){x.classList.remove('active');});b.classList.add('active');show(b.dataset.nameV91);});});
+    show(first);
+  }
+  window.renderDataView=function(){
+    var input=document.getElementById('dataSearchV87');var clear=document.getElementById('dataSearchClearV87');
+    if(input&&!input.dataset.v91Bound){input.dataset.v91Bound='1';input.addEventListener('input',function(){if(clear)clear.hidden=!input.value;window.renderDataView();});}
+    if(clear&&!clear.dataset.v91Bound){clear.dataset.v91Bound='1';clear.addEventListener('click',function(){if(input){input.value='';input.focus();}clear.hidden=true;window.renderDataView();});}
+    var box=document.getElementById('dataView');if(!box)return;if(!DB||!Array.isArray(DB.foods)){box.innerHTML='<div class="axe-empty-v87">시트 데이터를 불러오는 중입니다.</div>';return;}
+    if(activeTab==='foods'){
+      var foods=(DB.foods||[]).filter(function(r){return isTrue(r['사용여부']);}).map(function(r){return [t(r['요리명']),r];}).filter(function(x){return x[0];}).sort(function(a,b){return a[0].localeCompare(b[0],'ko');});
+      renderBrowserV91(box,foods,function(name){return foodDetailV91(name);});
+    }else if(activeTab==='materials'){
+      renderBrowserV91(box,groupedV91((DB.materials||[]).filter(function(r){return isTrue(r['사용여부']);}),'재료명'),materialDetailV91);
+    }else if(activeTab==='processes'){
+      renderBrowserV91(box,groupedV91((DB.processes||[]).filter(function(r){return isTrue(r['사용여부']);}),'가공재료명'),processDetailV91);
+    }else{
+      renderBrowserV91(box,groupedV91((DB.recipes||[]),'요리명'),function(name){return foodDetailV91(name);});
+    }
+  };
+  try{renderDataView=window.renderDataView;}catch(e){}
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(function(){try{window.renderDataView();}catch(e){}},0);});
+  window.axeCookV91Debug=function(){return {version:'v91-data-detail-chip-compact'};};
+})();
+</script>
+
+<style id="axeCookV94DataActionsFinalStyle">
+/* AXE COOK v94: 데이터 상세 작업/즐겨찾기 버튼 최종 오버라이드 */
+#viewData .axe-detail-head-v94{
+  display:flex!important;
+  align-items:flex-start!important;
+  justify-content:flex-start!important;
+  gap:10px!important;
+  margin-bottom:12px!important;
+  min-width:0!important;
+}
+#viewData .axe-detail-main-v94{min-width:0!important;}
+#viewData .axe-detail-title-row-v94{
+  display:flex!important;
+  align-items:center!important;
+  gap:8px!important;
+  flex-wrap:wrap!important;
+  min-width:0!important;
+}
+#viewData .axe-detail-title-row-v94 .axe-detail-title-v87{margin:0!important;}
+#viewData .axe-data-actions-v94{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:6px!important;
+  white-space:nowrap!important;
+}
+#viewData .axe-data-action-v94{
+  height:30px!important;
+  padding:0 10px!important;
+  border-radius:10px!important;
+  font-size:12px!important;
+  font-weight:1000!important;
+  line-height:1!important;
+}
+#viewData .axe-data-action-v94.axe-work-v94{
+  background:linear-gradient(135deg,#ffcf61,#ffb52e)!important;
+  border-color:rgba(255,181,46,.75)!important;
+  color:#17100a!important;
+}
+#viewData .axe-fav-btn-v94{
+  min-width:34px!important;
+  padding:0 9px!important;
+  border-color:rgba(255,181,46,.24)!important;
+  color:#9ba5b5!important;
+  background:rgba(255,255,255,.035)!important;
+}
+#viewData .axe-fav-btn-v94 .star-v94{
+  font-size:15px!important;
+  line-height:1!important;
+  color:#8d95a3!important;
+}
+#viewData .axe-fav-btn-v94.is-fav{
+  border-color:rgba(255,181,46,.42)!important;
+  background:rgba(255,181,46,.12)!important;
+  color:var(--gold2)!important;
+}
+#viewData .axe-fav-btn-v94.is-fav .star-v94{
+  color:var(--gold2)!important;
+  text-shadow:0 0 12px rgba(255,181,46,.28)!important;
+}
+#viewData .axe-detail-badges-v87{margin-top:8px!important;}
+#favStrip .fav{
+  max-width:160px!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+#orderList .order-name-v84,
+#orderList .order-name-v83,
+#orderList .order-name{cursor:default!important;}
+@media(max-width:720px){
+  #viewData .axe-detail-title-row-v94{align-items:flex-start!important;flex-direction:column!important;gap:7px!important;}
+  #viewData .axe-data-actions-v94{width:100%!important;}
+}
+</style>
+<script id="axeCookV94DataActionsFinalScript">
+(function(){
+  function esc(v){return h(v==null?'':v);}
+  function txt(v){return text(v==null?'':v);}
+  function norm(v){return txt(v).toLowerCase().trim();}
+  function groupedV94(list,key){var m=new Map();(list||[]).forEach(function(r){var n=txt(r[key]);if(!n)return;if(!m.has(n))m.set(n,[]);m.get(n).push(r);});return Array.from(m.entries()).sort(function(a,b){return a[0].localeCompare(b[0],'ko');});}
+  function recipesForV94(name){return (DB.recipes||[]).filter(function(r){return txt(r['요리명'])===name;});}
+  function matchV94(name){var input=document.getElementById('dataSearchV87');var q=norm(input?input.value:'');return !q||norm(name).includes(q);}
+  function matChipV94(name,qty){return '<div class="axe-line-v87"><span>'+esc(name)+'</span><b>'+esc(qty||'-')+'</b></div>';}
+  function favBtnV94(name){var on=(favorites||[]).includes(name);return '<button class="btn ghost axe-data-action-v94 axe-fav-btn-v94 '+(on?'is-fav':'')+'" type="button" data-fav-v94="'+esc(name)+'" title="'+(on?'즐겨찾기 해제':'즐겨찾기 추가')+'"><span class="star-v94">'+(on?'★':'☆')+'</span></button>';}
+  function actionHeadV94(name,badges){
+    return '<div class="axe-detail-head-v94"><div class="axe-detail-main-v94"><div class="axe-detail-title-row-v94"><div class="axe-detail-title-v87">'+esc(name)+'</div><div class="axe-data-actions-v94"><button class="btn primary axe-data-action-v94 axe-work-v94" type="button" data-add-v94="'+esc(name)+'">작업+</button>'+favBtnV94(name)+'</div></div>'+(badges?'<div class="axe-detail-badges-v87">'+badges+'</div>':'')+'</div></div>';
+  }
+  function foodDetailV94(name){
+    var food=getFood(name)||{};var rec=recipesForV94(name);
+    var badges='<span class="axe-badge-v87">'+esc(food['등급']||'등급 미확인')+'</span><span class="axe-badge-v87 gold">1세트 '+esc(getSetQty(food))+'개</span>';
+    var effect=txt(food['효과']||'미확인');var time=txt(food['지속시간']||'미확인');
+    return actionHeadV94(name,badges)+
+      '<div class="axe-info-grid-v87"><div class="axe-info-v87"><div class="axe-info-label-v87">효과</div><div class="axe-info-value-v87">'+esc(effect)+'</div></div><div class="axe-info-v87"><div class="axe-info-label-v87">지속시간</div><div class="axe-info-value-v87">'+esc(time)+'</div></div></div>'+ 
+      '<div class="axe-line-list-v87">'+(rec.length?rec.map(function(r){return matChipV94(r['재료명'],r['필요수량']);}).join(''):'<div class="axe-empty-v87">등록된 레시피가 없습니다.</div>')+'</div>';
+  }
+  function materialDetailV94(name,rows){
+    return '<div class="axe-detail-head-v87"><div><div class="axe-detail-title-v87">'+esc(name)+'</div></div></div><div class="axe-line-list-v87">'+rows.map(function(r){
+      var where=txt(r['구매처']||'-');var pack=txt(r['묶음수량'])||'1';var price=txt(r['묶음가격'])||'-';
+      return '<div class="axe-line-v87"><span>'+esc(where)+' <span class="axe-line-sub-v87">'+esc(pack)+'개 묶음</span></span><b>'+esc(price)+'원</b></div>';
+    }).join('')+'</div>';
+  }
+  function processDetailV94(name,rows){
+    var time=txt((rows.find(function(r){return txt(r['가공시간']);})||{})['가공시간'])||'미확인';
+    var mats=rows.filter(function(r){return txt(r['하위재료명']);});
+    return '<div class="axe-detail-head-v87"><div><div class="axe-detail-title-v87">'+esc(name)+'</div><div class="axe-detail-badges-v87"><span class="axe-badge-v87 gold">가공시간 '+esc(time)+'</span></div></div></div><div class="axe-process-mini-v87">'+(mats.length?mats.map(function(r){return '<span class="axe-mini-chip-v87">'+esc(r['하위재료명'])+(txt(r['필요수량'])?' <b>'+esc(r['필요수량'])+'</b>':'')+'</span>';}).join(''):'<span class="axe-mini-chip-v87">하위재료 미확인</span>')+'</div>';
+  }
+  function bindDetailV94(detail,rerender){
+    detail.querySelectorAll('[data-add-v94]').forEach(function(b){b.addEventListener('click',function(){addOrder(b.dataset.addV94,1);});});
+    detail.querySelectorAll('[data-fav-v94]').forEach(function(b){b.addEventListener('click',function(){toggleFavorite(b.dataset.favV94); if(typeof renderFavorites==='function')renderFavorites(); rerender();});});
+  }
+  function renderBrowserV94(box,items,detailFn){
+    items=items.filter(function(it){return matchV94(it[0]);});
+    if(!items.length){box.innerHTML='<div class="axe-empty-v87">검색 결과가 없습니다.</div>';return;}
+    var current=items[0][0];
+    box.innerHTML='<div class="axe-data-browser-v87"><div class="axe-data-list-v87">'+items.map(function(it,i){return '<button class="axe-data-pick-v87 '+(i===0?'active':'')+'" type="button" data-name-v94="'+esc(it[0])+'"><span>'+esc(it[0])+'</span></button>';}).join('')+'</div><div id="axeDataDetailV94" class="axe-data-detail-v87"></div></div>';
+    function show(name){current=name;var target=items.find(function(it){return it[0]===name;})||items[0];var detail=document.getElementById('axeDataDetailV94');if(detail){detail.innerHTML=detailFn(target[0],target[1]);bindDetailV94(detail,function(){show(current);});}}
+    box.querySelectorAll('[data-name-v94]').forEach(function(b){b.addEventListener('click',function(){box.querySelectorAll('.axe-data-pick-v87').forEach(function(x){x.classList.remove('active');});b.classList.add('active');show(b.dataset.nameV94);});});
+    show(current);
+  }
+  window.renderDataView=function(){
+    var input=document.getElementById('dataSearchV87');var clear=document.getElementById('dataSearchClearV87');
+    if(input&&!input.dataset.v94Bound){input.dataset.v94Bound='1';input.addEventListener('input',function(){if(clear)clear.hidden=!input.value;window.renderDataView();});}
+    if(clear&&!clear.dataset.v94Bound){clear.dataset.v94Bound='1';clear.addEventListener('click',function(){if(input){input.value='';input.focus();}clear.hidden=true;window.renderDataView();});}
+    var box=document.getElementById('dataView');if(!box)return;if(!DB||!Array.isArray(DB.foods)){box.innerHTML='<div class="axe-empty-v87">시트 데이터를 불러오는 중입니다.</div>';return;}
+    if(activeTab==='foods'){
+      var foods=(DB.foods||[]).filter(function(r){return isTrue(r['사용여부']);}).map(function(r){return [txt(r['요리명']),r];}).filter(function(x){return x[0];}).sort(function(a,b){return a[0].localeCompare(b[0],'ko');});
+      renderBrowserV94(box,foods,function(name){return foodDetailV94(name);});
+    }else if(activeTab==='materials'){
+      renderBrowserV94(box,groupedV94((DB.materials||[]).filter(function(r){return isTrue(r['사용여부']);}),'재료명'),materialDetailV94);
+    }else if(activeTab==='processes'){
+      renderBrowserV94(box,groupedV94((DB.processes||[]).filter(function(r){return isTrue(r['사용여부']);}),'가공재료명'),processDetailV94);
+    }else{
+      renderBrowserV94(box,groupedV94((DB.recipes||[]),'요리명'),function(name){return foodDetailV94(name);});
+    }
+  };
+  renderFavorites=function(){
+    var box=document.getElementById('favStrip');if(!box)return;var valid=(favorites||[]).filter(getFood).slice(0,10);
+    if(!valid.length){box.innerHTML='<span class="pill">즐겨찾기 없음</span>';return;}
+    box.innerHTML=valid.map(function(n){return '<button class="fav" data-add="'+esc(n)+'" title="'+esc(n)+'">'+esc(n)+'</button>';}).join('');
+    box.querySelectorAll('[data-add]').forEach(function(b){b.addEventListener('click',function(){addOrder(b.dataset.add,1);});});
+  };
+  try{renderDataView=window.renderDataView;}catch(e){}
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(function(){try{renderFavorites();window.renderDataView();}catch(e){}},0);});
+  window.axeCookV94Debug=function(){return {version:'v94-data-actions-final-after-v91'};};
+})();
+</script>
+
+<style>
+/* AXE COOK v95: 작업목록 음식명 커스텀 툴팁 */
+#axeOrderNameTooltipV95{
+  position:fixed!important;
+  z-index:999999!important;
+  max-width:min(360px,calc(100vw - 28px))!important;
+  padding:9px 12px!important;
+  border-radius:12px!important;
+  border:1px solid rgba(255,181,46,.28)!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025)),rgba(10,12,16,.96)!important;
+  color:#f4f7fb!important;
+  font-size:13px!important;
+  font-weight:1000!important;
+  letter-spacing:-.15px!important;
+  line-height:1.35!important;
+  box-shadow:0 18px 50px rgba(0,0,0,.46),0 0 0 1px rgba(255,255,255,.025) inset!important;
+  pointer-events:none!important;
+  opacity:0!important;
+  transform:translate(-50%,-8px) scale(.985)!important;
+  transition:opacity .12s ease,transform .12s ease!important;
+  white-space:normal!important;
+  word-break:keep-all!important;
+  overflow-wrap:anywhere!important;
+}
+#axeOrderNameTooltipV95.show{
+  opacity:1!important;
+  transform:translate(-50%,-14px) scale(1)!important;
+}
+#axeOrderNameTooltipV95::after{
+  content:''!important;
+  position:absolute!important;
+  left:50%!important;
+  bottom:-6px!important;
+  width:10px!important;
+  height:10px!important;
+  transform:translateX(-50%) rotate(45deg)!important;
+  background:rgba(10,12,16,.96)!important;
+  border-right:1px solid rgba(255,181,46,.22)!important;
+  border-bottom:1px solid rgba(255,181,46,.22)!important;
+}
+#orderList .order-name-v84,
+#orderList .order-name-v83,
+#orderList .order-name{
+  cursor:help!important;
+}
+</style>
+<script>
+(function(){
+  'use strict';
+  function ensureTip(){
+    var tip=document.getElementById('axeOrderNameTooltipV95');
+    if(!tip){
+      tip=document.createElement('div');
+      tip.id='axeOrderNameTooltipV95';
+      tip.setAttribute('role','tooltip');
+      document.body.appendChild(tip);
+    }
+    return tip;
+  }
+  function orderNameEl(target){
+    if(!target || !target.closest)return null;
+    return target.closest('#orderList .order-name-v84,#orderList .order-name-v83,#orderList .order-name');
+  }
+  function shouldShow(el){
+    if(!el)return false;
+    var text=(el.getAttribute('data-fullname-v95')||el.textContent||'').trim();
+    if(!text)return false;
+    return el.scrollWidth > el.clientWidth + 2 || text.length >= 7;
+  }
+  function placeTip(tip,x,y){
+    var pad=14;
+    var rect=tip.getBoundingClientRect();
+    var left=Math.max(pad+rect.width/2,Math.min(window.innerWidth-pad-rect.width/2,x));
+    var top=y-18;
+    if(top-rect.height < pad){
+      top=y+rect.height+22;
+      tip.style.transform='translate(-50%,8px) scale(1)';
+    }else{
+      tip.style.transform='translate(-50%,-14px) scale(1)';
+    }
+    tip.style.left=left+'px';
+    tip.style.top=top+'px';
+  }
+  var active=null;
+  document.addEventListener('mouseover',function(e){
+    var el=orderNameEl(e.target);
+    if(!el || !shouldShow(el))return;
+    active=el;
+    var tip=ensureTip();
+    var text=(el.getAttribute('data-fullname-v95')||el.textContent||'').trim();
+    tip.textContent=text;
+    tip.classList.add('show');
+    placeTip(tip,e.clientX,e.clientY);
+  },true);
+  document.addEventListener('mousemove',function(e){
+    if(!active)return;
+    var tip=ensureTip();
+    if(tip.classList.contains('show'))placeTip(tip,e.clientX,e.clientY);
+  },true);
+  document.addEventListener('mouseout',function(e){
+    var el=orderNameEl(e.target);
+    if(!el)return;
+    var to=e.relatedTarget;
+    if(to && el.contains(to))return;
+    active=null;
+    var tip=ensureTip();
+    tip.classList.remove('show');
+  },true);
+  function tagNames(){
+    document.querySelectorAll('#orderList .order-name-v84,#orderList .order-name-v83,#orderList .order-name').forEach(function(el){
+      var text=(el.textContent||'').trim();
+      if(text){
+        el.setAttribute('data-fullname-v95',text);
+        el.removeAttribute('title');
+      }
+    });
+  }
+  var oldRender=window.renderOrders;
+  if(typeof oldRender==='function' && !oldRender.__axeV95Wrapped){
+    var wrapped=function(){
+      var r=oldRender.apply(this,arguments);
+      setTimeout(tagNames,0);
+      return r;
+    };
+    wrapped.__axeV95Wrapped=true;
+    window.renderOrders=wrapped;
+    try{renderOrders=wrapped;}catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(tagNames,0);});
+  setTimeout(tagNames,0);
+})();
+</script>
