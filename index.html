@@ -9479,12 +9479,36 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
   }
   function bindRecipeEditor(){const box=document.getElementById('v116RecipeLines');if(!box)return;function sync(){recipeLines=[...box.querySelectorAll('[data-r]')].map(line=>({name:line.querySelector('[data-rf="name"]').value,qty:line.querySelector('[data-rf="qty"]').value}));}
     box.addEventListener('input',sync);box.addEventListener('click',e=>{const b=e.target.closest('[data-rdel]');if(!b)return;e.preventDefault();e.stopPropagation();syncSingleFormState();sync();recipeLines.splice(Number(b.dataset.rdel),1);renderForm();});document.getElementById('v116RecipeAdd')?.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();syncSingleFormState();sync();recipeLines.push({name:'',qty:''});renderForm();});}
-  function renderGroupForm(){const c=cfg[current],form=document.getElementById('v116Form');const key=selected?.key||'';const rows=selected?.lines||[{name:'',qty:'',time:''}];form.innerHTML=`<div class="v116-field full"><label>${c.label}명</label><input data-g="key" value="${esc(key)}"></div><div class="v116-recipe-box"><div class="v116-recipe-head"><span>구성</span><button class="v116-btn" id="v116LineAdd" type="button">재료 추가</button></div><div class="v116-recipe-lines" id="v116Lines">${rows.map((r,i)=>`<div class="v116-recipe-line" data-line="${i}"><input data-lf="name" placeholder="재료명" value="${esc(r.name)}"><input data-lf="qty" placeholder="수량" value="${esc(r.qty)}"><button class="v116-btn danger" type="button" data-ldel="${i}">×</button></div>`).join('')}</div></div>`;bindGroupEditor();}
-  function syncGroupEditorState(){
-    const lines=[...document.querySelectorAll('#v116Lines [data-line]')].map(line=>({name:line.querySelector('[data-lf="name"]').value,qty:line.querySelector('[data-lf="qty"]').value}));
-    selected={key:document.querySelector('#v116Form [data-g="key"]')?.value||'',lines:lines.length?lines:[{name:'',qty:''}]};
+  function renderGroupForm(){
+    const c=cfg[current],form=document.getElementById('v116Form');
+    const key=selected?.key||'';
+    const rows=selected?.lines&&selected.lines.length?selected.lines:[{name:'',qty:'',extra:'',time:''}];
+    const groupTime=selected?.groupTime || rows.find(r=>txt(r.time))?.time || '';
+    const timeField=current==='processes'?`<div class="v116-field"><label>가공시간</label><input data-g="time" value="${esc(groupTime)}" placeholder="예: 5초"></div>`:'';
+    const lineGridClass=current==='processes'?'v126-process-lines':'v126-basic-lines';
+    form.innerHTML=`<div class="v116-field ${current==='processes'?'':'full'}"><label>${c.label}명</label><input data-g="key" value="${esc(key)}" placeholder="예: 고기 양념"></div>${timeField}<div class="v116-recipe-box"><div class="v116-recipe-head"><span>구성</span><button class="v116-btn" id="v116LineAdd" type="button">재료 추가</button></div><div class="v116-recipe-lines ${lineGridClass}" id="v116Lines">${rows.map((r,i)=>`<div class="v116-recipe-line" data-line="${i}"><input data-lf="name" placeholder="하위재료명" value="${esc(r.name)}"><input data-lf="qty" placeholder="필요수량" value="${esc(r.qty)}">${current==='processes'?`<input data-lf="extra" placeholder="결과수량" value="${esc(r.extra||'')}">`:''}<button class="v116-btn danger" type="button" data-ldel="${i}">×</button></div>`).join('')}</div></div>`;
+    bindGroupEditor();
   }
-  function bindGroupEditor(){const box=document.getElementById('v116Lines');if(!box)return;box.addEventListener('input',syncGroupEditorState);box.addEventListener('click',e=>{const b=e.target.closest('[data-ldel]');if(!b)return;e.preventDefault();e.stopPropagation();syncGroupEditorState();selected.lines.splice(Number(b.dataset.ldel),1);renderForm();});document.getElementById('v116LineAdd')?.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();syncGroupEditorState();selected.lines.push({name:'',qty:''});renderForm();});}
+  function syncGroupEditorState(){
+    const groupTime=document.querySelector('#v116Form [data-g="time"]')?.value||'';
+    const lines=[...document.querySelectorAll('#v116Lines [data-line]')].map(line=>({
+      id:line.dataset.id||'',
+      name:line.querySelector('[data-lf="name"]')?.value||'',
+      qty:line.querySelector('[data-lf="qty"]')?.value||'',
+      extra:line.querySelector('[data-lf="extra"]')?.value||'',
+      time:groupTime
+    }));
+    selected={key:document.querySelector('#v116Form [data-g="key"]')?.value||'',groupTime,lines:lines.length?lines:[{name:'',qty:'',extra:'',time:groupTime}]};
+  }
+  function bindGroupEditor(){
+    const box=document.getElementById('v116Lines');if(!box)return;
+    const onSync=()=>syncGroupEditorState();
+    box.addEventListener('input',onSync);
+    document.querySelector('#v116Form [data-g="key"]')?.addEventListener('input',onSync);
+    document.querySelector('#v116Form [data-g="time"]')?.addEventListener('input',onSync);
+    box.addEventListener('click',e=>{const b=e.target.closest('[data-ldel]');if(!b)return;e.preventDefault();e.stopPropagation();syncGroupEditorState();selected.lines.splice(Number(b.dataset.ldel),1);if(!selected.lines.length)selected.lines=[{name:'',qty:'',extra:'',time:selected.groupTime||''}];renderForm();});
+    document.getElementById('v116LineAdd')?.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();syncGroupEditorState();selected.lines.push({name:'',qty:'',extra:'',time:selected.groupTime||''});renderForm();});
+  }
   function renderList(){const box=document.getElementById('v116List');if(!box)return;const list=records();if(!list.length){box.innerHTML='<div class="v116-empty">검색 결과가 없습니다.</div>';return;}const c=cfg[current];box.innerHTML=list.map((it,i)=>c.groupMaterials?materialRow(it,i):c.group?groupRow(it,i):singleRow(it,i)).join('');}
   function singleRow(r,i){const c=cfg[current],name=txt(c.title(r));const key=current+'::'+txt(r[c.id]||name);return `<div class="v116-row ${detailKey===key?'active':''}" data-i="${i}" data-key="${esc(key)}"><div class="v116-row-main"><div class="v116-row-name">${esc(name)}</div><div class="v116-row-meta">${metaSingle(r)}</div></div><div class="v116-row-actions"><button class="v116-btn" data-act="view" type="button">보기</button><button class="v116-btn" data-act="edit" type="button">수정</button></div>${detailKey===key?detailSingle(r):''}</div>`;}
   function metaSingle(r){if(current==='foods')return `<span class="v116-chip">${esc(r['등급']||'-')}</span><span class="v116-chip gold">1세트 ${esc(r['1세트수량']||'-')}</span>`;if(current==='farm')return `<span class="v116-chip">${esc(r['획득처']||'-')}</span>`;return '';}
@@ -9496,9 +9520,33 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
   function payloadSingle(){const c=cfg[current],o=collect(),p={};if(c.apiId)p[c.apiId]=o.__id||o[c.apiId]||selected?.__id||'';(c.fields||[]).forEach(([api])=>p[api]=o[api]||'');if(!p.is_active)p.is_active='TRUE';return p;}
   async function saveSingle(){const c=cfg[current];const p=payloadSingle();if(current==='foods'&&!txt(p.food_name)){alert('요리명을 입력하세요');return;}if(current==='materials'&&!txt(p.material_name)){alert('재료명을 입력하세요');return;}const ok=await modal({title:'시트에 저장할까요?',message:'현재 입력한 내용을 Google Sheet에 반영합니다.',yes:'예',no:'아니오'});if(!ok)return;const res=await api('saveRecord',{kind:c.apiKind,payload:JSON.stringify(p)});if(!res||!res.ok)throw new Error(res&&res.error?res.error:'저장 실패');if(current==='foods'){const food=p.food_name;const rows=[...document.querySelectorAll('#v116RecipeLines [data-r]')].map((el,i)=>({name:txt(el.querySelector('[data-rf="name"]').value),qty:txt(el.querySelector('[data-rf="qty"]').value),sort_order:String(i+1)})).filter(x=>x.name&&x.qty);for(const r of rows){await api('saveRecord',{kind:'recipes',payload:JSON.stringify({food_name:food,material_name:r.name,required_qty:r.qty,is_active:'TRUE',sort_order:r.sort_order})});}}
     await reload('저장 완료');}
-  async function save(){try{if(cfg[current].group){alert('가공 저장은 기존 방식 안정화 후 다시 연결하겠습니다.');return;}await saveSingle();}catch(e){console.error(e);alert('저장 실패: '+e.message);}}
+  async function saveGroup(){
+    if(current!=='processes'){alert('현재 그룹 저장은 가공 항목만 지원합니다.');return;}
+    syncGroupEditorState();
+    const key=txt(selected?.key), groupTime=txt(selected?.groupTime);
+    if(!key){alert('가공재료명을 입력하세요');return;}
+    if(!groupTime){alert('가공시간을 입력하세요');return;}
+    const rows=(selected?.lines||[]).map((r,i)=>({
+      id:txt(r.id),name:txt(r.name),qty:txt(r.qty),extra:txt(r.extra),time:groupTime,sort_order:String(i+1)
+    })).filter(r=>r.name&&r.qty);
+    if(!rows.length){alert('저장할 구성 재료가 없습니다.');return;}
+    const ok=await modal({title:'시트에 저장할까요?',message:'가공 구성과 가공시간을 Google Sheet에 반영합니다.',yes:'예',no:'아니오'});
+    if(!ok)return;
+    const existing=mode==='edit'&&detailKey?records().find(g=>current+'::'+g.key===detailKey):null;
+    const oldIds=new Set((existing?.rows||[]).map(x=>txt(x.row.id)).filter(Boolean));
+    const savedIds=new Set();
+    for(const r of rows){
+      const payload={process_id:r.id,process_material_name:key,input_material_name:r.name,required_qty:r.qty,result_qty:r.extra,process_time:r.time,is_active:'TRUE',sort_order:r.sort_order,memo:''};
+      const res=await api('saveRecord',{kind:'processes',payload:JSON.stringify(payload)});
+      if(!res||!res.ok)throw new Error(res&&res.error?res.error:'저장 실패');
+      savedIds.add(res.id||r.id);
+    }
+    for(const id of oldIds){if(id&&!savedIds.has(id)){try{await api('deleteRecord',{kind:'processes',id});}catch(e){console.warn('old process delete failed',id,e);}}}
+    await reload('가공 저장 완료');
+  }
+  async function save(){try{if(cfg[current].group){await saveGroup();return;}await saveSingle();}catch(e){console.error(e);alert('저장 실패: '+e.message);}}
   async function disable(){const ok=await modal({title:'미사용 처리할까요?',message:'현재 선택한 항목을 미사용 처리합니다.',yes:'예',no:'아니오'});if(!ok)return;alert('미사용 처리는 기존 관리 기능 안정화 후 다시 연결하겠습니다.');}
-  function bind(){const root=document.querySelector('#viewSettings .v116-settings-shell');root.addEventListener('click',e=>{const tab=e.target.closest('[data-cat]');if(tab){current=tab.dataset.cat;mode='new';selected=blank();detailKey='';recipeLines=[];mount();return;}if(e.target.closest('#v116New')){mode='new';selected=blank();detailKey='';recipeLines=[];renderForm();renderList();return;}if(e.target.closest('#v116Reload')){reload('시트 새로고침 완료');return;}if(e.target.closest('#v116Save')){save();return;}if(e.target.closest('#v116Disable')){disable();return;}const med=e.target.closest('[data-medit]');if(med){current='materials';const row=(DB.materials||[])[Number(med.dataset.medit)];selected=fromDb(row);mode='edit';recipeLines=[];renderForm();return;}const act=e.target.closest('[data-act]');if(act){const row=act.closest('[data-i]'),i=Number(row.dataset.i),list=records(),item=list[i];if(act.dataset.act==='view'){detailKey=detailKey===row.dataset.key?'':row.dataset.key;renderList();return;}if(act.dataset.act==='edit'){detailKey=row.dataset.key;mode='edit';if(cfg[current].group){selected={key:item.key,lines:item.rows.map(x=>({name:txt(x.row[cfg[current].name]),qty:txt(x.row[cfg[current].qty]),time:txt(x.row[cfg[current].time])}))};}else{selected=fromDb(item);recipeLines=[];}renderForm();renderList();return;}}});document.getElementById('v116Search')?.addEventListener('input',()=>{detailKey='';renderList();});}
+  function bind(){const root=document.querySelector('#viewSettings .v116-settings-shell');root.addEventListener('click',e=>{const tab=e.target.closest('[data-cat]');if(tab){current=tab.dataset.cat;mode='new';selected=blank();detailKey='';recipeLines=[];mount();return;}if(e.target.closest('#v116New')){mode='new';selected=blank();detailKey='';recipeLines=[];renderForm();renderList();return;}if(e.target.closest('#v116Reload')){reload('시트 새로고침 완료');return;}if(e.target.closest('#v116Save')){save();return;}if(e.target.closest('#v116Disable')){disable();return;}const med=e.target.closest('[data-medit]');if(med){current='materials';const row=(DB.materials||[])[Number(med.dataset.medit)];selected=fromDb(row);mode='edit';recipeLines=[];renderForm();return;}const act=e.target.closest('[data-act]');if(act){const row=act.closest('[data-i]'),i=Number(row.dataset.i),list=records(),item=list[i];if(act.dataset.act==='view'){detailKey=detailKey===row.dataset.key?'':row.dataset.key;renderList();return;}if(act.dataset.act==='edit'){detailKey=row.dataset.key;mode='edit';if(cfg[current].group){const c=cfg[current];const lines=item.rows.map(x=>({id:txt(x.row[c.id]),name:txt(x.row[c.name]),qty:txt(x.row[c.qty]),extra:txt(x.row['결과수량']),time:txt(x.row[c.time])}));selected={key:item.key,groupTime:(lines.find(x=>txt(x.time))||{}).time||'',lines};}else{selected=fromDb(item);recipeLines=[];}renderForm();renderList();return;}}});document.getElementById('v116Search')?.addEventListener('input',()=>{detailKey='';renderList();});}
   function modal(o){return new Promise(resolve=>{let r=document.getElementById('axeModalV116');if(!r){r=document.createElement('div');r.id='axeModalV116';document.body.appendChild(r);}r.innerHTML=`<div class="card"><h3>${esc(o.title||'확인')}</h3><p>${esc(o.message||'')}</p><div class="actions"><button class="yes" type="button">${esc(o.yes||'예')}</button><button class="no" type="button">${esc(o.no||'아니오')}</button></div></div>`;r.classList.add('show');const close=v=>{r.classList.remove('show');resolve(v);};r.querySelector('.yes').onclick=()=>close(true);r.querySelector('.no').onclick=()=>close(false);r.onclick=e=>{if(e.target===r)close(false);};});}
   function getOrders(){try{return Array.isArray(window.orders)?window.orders:(Array.isArray(orders)?orders:[]);}catch(e){return [];} }
   function setOrders(v){try{orders=v;}catch(e){}window.orders=v;}
@@ -9523,6 +9571,14 @@ window.addEventListener('load',function(){
  },1050);
 });
 </script>
+
+<style id="axeCookV126ProcessTimeEditorPatch">
+#viewSettings .v116-recipe-lines.v126-process-lines .v116-recipe-line{grid-template-columns:minmax(0,1fr) 82px 82px 34px!important;}
+#viewSettings .v116-recipe-lines.v126-basic-lines .v116-recipe-line{grid-template-columns:minmax(0,1fr) 76px 34px!important;}
+#viewSettings .v116-recipe-box{grid-column:1/-1!important;}
+#viewSettings .v116-field [data-g="time"]{border-color:rgba(255,181,46,.22)!important;background:rgba(255,181,46,.035)!important;}
+@media(max-width:720px){#viewSettings .v116-recipe-lines.v126-process-lines .v116-recipe-line{grid-template-columns:1fr 80px 80px 34px!important;}}
+</style>
 </body>
 </html>
 
