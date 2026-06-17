@@ -1569,29 +1569,6 @@ body{
 #viewHome .axe-hero-v50 .axe-hero-label-v50,
 #viewHome .axe-hero-v50 small{display:none!important;}
 </style>
-
-
-<style id="axeCookV130fBannerBottomExpandStyle">
-/* AXE COOK v130f: 배너 하단 여백만 소폭 확장 - 이미지 재생성 없이 표시 영역 조정 */
-#viewHome .axe-hero-v50{
-  height:265px!important;
-  min-height:265px!important;
-  max-height:265px!important;
-}
-#viewHome .axe-hero-img-v55{
-  width:100%!important;
-  height:100%!important;
-  object-fit:cover!important;
-  object-position:center 42%!important;
-}
-@media(max-width:1280px){
-  #viewHome .axe-hero-v50{height:245px!important;min-height:245px!important;max-height:245px!important;}
-}
-@media(max-width:760px){
-  #viewHome .axe-hero-v50{height:170px!important;min-height:170px!important;max-height:170px!important;}
-}
-</style>
-
 </head>
 <body><div id="axeBrandSplash" aria-label="AXE COOK 시작 화면"><img src="axe.png" alt="AXE"></div>
 
@@ -11992,24 +11969,3 @@ window.addEventListener('load',function(){
   window.axeCookV123Debug=function(){return{version:VERSION,expanded:isExpanded(),favorites:getValidFavorites().length};};
 })();
 </script>
-
-<style id="axeCookV130hBannerBalanceStyle">
-/* AXE COOK v130h: 배너 하단은 조금 더 보이되 상단 AXE 잘림 방지 */
-#viewHome.app-view.active[data-view-panel="home"]{
-  grid-template-rows:258px 136px 136px minmax(270px,auto)!important;
-}
-#viewHome .axe-hero-v50{
-  height:258px!important;
-  min-height:258px!important;
-  max-height:258px!important;
-}
-#viewHome .axe-hero-img-v55{
-  object-fit:cover!important;
-  object-position:center 52%!important;
-}
-@media(max-width:1280px){
-  #viewHome.app-view.active[data-view-panel="home"]{grid-template-rows:auto!important;}
-  #viewHome .axe-hero-v50{height:auto!important;min-height:0!important;max-height:none!important;}
-  #viewHome .axe-hero-img-v55{height:auto!important;object-fit:contain!important;object-position:center center!important;}
-}
-</style>
