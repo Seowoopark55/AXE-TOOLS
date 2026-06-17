@@ -2050,7 +2050,7 @@ function loadSheetPayloadJsonp(url){
     const timer=setTimeout(()=>{
       cleanup();
       reject(new Error('시트 데이터 로딩 시간이 초과되었습니다.'));
-    },9000);
+    },3500);
     function cleanup(){
       clearTimeout(timer);
       try{delete window[cb];}catch(e){window[cb]=undefined;}
@@ -6487,7 +6487,7 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
     if(hidden)return; hidden=true;
     var loader=qs('bootLoaderV69'); if(!loader)return;
     var elapsed=Date.now()-started;
-    var delay=Math.max(0,520-elapsed);
+    var delay=Math.max(0,420-elapsed);
     setTimeout(function(){
       loader.classList.add('is-leaving');
       setTimeout(function(){if(loader&&loader.parentNode)loader.parentNode.removeChild(loader);},360);
@@ -6498,8 +6498,8 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
     if(window.AXE_COOK_BOOT_READY){clearInterval(readyTimer);clearInterval(msgTimer);hideLoader();}
   },80);
   window.addEventListener('load',function(){setTimeout(function(){if(window.AXE_COOK_BOOT_READY){clearInterval(readyTimer);clearInterval(msgTimer);hideLoader();}},80);});
-  setTimeout(function(){clearInterval(readyTimer);clearInterval(msgTimer);hideLoader();},10000);
-  window.axeCookV69LoadingDebug=function(){return {version:'v69',visible:!hidden,ready:!!window.AXE_COOK_BOOT_READY,elapsed:Date.now()-started};};
+  setTimeout(function(){clearInterval(readyTimer);clearInterval(msgTimer);hideLoader();},4500);
+  window.axeCookV69LoadingDebug=function(){return {version:'v70-real-loading',visible:!hidden,ready:!!window.AXE_COOK_BOOT_READY,elapsed:Date.now()-started};};
 })();
 </script>
 
