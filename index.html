@@ -10037,3 +10037,316 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
 </script>
+
+<style id="axeCookV113SettingsCompactRedesignStyle">
+/* AXE COOK v113: settings compact redesign + recipe merge view */
+#viewSettings .page-panel.settings-page-panel{
+  max-width:1280px!important;
+  min-height:0!important;
+  padding:16px!important;
+}
+#viewSettings .page-head-v23{
+  margin-bottom:12px!important;
+  align-items:center!important;
+}
+#viewSettings .panel-title.no-margin{
+  font-size:19px!important;
+  line-height:1.1!important;
+}
+#viewSettings .panel-title small,
+#viewSettings .page-head-v23>.pill.ok{
+  display:none!important;
+}
+#viewSettings .page-desc-v23{
+  margin-top:7px!important;
+  font-size:12.5px!important;
+  color:#aeb8c8!important;
+}
+#viewSettings .settings-tabs-v36{
+  margin-bottom:12px!important;
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:7px!important;
+}
+#viewSettings #settingsTabs [data-manage="recipes"]{
+  display:none!important;
+}
+#viewSettings .settings-work-v36{
+  display:grid!important;
+  grid-template-columns:minmax(420px,.92fr) minmax(480px,1.08fr)!important;
+  gap:12px!important;
+  align-items:start!important;
+}
+#viewSettings .setting-editor-v36,
+#viewSettings .setting-list-v36{
+  border-radius:18px!important;
+  padding:12px!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.016))!important;
+  border:1px solid rgba(255,255,255,.085)!important;
+  box-shadow:0 18px 50px rgba(0,0,0,.22)!important;
+}
+#viewSettings .setting-editor-head-v36,
+#viewSettings .setting-list-head-v36{
+  margin-bottom:10px!important;
+  min-height:34px!important;
+}
+#viewSettings .setting-editor-head-v36 b{
+  color:#fff!important;
+  font-size:18px!important;
+  letter-spacing:-.4px!important;
+}
+#viewSettings #settingsNewBtn,
+#viewSettings #settingsReloadBtn,
+#viewSettings .settings-row-actions-v36 .btn{
+  min-height:30px!important;
+  padding:0 10px!important;
+  border-radius:10px!important;
+  font-size:12px!important;
+}
+#viewSettings .settings-form-v36{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:8px!important;
+}
+#viewSettings .settings-field-v36{
+  gap:4px!important;
+}
+#viewSettings .settings-field-v36 label{
+  font-size:11.5px!important;
+  color:#9fb0c4!important;
+}
+#viewSettings .settings-field-v36 input,
+#viewSettings .settings-field-v36 select,
+#viewSettings .settings-field-v36 textarea{
+  min-height:35px!important;
+  border-radius:11px!important;
+  font-size:13px!important;
+  font-weight:900!important;
+  background:#0d1117!important;
+}
+#viewSettings .settings-field-v36 textarea{
+  min-height:60px!important;
+  resize:vertical!important;
+}
+#viewSettings .settings-field-v36:has([data-field="food_id"]),
+#viewSettings .settings-field-v36:has([data-field="material_id"]),
+#viewSettings .settings-field-v36:has([data-field="process_id"]),
+#viewSettings .settings-field-v36:has([data-field="farm_id"]),
+#viewSettings .settings-field-v36:has([data-field="fish_id"]),
+#viewSettings .settings-field-v36:has([data-field="sort_order"]){
+  display:none!important;
+}
+#viewSettings .settings-field-v36:has(textarea),
+#viewSettings .settings-recipe-merge-v113,
+#viewSettings .settings-actions-v36,
+#viewSettings .settings-note-v36{
+  grid-column:1/-1!important;
+}
+#viewSettings .settings-actions-v36{
+  justify-content:flex-start!important;
+  margin-top:8px!important;
+}
+#viewSettings .settings-note-v36{
+  display:none!important;
+}
+#viewSettings .setting-list-head-v36{
+  grid-template-columns:minmax(0,1fr) auto!important;
+  gap:8px!important;
+}
+#viewSettings #settingsSearch{
+  min-height:36px!important;
+  border-radius:12px!important;
+  max-width:none!important;
+}
+#viewSettings .settings-list-body-v36{
+  max-height:585px!important;
+  border-radius:14px!important;
+  border:1px solid rgba(255,255,255,.07)!important;
+  background:rgba(0,0,0,.1)!important;
+}
+#viewSettings .settings-row-v36{
+  min-height:48px!important;
+  padding:8px 9px!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  background:rgba(255,255,255,.018)!important;
+}
+#viewSettings .settings-row-v36.is-selected{
+  background:linear-gradient(90deg,rgba(255,181,46,.14),rgba(255,181,46,.045))!important;
+}
+#viewSettings .settings-row-title-v36{
+  font-size:14px!important;
+  letter-spacing:-.25px!important;
+}
+#viewSettings .settings-row-meta-v36{
+  font-size:11.5px!important;
+  color:#9daabe!important;
+}
+#viewSettings .settings-recipe-merge-v113{
+  margin-top:2px!important;
+  padding:10px!important;
+  border-radius:13px!important;
+  border:1px solid rgba(255,181,46,.11)!important;
+  background:rgba(255,181,46,.035)!important;
+}
+#viewSettings .merge-head-v113{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:8px!important;
+  margin-bottom:8px!important;
+}
+#viewSettings .merge-head-v113 b{
+  color:#ffc95a!important;
+  font-size:13.5px!important;
+  font-weight:1000!important;
+}
+#viewSettings .merge-head-v113 small{
+  color:#8fa1b8!important;
+  font-size:11px!important;
+  font-weight:850!important;
+}
+#viewSettings .merge-chips-v113{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:7px!important;
+}
+#viewSettings .merge-chip-v113{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:7px!important;
+  min-height:28px!important;
+  padding:0 10px!important;
+  border-radius:999px!important;
+  border:1px solid rgba(255,255,255,.1)!important;
+  background:rgba(255,255,255,.045)!important;
+  color:#ecf2fb!important;
+  font-size:12.5px!important;
+  font-weight:950!important;
+}
+#viewSettings .merge-chip-v113 b{
+  display:inline-grid!important;
+  place-items:center!important;
+  min-width:22px!important;
+  height:20px!important;
+  padding:0 6px!important;
+  border-radius:999px!important;
+  background:rgba(255,181,46,.11)!important;
+  border:1px solid rgba(255,181,46,.2)!important;
+  color:#ffd36b!important;
+}
+#viewSettings .merge-empty-v113{
+  color:#8fa1b8!important;
+  font-size:12px!important;
+  font-weight:850!important;
+}
+#viewSettings .settings-row-meta-v36 .meta-chip-v113{
+  display:inline-flex!important;
+  align-items:center!important;
+  min-height:20px!important;
+  padding:0 7px!important;
+  margin-right:4px!important;
+  border-radius:999px!important;
+  background:rgba(255,255,255,.045)!important;
+  border:1px solid rgba(255,255,255,.075)!important;
+  color:#b9c5d5!important;
+}
+@media(max-width:980px){
+  #viewSettings .settings-work-v36{grid-template-columns:1fr!important;}
+  #viewSettings .settings-list-body-v36{max-height:420px!important;}
+}
+@media(max-width:620px){
+  #viewSettings .settings-form-v36{grid-template-columns:1fr!important;}
+}
+</style>
+
+<script id="axeCookV113SettingsCompactRedesignScript">
+(function(){
+  const VERSION='AXE_COOK_v113_SETTINGS_COMPACT_REDESIGN';
+  function esc(v){try{return typeof h==='function'?h(v):String(v??'').replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m]));}catch(e){return String(v??'');}}
+  function isSettingsVisible(){const v=document.getElementById('viewSettings');return !!(v&&v.classList.contains('active'));}
+  function currentKind(){
+    const active=document.querySelector('#settingsTabs .tab.active');
+    return active?active.dataset.manage:'foods';
+  }
+  function activeFoodName(){
+    const input=document.querySelector('#settingsForm [data-field="food_name"]');
+    return String(input&&input.value||'').trim();
+  }
+  function recipesForFood(name){
+    if(!name||!window.DB||!Array.isArray(DB.recipes))return [];
+    return DB.recipes.filter(r=>String(r['요리명']||'').trim()===name && String(r['사용여부']||'TRUE').toUpperCase()!=='FALSE');
+  }
+  function renderMergeRecipeBox(){
+    const form=document.getElementById('settingsForm');
+    if(!form)return;
+    const kind=currentKind();
+    let box=document.getElementById('settingsRecipeMergeV113');
+    if(kind!=='foods'){
+      if(box)box.remove();
+      return;
+    }
+    const food=activeFoodName();
+    const rows=recipesForFood(food);
+    const chips=rows.map(r=>`<span class="merge-chip-v113"><span>${esc(r['재료명']||r['material_name']||'-')}</span><b>${esc(r['필요수량']||r['required_qty']||'-')}</b></span>`).join('');
+    const html=`<div class="merge-head-v113"><b>레시피 구성</b><small>요리 정보와 함께 확인</small></div><div class="merge-chips-v113">${chips||'<span class="merge-empty-v113">등록된 레시피 재료가 없습니다.</span>'}</div>`;
+    if(!box){
+      box=document.createElement('div');
+      box.id='settingsRecipeMergeV113';
+      box.className='settings-recipe-merge-v113';
+      const actions=document.querySelector('#viewSettings .settings-actions-v36');
+      if(actions&&actions.parentNode===form.parentNode){form.appendChild(box);}else{form.appendChild(box);}
+    }
+    box.innerHTML=html;
+  }
+  function decorateSettingsList(){
+    const list=document.getElementById('settingsList');
+    if(!list)return;
+    list.querySelectorAll('.settings-row-meta-v36').forEach(meta=>{
+      if(meta.dataset.v113==='1')return;
+      const raw=meta.textContent||'';
+      const parts=raw.split('·').map(s=>s.trim()).filter(Boolean);
+      if(parts.length>=2){meta.innerHTML=parts.slice(0,4).map(p=>`<span class="meta-chip-v113">${esc(p)}</span>`).join('');}
+      meta.dataset.v113='1';
+    });
+  }
+  function normalizeHeader(){
+    const title=document.querySelector('#viewSettings .panel-title.no-margin');
+    const desc=document.querySelector('#viewSettings .page-desc-v23');
+    if(title)title.innerHTML='설정';
+    if(desc)desc.textContent='요리·재료·가공 데이터를 추가하거나 수정하는 관리 영역입니다.';
+    const recipeTab=document.querySelector('#settingsTabs [data-manage="recipes"]');
+    if(recipeTab)recipeTab.style.display='none';
+    const active=document.querySelector('#settingsTabs .tab.active[data-manage="recipes"]');
+    if(active){
+      const foodTab=document.querySelector('#settingsTabs [data-manage="foods"]');
+      if(foodTab)foodTab.click();
+    }
+  }
+  function relabelButtons(){
+    const save=document.getElementById('settingsSaveBtn');
+    const disable=document.getElementById('settingsDisableBtn');
+    const reload=document.getElementById('settingsReloadBtn');
+    if(save)save.textContent='시트 저장';
+    if(disable)disable.textContent='미사용';
+    if(reload)reload.textContent='새로고침';
+  }
+  function patch(){
+    if(!isSettingsVisible())return;
+    normalizeHeader();
+    relabelButtons();
+    renderMergeRecipeBox();
+    decorateSettingsList();
+  }
+  document.addEventListener('input',function(e){
+    if(e.target&&e.target.matches&&e.target.matches('#settingsForm [data-field="food_name"]'))setTimeout(renderMergeRecipeBox,0);
+    if(e.target&&e.target.id==='settingsSearch')setTimeout(decorateSettingsList,20);
+  },true);
+  document.addEventListener('click',function(e){
+    if(e.target&&e.target.closest&&e.target.closest('#settingsTabs,[data-edit-idx],#settingsNewBtn,#settingsReloadBtn,.top-tab-v23[data-view="settings"]'))setTimeout(patch,80);
+  },true);
+  const oldRender=typeof window.render==='function'?window.render:null;
+  if(oldRender){window.render=function(){const out=oldRender.apply(this,arguments);setTimeout(patch,0);return out;};}
+  function boot(){patch();setTimeout(patch,300);setTimeout(patch,1000);try{new MutationObserver(function(){clearTimeout(window.__axeV113SettingsT);window.__axeV113SettingsT=setTimeout(patch,60);}).observe(document.getElementById('viewSettings')||document.body,{childList:true,subtree:true,attributes:true});}catch(e){} window.axeCookV113Debug=function(){return{version:VERSION,kind:currentKind(),food:activeFoodName(),recipeCount:recipesForFood(activeFoodName()).length};};}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+})();
+</script>
