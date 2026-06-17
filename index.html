@@ -7818,5 +7818,111 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
 })();
 </script>
 
+
+
+<style id="axeCookV84OrderBalanceFixStyle">
+/* AXE COOK v84: 작업목록 간격/초기화 버튼 최종 보정 */
+#viewHome #clearBtnVisible::before{content:none!important;display:none!important;}
+#viewHome #clearBtnVisible{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;
+  height:34px!important;min-width:86px!important;padding:0 13px!important;border-radius:12px!important;
+  color:#e7edf7!important;background:rgba(255,255,255,.035)!important;border:1px solid rgba(255,255,255,.11)!important;
+}
+#viewHome #clearBtnVisible .axe-ico-v81{width:15px!important;height:15px!important;color:#ffbf3f!important;filter:none!important;}
+#viewHome #clearBtnVisible span:not(.axe-ico-v81){font-size:12px!important;font-weight:1000!important;}
+
+#viewHome .order-row.order-row-v84{
+  display:grid!important;
+  grid-template-columns:auto minmax(240px,1fr) auto!important;
+  column-gap:22px!important;
+  align-items:center!important;
+  min-height:60px!important;
+  padding:10px 12px 10px 22px!important;
+  border-radius:14px!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.044),rgba(255,255,255,.014)),rgba(0,0,0,.23)!important;
+  border:1px solid rgba(255,255,255,.085)!important;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)!important;
+  overflow:hidden!important;
+}
+#viewHome .order-row-v84 .order-name-v84{
+  min-width:48px!important;max-width:190px!important;
+  font-size:15px!important;line-height:1.15!important;font-weight:1000!important;color:#f7f9fc!important;
+  white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
+}
+#viewHome .order-row-v84 .order-meta-line-v84{
+  min-width:0!important;display:flex!important;align-items:center!important;gap:12px!important;
+  white-space:nowrap!important;overflow:hidden!important;
+}
+#viewHome .order-row-v84 .order-info-v84{
+  display:inline-flex!important;align-items:center!important;gap:6px!important;min-width:0!important;
+  color:#d9e0ea!important;font-size:13px!important;line-height:1!important;font-weight:950!important;letter-spacing:-.15px!important;
+}
+#viewHome .order-row-v84 .order-info-v84 b{color:#ffcf61!important;font-size:16px!important;font-weight:1000!important;margin:0 1px!important;}
+#viewHome .order-row-v84 .order-info-v84 .axe-ico-v81{width:15px!important;height:15px!important;color:#ffbf3f!important;filter:none!important;}
+#viewHome .order-row-v84 .order-divider-v84{width:1px!important;height:24px!important;background:rgba(255,255,255,.12)!important;flex:0 0 auto!important;}
+#viewHome .order-row-v84 .order-row-controls-v21{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:8px!important;min-width:max-content!important;}
+#viewHome .order-row-v84 .num{width:58px!important;height:34px!important;border-radius:11px!important;text-align:center!important;font-size:15px!important;font-weight:1000!important;background:#10141b!important;border:1px solid rgba(255,255,255,.105)!important;color:#f7f9fc!important;}
+#viewHome .order-row-v84 .btn{height:34px!important;min-width:46px!important;border-radius:11px!important;font-size:11.5px!important;padding:0 9px!important;color:#d5dce7!important;background:rgba(255,255,255,.035)!important;border:1px solid rgba(255,255,255,.09)!important;}
+#viewHome .order-row-v84 .order-main-v21,#viewHome .order-row-v84 .order-sub,#viewHome .order-row-v84 .order-meta-v81,#viewHome .order-row-v84 .order-total-v81{all:unset!important;}
+@media(max-width:1180px){
+  #viewHome .order-row.order-row-v84{grid-template-columns:auto minmax(190px,1fr) auto!important;column-gap:16px!important;padding-left:18px!important;}
+  #viewHome .order-row-v84 .order-name-v84{font-size:14px!important;max-width:150px!important;}
+  #viewHome .order-row-v84 .order-info-v84{font-size:12.3px!important;}
+  #viewHome .order-row-v84 .order-info-v84 b{font-size:14.5px!important;}
+}
+@media(max-width:760px){
+  #viewHome .order-row.order-row-v84{grid-template-columns:1fr!important;gap:8px!important;align-items:start!important;padding:10px 12px!important;}
+  #viewHome .order-row-v84 .order-meta-line-v84{flex-wrap:wrap!important;white-space:normal!important;}
+  #viewHome .order-row-v84 .order-divider-v84{display:none!important;}
+  #viewHome .order-row-v84 .order-row-controls-v21{justify-content:flex-start!important;}
+}
+</style>
+<script id="axeCookV84OrderBalanceFixScript">
+(function(){
+  function escV84(v){return h(v==null?'':v);}
+  function iconV84(name){
+    var paths={
+      package:'<path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/>',
+      layers:'<path d="M12 2l9 5-9 5-9-5 9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 17l9 5 9-5"/>',
+      list:'<path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3.5 6h.01"/><path d="M3.5 12h.01"/><path d="M3.5 18h.01"/>',
+      refresh:'<path d="M21 12a9 9 0 0 1-15.4 6.4"/><path d="M3 12A9 9 0 0 1 18.4 5.6"/><path d="M18 2v4h4"/><path d="M6 22v-4H2"/>'
+    };
+    return '<span class="axe-ico-v81" aria-hidden="true"><svg viewBox="0 0 24 24">'+(paths[name]||paths.package)+'</svg></span>';
+  }
+  function decorateOrdersV84(){
+    var o=document.querySelector('#viewHome .orders-panel .panel-title');
+    if(!o) return;
+    var n=(typeof orders!=='undefined'&&orders)?orders.length:0;
+    o.innerHTML='<span class="axe-title-v81">'+iconV84('list')+'<span>작업 목록</span><small id="orderCount">'+n+'개</small></span><button class="btn bad reset-visible-v29" id="clearBtnVisible" type="button">'+iconV84('refresh')+'<span>초기화</span></button>';
+    var reset=document.getElementById('clearBtnVisible');
+    if(reset){
+      reset.onclick=function(ev){
+        ev.preventDefault();ev.stopPropagation();
+        if(typeof resetWorkspace==='function') resetWorkspace();
+        else {orders=[];checks={};saveState();if(typeof render==='function')render();}
+      };
+    }
+  }
+  function renderOrdersV84(){
+    decorateOrdersV84();
+    var count=document.getElementById('orderCount'); if(count) count.textContent=orders.length+'개';
+    var box=document.getElementById('orderList'); if(!box) return;
+    if(!orders.length){box.innerHTML='<div class="empty">만들 음식을 추가하세요.</div>';return;}
+    box.innerHTML=orders.map(function(o){
+      var f=getFood(o.name), setQty=getSetQty(f), total=num(o.sets,0)*setQty;
+      return '<div class="order-row order-row-v84"><div class="order-name-v84">'+escV84(o.name)+'</div><div class="order-meta-line-v84"><span class="order-info-v84">'+iconV84('package')+'<span>세트 구성 <b>'+escV84(setQty)+'</b>개</span></span><span class="order-divider-v84"></span><span class="order-info-v84">'+iconV84('layers')+'<span>총 <b>'+escV84(total)+'</b>개 제작</span></span></div><div class="order-row-controls-v21"><input class="num" type="number" min="1" value="'+escV84(o.sets)+'" data-set="'+escV84(o.name)+'"><button class="btn bad" data-del="'+escV84(o.name)+'">삭제</button></div></div>';
+    }).join('');
+    box.querySelectorAll('[data-set]').forEach(function(i){i.addEventListener('change',function(){updateSets(i.dataset.set,i.value);});});
+    box.querySelectorAll('[data-del]').forEach(function(b){b.addEventListener('click',function(){removeOrder(b.dataset.del);});});
+  }
+  function installV84(){
+    window.renderOrders=renderOrdersV84; try{renderOrders=renderOrdersV84;}catch(e){}
+    setTimeout(function(){try{renderOrdersV84();}catch(e){console.warn('[AXE COOK v84]',e);}},0);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',installV84); else installV84();
+  window.axeCookV84Debug=function(){return {version:'v84-order-spacing-reset-fix',reset:'single svg icon and resetWorkspace binding'};};
+})();
+</script>
+
 </body>
 </html>
