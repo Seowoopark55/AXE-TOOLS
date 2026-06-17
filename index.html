@@ -764,7 +764,7 @@ body{font-size:15.8px!important;}
 @media(max-width:640px){#settingsRootV44 .detail-line-v44{grid-template-columns:68px minmax(0,1fr)!important;}#settingsRootV44 .group-lines-v44{grid-template-columns:1fr!important;}}
 
 
-/* AXE COOK v48: AXE logo watermark background */
+/* AXE COOK v49: side-only AXE atmosphere background */
 html,body{
   min-height:100%;
 }
@@ -775,15 +775,19 @@ body{
 body::before{
   content:'';
   position:fixed;
-  inset:0;
+  top:50%;
+  left:max(18px,calc(50% + 430px));
+  width:clamp(360px,30vw,620px);
+  aspect-ratio:1/1;
   z-index:0;
   pointer-events:none;
-  background-image:url('./axe.png?v=48');
+  background-image:url('./axe.png?v=49');
   background-repeat:no-repeat;
-  background-position:center 58%;
-  background-size:clamp(520px,62vw,980px) auto;
-  opacity:.052;
-  filter:grayscale(.12) saturate(.82) brightness(.72);
+  background-position:center;
+  background-size:contain;
+  opacity:.075;
+  filter:grayscale(.18) saturate(.78) brightness(.58);
+  transform:translateY(-45%);
 }
 body::after{
   content:'';
@@ -792,8 +796,9 @@ body::after{
   z-index:0;
   pointer-events:none;
   background:
-    radial-gradient(circle at 18% 28%,rgba(255,181,46,.035),transparent 28%),
-    radial-gradient(circle at 82% 70%,rgba(255,181,46,.028),transparent 30%);
+    radial-gradient(circle at calc(50% + 560px) 44%,rgba(255,181,46,.045),transparent 24%),
+    radial-gradient(circle at calc(50% - 520px) 72%,rgba(255,181,46,.026),transparent 26%),
+    linear-gradient(90deg,rgba(255,181,46,.018),transparent 18%,transparent 82%,rgba(255,181,46,.018));
 }
 .app{
   position:relative;
@@ -801,6 +806,17 @@ body::after{
 }
 .top{
   z-index:50;
+}
+@media(max-width:1180px){
+  body::before{
+    left:auto;
+    right:-210px;
+    opacity:.045;
+  }
+}
+@media(max-width:760px){
+  body::before{display:none;}
+  body::after{background:radial-gradient(circle at 50% 0%,rgba(255,181,46,.055),transparent 34%);}
 }
 
 </style>
