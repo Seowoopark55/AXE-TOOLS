@@ -9868,7 +9868,7 @@ window.addEventListener('load',function(){
     var st=document.createElement('style');
     st.id='axeWorkspaceTabsV130cStyle';
     st.textContent='\
-      #workspaceTabsV130b,#workspaceTabsV130c{display:none!important}\
+      #workspaceTabsV130b{display:none!important}\
       .workspace-tabs-inline-v130c{display:inline-flex!important;align-items:center!important;gap:5px!important;margin-left:8px!important;vertical-align:middle!important;max-width:min(360px,42vw)!important;overflow:auto!important;white-space:nowrap!important;scrollbar-width:none!important}\
       .workspace-tabs-inline-v130c::-webkit-scrollbar{display:none!important}\
       .workspace-tab-v130c,.workspace-add-v130c,.workspace-del-v130c{height:24px!important;min-width:25px!important;padding:0 8px!important;border-radius:999px!important;border:1px solid rgba(255,255,255,.11)!important;background:rgba(255,255,255,.035)!important;color:#c8ced8!important;font-size:10.5px!important;font-weight:1000!important;line-height:22px!important;white-space:nowrap!important}\
@@ -9958,6 +9958,41 @@ window.addEventListener('load',function(){
 })();
 </script>
 
+
+<!-- AXE COOK v130-d: Workspace tabs visible fix + favorites safety note patch -->
+<script id="axe-v130d-tabs-visible-fav-safe">
+(function(){
+  'use strict';
+  function fixTabs(){
+    var host=document.getElementById('workspaceTabsV130c');
+    if(host){
+      host.style.setProperty('display','inline-flex','important');
+      host.style.setProperty('align-items','center','important');
+    }
+    try{if(typeof window.axeRenderWorkspaceTabsV130c==='function')window.axeRenderWorkspaceTabsV130c();}
+    catch(e){}
+  }
+  function mirrorFavorites(){
+    try{
+      var key='axe_cook_v1_favs';
+      var bak='axe_cook_v130_favs_backup';
+      var cur=localStorage.getItem(key);
+      var old=localStorage.getItem(bak);
+      if((!cur||cur==='[]')&&old&&old!=='[]')localStorage.setItem(key,old);
+      if(cur&&cur!=='[]')localStorage.setItem(bak,cur);
+    }catch(e){}
+  }
+  mirrorFavorites();
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){fixTabs();mirrorFavorites();setTimeout(fixTabs,120);},{once:true});
+  else{fixTabs();setTimeout(fixTabs,120);}
+  var oldSave=window.saveState;
+  if(typeof oldSave==='function'&&!oldSave.__axeV130dFavSafe){
+    var wrapped=function(){var out=oldSave.apply(this,arguments);mirrorFavorites();return out;};
+    wrapped.__axeV130dFavSafe=true;
+    window.saveState=wrapped;try{saveState=wrapped;}catch(e){}
+  }
+})();
+</script>
 </body>
 </html>
 
