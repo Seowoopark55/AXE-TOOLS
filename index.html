@@ -10473,6 +10473,117 @@ window.addEventListener('load',function(){
   window.axeCookV130eDebug=function(){return{version:VERSION,orderCountHidden:!document.querySelector('#viewHome #orderCount:not([style*="display: none"])'),clearButton:!!btn(),query:input()?input().value:''};};
 })();
 </script>
+
+
+<style id="axeCookV134RecipeChipUnifiedStyle">
+/* AXE COOK v134: 제작 레시피 재료칩을 가공 레시피와 동일한 빠른 인식형으로 통일 */
+#viewHome .axe-recipe-card-v64 .mats-v64,
+#viewHome .axe-process-card-v64 .mats-v64{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:6px!important;
+  align-items:center!important;
+  min-width:0!important;
+}
+
+#viewHome .axe-recipe-card-v64 .mat-v64,
+#viewHome .axe-process-card-v64 .mat-v64{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  height:28px!important;
+  min-height:28px!important;
+  max-width:100%!important;
+  padding:0 4px 0 10px!important;
+  gap:7px!important;
+  border-radius:9px!important;
+  border:1px solid rgba(160,178,205,.26)!important;
+  background:linear-gradient(180deg,rgba(40,51,66,.96),rgba(18,24,33,.98))!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 4px 12px rgba(0,0,0,.16)!important;
+  color:#f7f9fd!important;
+  font-family:"Segoe UI","Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",Arial,sans-serif!important;
+  font-size:13.2px!important;
+  font-weight:720!important;
+  letter-spacing:-.05px!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+
+#viewHome .axe-recipe-card-v64 .mat-v64 span,
+#viewHome .axe-process-card-v64 .mat-v64 span{
+  display:inline-block!important;
+  min-width:0!important;
+  max-width:118px!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+  color:#f7f9fd!important;
+  font-weight:720!important;
+  letter-spacing:-.04px!important;
+  line-height:1!important;
+}
+
+#viewHome .axe-recipe-card-v64 .mat-v64 b,
+#viewHome .axe-process-card-v64 .mat-v64 b{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex:0 0 auto!important;
+  min-width:32px!important;
+  height:22px!important;
+  padding:0 7px!important;
+  gap:2px!important;
+  border-radius:7px!important;
+  border:1px solid rgba(255,218,111,.5)!important;
+  background:linear-gradient(180deg,#ffd66f,#ffb72f)!important;
+  box-shadow:0 5px 14px rgba(255,181,46,.18),inset 0 1px 0 rgba(255,255,255,.28)!important;
+  color:#171009!important;
+  font-family:"Segoe UI","Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",Arial,sans-serif!important;
+  font-size:13.2px!important;
+  font-weight:850!important;
+  letter-spacing:-.05px!important;
+  line-height:1!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+}
+
+#viewHome .axe-recipe-card-v64 .mat-v64 b::before,
+#viewHome .axe-process-card-v64 .mat-v64 b::before{
+  content:'×'!important;
+  display:inline!important;
+  position:static!important;
+  margin:0!important;
+  padding:0!important;
+  font-size:12.2px!important;
+  font-weight:850!important;
+  line-height:1!important;
+  color:#171009!important;
+  opacity:1!important;
+}
+
+#viewHome .axe-recipe-card-v64,
+#viewHome .axe-process-card-v64{
+  padding:9px 10px!important;
+}
+
+@media(max-width:760px){
+  #viewHome .axe-recipe-card-v64 .mat-v64,
+  #viewHome .axe-process-card-v64 .mat-v64{
+    height:27px!important;
+    min-height:27px!important;
+    font-size:12.8px!important;
+    padding-left:9px!important;
+    gap:6px!important;
+  }
+  #viewHome .axe-recipe-card-v64 .mat-v64 b,
+  #viewHome .axe-process-card-v64 .mat-v64 b{
+    min-width:30px!important;
+    height:21px!important;
+    font-size:12.8px!important;
+  }
+}
+</style>
+
 </body>
 </html>
 
