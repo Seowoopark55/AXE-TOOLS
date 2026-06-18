@@ -9471,20 +9471,32 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
   function materialGroups(){const q=txt(document.getElementById('v116Search')?.value).toLowerCase();return groupBy(DB.materials||[],'재료명').filter(g=>!q||g.key.toLowerCase().includes(q));}
   function records(){const c=cfg[current];const q=txt(document.getElementById('v116Search')?.value).toLowerCase();if(c.groupMaterials)return materialGroups();if(c.group)return groupBy(c.rows(),c.key).filter(g=>(g.key+' '+g.rows.map(x=>txt(x.row[c.name])).join(' ')).toLowerCase().includes(q));return (c.rows()||[]).filter(r=>!q||txt(c.title(r)).toLowerCase().includes(q)).sort((a,b)=>txt(c.title(a)).localeCompare(txt(c.title(b)),'ko'));}
   function blank(){const c=cfg[current];const o={};(c.fields||[]).forEach(([api,label,type,ko])=>o[api]=(api==='is_active'||api==='is_primary')?'TRUE':'');return o;}
-  function fromDb(r){const c=cfg[current],o={__id:txt(r[c.id])};(c.fields||[]).forEach(([api,label,type,ko])=>o[api]=txt(r[ko]));return o;}
+  function fromDb(r){const c=cfg[current],o={__id:txt(r[c.id])};(c.fields||[]).forEach(([api,label,type,ko])=>o[api]=txt(r[ko]));if(current==='foods')o.__originalFoodName=txt(r['요리명']);if(current==='materials')o.__originalMaterialName=txt(r['재료명']);return o;}
   function formVal(api){return document.querySelector(`#v116Form [data-f="${api}"]`)?.value||'';}
   function collect(){const c=cfg[current],o=selected||{};(c.fields||[]).forEach(([api])=>o[api]=formVal(api));return o;}
   function mount(){const view=document.getElementById('viewSettings');if(!view)return;view.innerHTML=`<section class="panel page-panel settings-page-panel"><div class="v116-settings-shell"><div class="v116-head"><div><div class="panel-title no-margin">설정</div><div class="v116-desc">요리·재료·가공 데이터를 추가하거나 수정하는 관리 영역입니다.</div></div><span class="pill ok">관리 영역</span></div><div class="v116-tabs">${cats.map(([k,l])=>`<button class="v116-tab ${k===current?'active':''}" data-cat="${k}" type="button">${l}</button>`).join('')}</div><div class="v116-work"><div class="v116-box"><div class="v116-box-head"><div class="v116-title"><b id="v116EditorTitle"></b><span id="v116Mode" class="v116-mode"></span></div><button id="v116New" class="v116-btn" type="button">추가</button></div><div id="v116Form" class="v116-form"></div><div class="v116-actions"><button id="v116Save" class="v116-btn primary" type="button">시트 저장</button><button id="v116Disable" class="v116-btn danger" type="button">미사용 처리</button></div></div><div class="v116-box"><div class="v116-list-tools"><input id="v116Search" class="v116-search" placeholder="현재 관리 항목 검색" autocomplete="off"><button id="v116Reload" class="v116-btn" type="button">시트 새로고침</button></div><div id="v116List" class="v116-list"></div></div></div></div></section>`;bind();if(!selected)selected=blank();renderForm();renderList();}
   function renderForm(){const c=cfg[current], form=document.getElementById('v116Form');if(!form)return;document.getElementById('v116EditorTitle').textContent=c.label;document.getElementById('v116Mode').textContent=mode==='edit'?'수정중':'새 항목';if(c.group){renderGroupForm();return;}if(c.groupMaterials&&selected&&selected.__groupOnly){selected=blank();}
     form.innerHTML=(c.fields||[]).map(([api,label,type])=>{const val=selected?.[api]??'';const full=(type==='textarea'||api==='effect'||api==='memo');if(type.startsWith('select:')){const opts=type.slice(7).split('|');return `<div class="v116-field"><label>${esc(label)}</label><select data-f="${api}">${opts.map(o=>`<option value="${esc(o)}" ${String(val)===o?'selected':''}>${esc(o)}</option>`).join('')}</select></div>`;}if(type==='textarea')return `<div class="v116-field full"><label>${esc(label)}</label><textarea data-f="${api}">${esc(val)}</textarea></div>`;return `<div class="v116-field ${full?'full':''}"><label>${esc(label)}</label><input data-f="${api}" type="${type==='number'?'number':'text'}" value="${esc(val)}"></div>`;}).join('')+(current==='foods'?recipeEditorHtml(): '');
     bindRecipeEditor();}
-  function recipeEditorHtml(){const food=selected?.food_name||'';if(!recipeLines.length&&food)recipeLines=recipeRows(food).map(r=>({id:txt(r.id),name:txt(r['재료명']),qty:txt(r['필요수량'])}));return `<div class="v116-recipe-box"><div class="v116-recipe-head"><span>레시피 구성</span><button class="v116-btn" id="v116RecipeAdd" type="button">재료 추가</button></div><div class="v116-recipe-lines" id="v116RecipeLines">${(recipeLines.length?recipeLines:[{name:'',qty:''}]).map((r,i)=>`<div class="v116-recipe-line" data-r="${i}"><input data-rf="name" placeholder="재료명" value="${esc(r.name)}"><input data-rf="qty" placeholder="수량" value="${esc(r.qty)}"><button class="v116-btn danger" type="button" data-rdel="${i}">×</button></div>`).join('')}</div></div>`;}
+  function normalizedRecipeLinesForFood(food){
+    const seen=new Set(), out=[];
+    recipeRows(food).forEach(r=>{
+      const name=txt(r['재료명']);
+      if(!name)return;
+      const key=name.toLowerCase();
+      if(seen.has(key))return;
+      seen.add(key);
+      out.push({id:txt(r.id),name,qty:txt(r['필요수량'])});
+    });
+    return out;
+  }
+  function recipeEditorHtml(){const food=selected?.food_name||'';if(!recipeLines.length&&food)recipeLines=normalizedRecipeLinesForFood(food);return `<div class="v116-recipe-box"><div class="v116-recipe-head"><span>레시피 구성</span><button class="v116-btn" id="v116RecipeAdd" type="button">재료 추가</button></div><div class="v116-recipe-lines" id="v116RecipeLines">${(recipeLines.length?recipeLines:[{id:'',name:'',qty:''}]).map((r,i)=>`<div class="v116-recipe-line" data-r="${i}" data-rid="${esc(r.id||'')}"><input data-rf="name" placeholder="재료명" value="${esc(r.name)}"><input data-rf="qty" placeholder="수량" value="${esc(r.qty)}"><button class="v116-btn danger" type="button" data-rdel="${i}">×</button></div>`).join('')}</div></div>`;}
   function syncSingleFormState(){
     if(!selected)selected={};
     document.querySelectorAll('#v116Form [data-f]').forEach(el=>{selected[el.getAttribute('data-f')]=el.value;});
   }
-  function bindRecipeEditor(){const box=document.getElementById('v116RecipeLines');if(!box)return;function sync(){recipeLines=[...box.querySelectorAll('[data-r]')].map(line=>({name:line.querySelector('[data-rf="name"]').value,qty:line.querySelector('[data-rf="qty"]').value}));}
-    box.addEventListener('input',sync);box.addEventListener('click',e=>{const b=e.target.closest('[data-rdel]');if(!b)return;e.preventDefault();e.stopPropagation();syncSingleFormState();sync();recipeLines.splice(Number(b.dataset.rdel),1);renderForm();});document.getElementById('v116RecipeAdd')?.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();syncSingleFormState();sync();recipeLines.push({name:'',qty:''});renderForm();});}
+  function bindRecipeEditor(){const box=document.getElementById('v116RecipeLines');if(!box)return;function sync(){recipeLines=[...box.querySelectorAll('[data-r]')].map(line=>({id:txt(line.dataset.rid),name:line.querySelector('[data-rf="name"]').value,qty:line.querySelector('[data-rf="qty"]').value}));}
+    box.addEventListener('input',sync);box.addEventListener('click',e=>{const b=e.target.closest('[data-rdel]');if(!b)return;e.preventDefault();e.stopPropagation();syncSingleFormState();sync();recipeLines.splice(Number(b.dataset.rdel),1);renderForm();});document.getElementById('v116RecipeAdd')?.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();syncSingleFormState();sync();recipeLines.push({id:'',name:'',qty:''});renderForm();});}
   function renderGroupForm(){
     const c=cfg[current],form=document.getElementById('v116Form');
     const key=selected?.key||'';
@@ -9524,7 +9536,36 @@ main.main.tool-main.app-shell-v23,.tool-main,.main,.app-shell-v23{
   async function api(action,params){const url=String(window.AXE_COOK_SHEET_API_URL||'').trim();return new Promise((resolve,reject)=>{if(!/^https?:\/\//.test(url))return reject(new Error('Apps Script URL이 없습니다.'));const cb='axeCookV116Cb_'+Date.now()+'_'+Math.random().toString(36).slice(2);const s=document.createElement('script');const q=new URLSearchParams(Object.assign({},params,{action,callback:cb,t:Date.now()}));const timer=setTimeout(()=>{cleanup();reject(new Error('요청 시간이 초과되었습니다.'));},16000);function cleanup(){clearTimeout(timer);try{delete window[cb];}catch(e){window[cb]=undefined;}s.remove();}window[cb]=p=>{cleanup();resolve(p);};s.onerror=()=>{cleanup();reject(new Error('Apps Script 연결 실패'));};s.src=url+(url.includes('?')?'&':'?')+q.toString();document.head.appendChild(s);});}
   async function reload(msg){try{if(typeof toast==='function')toast('시트 새로고침 중');await loadSheetRawBeforeBoot();initDB();selected=blank();recipeLines=[];renderForm();renderList();if(msg&&typeof toast==='function')toast(msg);}catch(e){alert('새로고침 실패: '+e.message);}}
   function payloadSingle(){const c=cfg[current],o=collect(),p={};if(c.apiId)p[c.apiId]=o.__id||o[c.apiId]||selected?.__id||'';(c.fields||[]).forEach(([api])=>p[api]=o[api]||'');if(!p.is_active)p.is_active='TRUE';return p;}
-  async function saveSingle(){const c=cfg[current];const p=payloadSingle();if(current==='foods'&&!txt(p.food_name)){alert('요리명을 입력하세요');return;}if(current==='materials'&&!txt(p.material_name)){alert('재료명을 입력하세요');return;}const ok=await modal({title:'시트에 저장할까요?',message:'현재 입력한 내용을 Google Sheet에 반영합니다.',yes:'예',no:'아니오'});if(!ok)return;const res=await api('saveRecord',{kind:c.apiKind,payload:JSON.stringify(p)});if(!res||!res.ok)throw new Error(res&&res.error?res.error:'저장 실패');if(current==='foods'){const food=p.food_name;const rows=[...document.querySelectorAll('#v116RecipeLines [data-r]')].map((el,i)=>({name:txt(el.querySelector('[data-rf="name"]').value),qty:txt(el.querySelector('[data-rf="qty"]').value),sort_order:String(i+1)})).filter(x=>x.name&&x.qty);for(const r of rows){await api('saveRecord',{kind:'recipes',payload:JSON.stringify({food_name:food,material_name:r.name,required_qty:r.qty,is_active:'TRUE',sort_order:r.sort_order})});}}
+  async function saveSingle(){const c=cfg[current];const originalFood=current==='foods'?txt(selected?.__originalFoodName||selected?.food_name):'';const p=payloadSingle();if(current==='foods'&&!txt(p.food_name)){alert('요리명을 입력하세요');return;}if(current==='materials'&&!txt(p.material_name)){alert('재료명을 입력하세요');return;}const ok=await modal({title:'시트에 저장할까요?',message:'현재 입력한 내용을 Google Sheet에 반영합니다.',yes:'예',no:'아니오'});if(!ok)return;const res=await api('saveRecord',{kind:c.apiKind,payload:JSON.stringify(p)});if(!res||!res.ok)throw new Error(res&&res.error?res.error:'저장 실패');if(current==='foods'){
+      const food=txt(p.food_name);
+      const baseFood=originalFood||food;
+      const existing=recipeRows(baseFood);
+      const existingById=new Map(existing.map(r=>[txt(r.id),r]).filter(x=>x[0]));
+      const existingByName=new Map();
+      existing.forEach(r=>{const k=txt(r['재료명']).toLowerCase();if(k&&!existingByName.has(k))existingByName.set(k,r);});
+      const oldIds=new Set(existing.map(r=>txt(r.id)).filter(Boolean));
+      const usedOldIds=new Set();
+      const rows=[...document.querySelectorAll('#v116RecipeLines [data-r]')].map((el,i)=>({
+        id:txt(el.dataset.rid),
+        name:txt(el.querySelector('[data-rf="name"]').value),
+        qty:txt(el.querySelector('[data-rf="qty"]').value),
+        sort_order:String(i+1)
+      })).filter(x=>x.name&&x.qty);
+      for(const r of rows){
+        let recipeId=r.id;
+        if(recipeId&&!existingById.has(recipeId))recipeId='';
+        if(!recipeId){
+          const matched=existingByName.get(r.name.toLowerCase());
+          if(matched&&!usedOldIds.has(txt(matched.id)))recipeId=txt(matched.id);
+        }
+        const payload={recipe_id:recipeId,food_name:food,material_name:r.name,required_qty:r.qty,is_active:'TRUE',sort_order:r.sort_order,memo:''};
+        const rr=await api('saveRecord',{kind:'recipes',payload:JSON.stringify(payload)});
+        if(!rr||!rr.ok)throw new Error(rr&&rr.error?rr.error:'레시피 저장 실패');
+        const savedId=txt(rr.id||recipeId);
+        if(savedId)usedOldIds.add(savedId);
+      }
+      for(const id of oldIds){if(id&&!usedOldIds.has(id)){try{await api('deleteRecord',{kind:'recipes',id});}catch(e){console.warn('old recipe delete failed',id,e);}}}
+    }
     await reload('저장 완료');}
   async function saveGroup(){
     if(current!=='processes'){alert('현재 그룹 저장은 가공 항목만 지원합니다.');return;}
