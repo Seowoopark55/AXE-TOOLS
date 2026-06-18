@@ -11969,3 +11969,59 @@ window.addEventListener('load',function(){
   window.axeCookV123Debug=function(){return{version:VERSION,expanded:isExpanded(),favorites:getValidFavorites().length};};
 })();
 </script>
+
+<script id="axeCookV130iProcessProductionOrder">
+/* AXE COOK v130i: 가공 레시피를 실제 제작 순서(하위 가공 → 최종 가공)로 정렬 */
+(function(){
+  var oldCalc=(typeof calc==='function')?calc:null;
+  if(!oldCalc) return;
+  var STEP=['①','②','③','④','⑤','⑥','⑦','⑧','⑨','⑩','⑪','⑫','⑬','⑭','⑮','⑯','⑰','⑱','⑲','⑳'];
+  function rawText(v){try{return text(v);}catch(e){return String(v==null?'':v).trim();}}
+  function canonical(v){try{return stdName(rawText(v));}catch(e){return rawText(v);}}
+  function productionSort(proc){
+    if(!Array.isArray(proc)||proc.length<2) return proc||[];
+    var original=new Map();
+    proc.forEach(function(p,i){p.__axeOriginalIndex=i;});
+    var byName=new Map();
+    proc.forEach(function(p){byName.set(canonical(p.name),p);});
+    var visiting=new Set(), memo=new Map();
+    function depthOf(p){
+      var key=canonical(p.name);
+      if(memo.has(key)) return memo.get(key);
+      if(visiting.has(key)) return 0;
+      visiting.add(key);
+      var depth=0;
+      (p.rows||[]).forEach(function(r){
+        var child=canonical(r['하위재료명']);
+        var childProc=byName.get(child);
+        if(childProc) depth=Math.max(depth,depthOf(childProc)+1);
+      });
+      visiting.delete(key);
+      memo.set(key,depth);
+      return depth;
+    }
+    return proc.slice().sort(function(a,b){
+      var da=depthOf(a), db=depthOf(b);
+      if(da!==db) return da-db;
+      return (a.__axeOriginalIndex||0)-(b.__axeOriginalIndex||0);
+    }).map(function(p,i){
+      var clone=Object.assign({},p);
+      clone.__axeOriginalName=p.name;
+      clone.__axeStep=i+1;
+      clone.name=(STEP[i]||((i+1)+'.'))+' '+p.name;
+      delete clone.__axeOriginalIndex;
+      return clone;
+    });
+  }
+  window.calc=function(){
+    var r=oldCalc.apply(this,arguments);
+    if(r&&Array.isArray(r.proc)) r.proc=productionSort(r.proc);
+    return r;
+  };
+  try{calc=window.calc;}catch(e){}
+  function refresh(){try{if(typeof renderResultsOnly==='function')renderResultsOnly();}catch(e){console.warn('[AXE COOK v130i process order]',e);}}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(refresh,0);},{once:true});
+  else setTimeout(refresh,0);
+  window.axeCookV130iDebug=function(){try{var r=calc();return{processOrder:(r.proc||[]).map(function(p){return p.name;})};}catch(e){return{error:String(e)}}};
+})();
+</script>
