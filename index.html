@@ -1595,6 +1595,171 @@ body{
   font-size:12.2px!important;
 }
 </style>
+
+
+<style id="axeCookV131FastReadabilityStyle">
+/* AXE COOK v131: 작업 중 빠른 판독용 가독성 조정
+   - 구조 변경 없이 재료명/수량/구매수량의 색상·크기·폰트 렌더링만 보정 */
+#viewHome{
+  -webkit-font-smoothing:antialiased!important;
+  text-rendering:geometricPrecision!important;
+}
+
+/* 제작/가공 레시피: 칩 배경보다 글자와 숫자가 먼저 보이게 */
+#viewHome .recipe-v13-mats{
+  gap:6px!important;
+  line-height:1.28!important;
+}
+#viewHome .recipe-v13-mat{
+  font-family:"Segoe UI","Apple SD Gothic Neo","Noto Sans KR",Arial,sans-serif!important;
+  font-size:13.4px!important;
+  font-weight:650!important;
+  letter-spacing:-.08px!important;
+  color:#edf3ff!important;
+  background:rgba(255,255,255,.026)!important;
+  border:1px solid rgba(255,255,255,.078)!important;
+  border-radius:999px!important;
+  padding:4px 8px!important;
+  line-height:1.18!important;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.16)!important;
+}
+#viewHome .recipe-v13-mat b{
+  min-width:auto!important;
+  height:auto!important;
+  padding:0!important;
+  margin-left:2px!important;
+  display:inline!important;
+  place-items:unset!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:#ffcf61!important;
+  font-size:14.1px!important;
+  font-weight:800!important;
+  line-height:1!important;
+  font-variant-numeric:tabular-nums!important;
+}
+#viewHome .recipe-v13-name{
+  color:#ffcf61!important;
+  font-weight:800!important;
+  letter-spacing:-.12px!important;
+}
+#viewHome .recipe-v13-time{
+  color:#ffd978!important;
+  background:rgba(255,181,46,.085)!important;
+  border-color:rgba(255,181,46,.25)!important;
+}
+
+/* 가공 레시피도 제작 레시피와 같은 판독 기준으로 통일 */
+#viewHome .process-recipe-mats-v31{
+  font-family:"Segoe UI","Apple SD Gothic Neo","Noto Sans KR",Arial,sans-serif!important;
+  font-size:13.2px!important;
+  line-height:1.43!important;
+  color:#edf3ff!important;
+  font-weight:650!important;
+  letter-spacing:-.08px!important;
+}
+#viewHome .process-recipe-mat-v31{
+  color:#edf3ff!important;
+}
+#viewHome .process-recipe-mat-v31 b{
+  color:#ffcf61!important;
+  font-size:14px!important;
+  font-weight:800!important;
+  font-variant-numeric:tabular-nums!important;
+}
+#viewHome .process-recipe-dot-v31{
+  color:rgba(255,255,255,.23)!important;
+  margin:0 6px!important;
+}
+#viewHome .process-side-row-v30 b{
+  color:#f3f7ff!important;
+  font-size:13.2px!important;
+  font-weight:750!important;
+  letter-spacing:-.08px!important;
+}
+#viewHome .process-side-batch-v30{
+  color:#ffcf61!important;
+  font-size:12.2px!important;
+  font-weight:850!important;
+  background:rgba(255,181,46,.09)!important;
+}
+
+/* 구매 체크리스트: 재료명과 1묶음 숫자가 먼저 들어오게 */
+#viewHome .check-row{
+  background:rgba(255,255,255,.022)!important;
+  border-color:rgba(255,255,255,.085)!important;
+}
+#viewHome .check-name{
+  font-family:"Segoe UI","Apple SD Gothic Neo","Noto Sans KR",Arial,sans-serif!important;
+  color:#f4f8ff!important;
+  font-size:17.2px!important;
+  font-weight:760!important;
+  line-height:1.12!important;
+  letter-spacing:-.18px!important;
+}
+#viewHome .check-sub{
+  color:#aebbd0!important;
+  font-size:12.2px!important;
+  font-weight:650!important;
+  line-height:1.28!important;
+  letter-spacing:-.08px!important;
+}
+#viewHome .check-right{
+  width:78px!important;
+  min-width:78px!important;
+  max-width:78px!important;
+}
+#viewHome .check-bundle{
+  min-width:62px!important;
+  height:28px!important;
+  padding:0 10px!important;
+  color:#15100a!important;
+  background:linear-gradient(135deg,#ffd978,#ffb52e)!important;
+  border-color:rgba(255,181,46,.75)!important;
+  border-radius:999px!important;
+  font-size:14px!important;
+  font-weight:850!important;
+  letter-spacing:-.1px!important;
+  box-shadow:0 8px 18px rgba(255,181,46,.12)!important;
+}
+#viewHome .check-cost{
+  color:#74f0ad!important;
+  font-size:12.5px!important;
+  font-weight:750!important;
+  font-variant-numeric:tabular-nums!important;
+}
+#viewHome .farm-badge{
+  font-weight:750!important;
+  color:#a8f5ca!important;
+}
+
+/* 작업 목록: 선택한 요리명과 세트 수량도 같은 계층으로 보정 */
+#viewHome .order-name{
+  color:#f4f8ff!important;
+  font-size:16.4px!important;
+  font-weight:760!important;
+  letter-spacing:-.16px!important;
+}
+#viewHome .order-sub{
+  color:#aebbd0!important;
+  font-size:12.2px!important;
+  font-weight:650!important;
+}
+#viewHome .order-row .num{
+  color:#f4f8ff!important;
+  font-weight:800!important;
+}
+
+@media(max-width:760px){
+  #viewHome .recipe-v13-mat{font-size:12.9px!important;padding:4px 7px!important;}
+  #viewHome .recipe-v13-mat b{font-size:13.6px!important;}
+  #viewHome .check-name{font-size:16.2px!important;}
+  #viewHome .check-sub{font-size:11.7px!important;}
+  #viewHome .check-right{width:70px!important;min-width:70px!important;max-width:70px!important;}
+}
+</style>
+
 </head>
 <body><div id="axeBrandSplash" aria-label="AXE COOK 시작 화면"><img src="axe.png" alt="AXE"></div>
 
