@@ -10584,6 +10584,107 @@ window.addEventListener('load',function(){
 }
 </style>
 
+
+
+<!-- AXE COOK v135: settings password lock -->
+<style id="axeCookV135SettingsLockStyle">
+.axe-admin-lock-v135{position:fixed;inset:0;z-index:99998;display:none;place-items:center;background:rgba(0,0,0,.58);backdrop-filter:blur(5px)}
+.axe-admin-lock-v135.show{display:grid}
+.axe-admin-box-v135{width:min(380px,calc(100vw - 34px));border:1px solid rgba(255,181,46,.24);border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018)),#101319;box-shadow:0 24px 80px rgba(0,0,0,.5);padding:18px}
+.axe-admin-title-v135{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:1000;color:#f4f6fa;margin-bottom:8px}
+.axe-admin-desc-v135{font-size:12px;line-height:1.45;color:#9aa4b5;font-weight:850;margin-bottom:13px}
+.axe-admin-input-v135{width:100%;height:42px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:#0b0e13;color:#f4f6fa;outline:none;padding:0 12px;font-size:15px;font-weight:900;letter-spacing:.1px}
+.axe-admin-input-v135:focus{border-color:rgba(255,181,46,.55);box-shadow:0 0 0 3px rgba(255,181,46,.08)}
+.axe-admin-error-v135{min-height:19px;margin-top:7px;color:#ff9aa3;font-size:12px;font-weight:900}
+.axe-admin-actions-v135{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
+.axe-admin-badge-v135{height:24px;display:inline-flex;align-items:center;padding:0 8px;border-radius:999px;border:1px solid rgba(255,181,46,.22);background:rgba(255,181,46,.07);color:#ffcf61;font-size:11px;font-weight:1000;margin-left:auto}
+.top-tab-v23[data-view="settings"]::after{content:' 잠금';font-size:10px;color:rgba(255,255,255,.62);font-weight:900;margin-left:3px}
+.top-tab-v23[data-view="settings"].admin-unlocked-v135::after{content:' 열림';color:#9af0c3}
+@media(max-width:640px){.axe-admin-box-v135{padding:16px}.axe-admin-title-v135{font-size:16px}}
+</style>
+
+<div id="axeAdminLockV135" class="axe-admin-lock-v135" aria-hidden="true">
+  <div class="axe-admin-box-v135" role="dialog" aria-modal="true" aria-labelledby="axeAdminTitleV135">
+    <div class="axe-admin-title-v135" id="axeAdminTitleV135">🔒 설정 잠금 <span class="axe-admin-badge-v135">관리자</span></div>
+    <div class="axe-admin-desc-v135">설정은 레시피·재료 데이터를 수정하는 영역입니다. 비밀번호 확인 후 진입합니다.</div>
+    <input id="axeAdminPasswordV135" class="axe-admin-input-v135" type="password" placeholder="비밀번호 입력" autocomplete="current-password">
+    <div id="axeAdminErrorV135" class="axe-admin-error-v135"></div>
+    <div class="axe-admin-actions-v135">
+      <button id="axeAdminCancelV135" class="btn ghost" type="button">취소</button>
+      <button id="axeAdminSubmitV135" class="btn primary" type="button">설정 진입</button>
+    </div>
+  </div>
+</div>
+
+<script id="axeCookV135SettingsLockScript">
+(function(){
+  const ADMIN_PASSWORD='axe1234';
+  const KEY='AXE_COOK_ADMIN_UNLOCKED_V135';
+  const modal=document.getElementById('axeAdminLockV135');
+  const input=document.getElementById('axeAdminPasswordV135');
+  const error=document.getElementById('axeAdminErrorV135');
+  const submit=document.getElementById('axeAdminSubmitV135');
+  const cancel=document.getElementById('axeAdminCancelV135');
+  const settingsTab=document.querySelector('.top-tab-v23[data-view="settings"]');
+
+  function isUnlocked(){return sessionStorage.getItem(KEY)==='TRUE';}
+  function markTab(){if(settingsTab)settingsTab.classList.toggle('admin-unlocked-v135',isUnlocked());}
+  function openModal(){
+    if(!modal)return;
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden','false');
+    if(error)error.textContent='';
+    if(input){input.value='';setTimeout(()=>input.focus(),30);}
+  }
+  function closeModal(){
+    if(!modal)return;
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden','true');
+  }
+  function goSettings(){
+    sessionStorage.setItem(KEY,'TRUE');
+    markTab();
+    closeModal();
+    if(typeof window.axeCookSetView==='function') window.axeCookSetView('settings');
+  }
+  function tryLogin(){
+    if(String(input?.value||'')===ADMIN_PASSWORD){goSettings();return;}
+    if(error)error.textContent='비밀번호가 맞지 않습니다.';
+    if(input){input.select();input.focus();}
+  }
+
+  document.addEventListener('click',function(e){
+    const btn=e.target.closest && e.target.closest('.top-tab-v23[data-view="settings"]');
+    if(!btn)return;
+    if(isUnlocked())return;
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+    openModal();
+  },true);
+
+  document.addEventListener('click',function(e){
+    const settings=document.getElementById('viewSettings');
+    if(!settings || !settings.classList.contains('active') || isUnlocked())return;
+    if(settings.contains(e.target)){
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      openModal();
+    }
+  },true);
+
+  submit?.addEventListener('click',tryLogin);
+  cancel?.addEventListener('click',closeModal);
+  modal?.addEventListener('click',e=>{if(e.target===modal)closeModal();});
+  input?.addEventListener('keydown',e=>{if(e.key==='Enter')tryLogin(); if(e.key==='Escape')closeModal();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape' && modal?.classList.contains('show'))closeModal();});
+
+  window.axeCookAdminLockV135={lock:()=>{sessionStorage.removeItem(KEY);markTab();if(typeof window.axeCookSetView==='function')window.axeCookSetView('home');},unlock:goSettings,isUnlocked};
+  markTab();
+})();
+</script>
+
 </body>
 </html>
 
